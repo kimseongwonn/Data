@@ -85,7 +85,25 @@ print(d)
 
 """버블 정렬"""
 
+# 무작위로 정렬된 리스트를 가장 처음부터 끝까지 앞 뒤 요소를 비교하여 정렬시키는 방법
 
+def bubble_sort(a):
+    n = len(a)
+    while True: # 정렬이 완료될 때까지 진행
+        changed = False # changed : 요소값의 위치가 바뀌었는지 여부
+
+        for i in range(0, n-1):
+            if a[i] > a[i+1]: # 만약 앞의 요소값이 더 크다면
+                print(a)
+                a[i], a[i+1] = a[i+1], a[i] # 두 요소값의 자리를 바꿔준다.
+                changed = True # 요소값 위치가 바뀌었음을 표시
+
+        if changed == False: # 만약 자료를 훑는 동안 자리가 바뀐적이 없거나 자리를 순서대로 다 바꿨다면 changed는 False가 됨 >> 종료 조건
+            return
+
+d = [2, 4, 5, 1, 3]
+bubble_sort(d)
+print(d)
 
 """이분 탐색"""
 
@@ -117,3 +135,196 @@ print(binary_search(d, 36))
 print(binary_search(d, 50))
 
 # 재귀 호출을 이용한 이분 탐색
+
+def binary_search_sub(a, x, start, end):
+    if start > end:
+        return -1
+
+    mid = (start + end) // 2
+    if x == a[mid]:
+        return mid
+
+    elif x > a[mid]:
+        return binary_search_sub(a, x, mid+1, end)
+        # elif x > a[mid]: # 찾는 값이 중간 위치 값보다 크면 start 지점을 오른쪽으로 한칸 이동
+        #    start = mid + 1
+        # 위의 함수의 다음 코드와 같은 효과
+
+    else :
+        return binary_search_sub(a, x, start, mid-1)
+        # else: # 찾는 값이 중간 위치 값보다 작으면 end 지점을 왼쪽으로 한칸 이동
+        #    end = mid - 1
+        # 위의 함수의 다음 코드와 같은 효과
+
+    return -1 # 찾는 값이 없으면 -1 반환
+def binary_search(a, x):
+    return binary_search_sub(a, x, 0, len(a) - 1)
+
+
+d = [1, 4, 9, 16, 25, 36, 49, 64, 81]
+print(binary_search(d, 36))
+print(binary_search(d, 50))
+
+"""네 번째 알고리즘 기초 실습 문제
+- 회문 찾기
+- 동명이인 찾기
+- 친구의 친구 찾기
+
+회문 찾기
+"""
+
+# 회문 찾기
+# 회문 : 순서대로 읽어도 거꾸로 읽어도 그 내용이 같은 낱말이나 문장
+# 예) 토마토, 기러기, 다가가다, 다시 합창 합시다, mom, level 등등
+
+# 큐와 스택
+
+# 큐 : 줄 서기
+# 선입선출 후입후출
+
+# 스택 : 접시 쌓기
+# 선입후출 후입선출
+
+def palindrome(s):
+    qu = [] # queue를 담을 빈 리스트 생성(초기화)
+    st = [] # stack를 담을 빈 리스트 생성(초기화)
+
+    for x in s:
+        if x.isalpha(): # isalpha : 알파벳이면 True 알파벳이 아닌 특수문자, 띄어쓰기는 False
+            qu.append(x.lower()) # lower()로 문장을 전부 소문자로 만들어서 대 소문자 관계없이 비교
+            st.append(x.lower())
+
+    while qu:
+        if qu.pop(0) != st.pop(): # queue에서 pop은 첫번째 요소부터 나옴, stack에서 pop은 뒤에서부터 나옴
+            return False # 둘을 비교해서 같으면 회문이므로 다르다면 False를 반환
+
+    return True
+
+print(palindrome("Wow"))
+print(palindrome("Madam, I’m Adam."))
+print(palindrome("Madam, I am Adam."))
+
+# 회문 찾기2
+
+def palindrome(s):
+    i = 0 # 문자열 위치 start
+    j = len(s) - 1 # 문자열 위치 end
+    while i < j: # start 지점이 end 지점보다 같거나 커지면 비교가 끝난 것이므로 i < j 일때까지 반복
+        if s[i].isalpha() == False: # s[i]가 알파벳이 아니면 뒤로 이동
+            i += 1
+        elif s[j].isalpha() == False: # s[ㅓ]가 알파벳이 아니면 앞으로 이동
+            j -= 1
+        # isalpha로 알파벳 문자만 비교하기 위해서 조건이 거짓이면 위치를 옮겨준다
+        elif s[i].lower() != s[j].lower(): # 한칸 씩 옮기게 된 start 문자와 end 문자를 비교하여 같은지 판단
+            return False
+        else:
+            i += 1
+            j -= 1
+            # 위의 두 문장으로 start 문자와 end 문자를 한칸씩 옮기게 해준다.
+
+    return True
+
+print(palindrome("Wow"))
+print(palindrome("Madam, I’m Adam."))
+print(palindrome("Madam, I am Adam."))
+
+"""동명이인 찾기"""
+
+# n명의 사람 이름 중에서 같은 이름을 찾아 집합으로 만들어 돌려주는 알고리즘
+
+# 딕셔너리 사용
+
+# 힌트 : 각 이름을 키값으로 그 이름이 리스트에 등장한 횟수를 밸류값으로 사용하기
+
+def find_same_name(a):
+    name_dict = {} # 각 이름을 키값, 이름이 나온 횟수를 밸류값으로 사용할 빈 딕셔너리 생성
+    for name in a: # 리스트 a에서 name을 하나씩 추출
+        if name in name_dict: # 딕셔너리 안에 이름이 있으면 해당 이름을 키로 가지는 밸류값을 1씩 증가
+            name_dict[name] += 1
+        else:
+            name_dict[name] = 1
+
+    res = set()
+    for name in name_dict:
+        if name_dict[name] >= 2: # 2번 이상 나온 이름은 res 집합에 넣기
+            res.add(name)
+
+    return res
+
+name = ["Tom", "Jerry", "Mike", "Tom"] # 대소문자 유의: 파이썬은 대소문자를 구분함
+print(find_same_name(name))
+
+print()
+
+name2 = ["Tom", "Jerry", "Mike", "Tom", "Mike"]
+print(find_same_name(name2))
+
+"""친구의 친구 찾기"""
+
+# 친구의 친구 찾기
+
+def print_all_friends(g, start): # 친구들과의 관계 정보가 담긴 딕셔너리 g와 친구 관계를 찾고자 하는 기준 사람인 start
+    qu = [] # 앞으로 처리해야할 사람들을 저장할 빈 큐
+    done = set() # 이미 처리된 사람들의 중복을 방지하여 저장할 집합
+
+    # 기준 사람부터 두 바구니에 넣는다
+    qu.append(start)
+    done.add(start)
+
+    while qu: # 앞으로 처리해야할 사람들이 더 이상 없을때 까지
+        p = qu.pop(0) # 앞으로 처리해야할 사람들을 한명씩 추출
+        print(p) # 추출하여 인쇄
+        for x in g[p]: # 친구들의 관계정보 딕셔너리에서 앞으로 처리해야할 사람을 키값으로 사용하여 밸류값인 친구 리스트 불러옴 >> 그 리스트에서 x에 하나씩 대입
+            if x not in done: # 만약 x에 대입된 사람이 done에 추가되지 않았다면
+                # qu에 추가하여 친구의 친구를 전부 조사한뒤 중복이 없는 done에도 추가하여 결과값을 중복없이 나오게 한다.
+                qu.append(x)
+                done.add(x)
+
+fr_info = {
+'Summer': ['John', 'Justin', 'Mike'],
+'John': ['Summer', 'Justin'],
+'Justin': ['John', 'Summer', 'Mike', 'May'],
+'Mike': ['Summer', 'Justin'],
+'May': ['Justin', 'Kim'],
+'Kim': ['May'],
+'Tom': ['Jerry'],
+'Jerry': ['Tom']
+}
+print_all_friends(fr_info, 'Summer')
+print()
+print_all_friends(fr_info, 'Jerry')
+
+# 친밀도 계산 알고리즘
+# 사람과 사람 사이에 몇단계로 이루어 져있는지를 수치로 표현
+# 예를 들어 A, B, C가 있을때 A와 B는 친구이고 B와 C가 친구라면 A와 B의 친밀도는 1, A와 C의 친밀도는 2라고 할 수 있다.
+
+def print_all_friends(g, start):
+    qu = [] # 앞으로 처리해야할 사람들을 저장할 빈 큐 >> 리스트의 요소를 (이름, 친밀도) 형식의 튜플로 저장
+    done = set() # 이미 처리된 사람들의 중복을 방지하여 저장할 집합
+
+    qu.append((start, 0)) # 처음에는 자기 자신이 추가되는 것이므로 친밀도를 0으로 설정
+    done.add(start)
+
+    while qu: # 앞으로 처리해야할 사람들이 더 이상 없을때 까지
+        (p, d) = qu.pop(0) # 큐에서 (사람 이름, 친밀도) 정보를 p와 d로 각각 꺼냄
+        print(p, d)
+        for x in g[p]: # 친구들 중에
+            if x not in done: # 아직 큐에 추가된 적이 없는 사람을
+                qu.append((x, d + 1)) # 친밀도를 1 증가시켜 큐에 추가하고
+                done.add(x) # 집합에도 추가
+
+fr_info = {
+'Summer': ['John', 'Justin', 'Mike'],
+'John': ['Summer', 'Justin'],
+'Justin': ['John', 'Summer', 'Mike', 'May'],
+'Mike': ['Summer', 'Justin'],
+'May': ['Justin', 'Kim'],
+'Kim': ['May'],
+'Tom': ['Jerry'],
+'Jerry': ['Tom']
+}
+
+print_all_friends(fr_info, 'Summer')
+print()
+print_all_friends(fr_info, 'Jerry')
+
