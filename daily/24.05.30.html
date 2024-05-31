@@ -1,0 +1,745 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>24.05.30</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="7bd42aa9-cbbd-4dfc-89e3-e40004279525" class="page sans"><header><h1 class="page-title">24.05.30</h1><p class="page-description"></p></header><div class="page-body"><ul id="f28e5ef9-40cf-46c4-853b-0386d2b409b7" class="toggle"><li><details open=""><summary>코드 해석 질문 (AutoTokenizer, AutoModelForSeq2SeqLM 관련)</summary><ul id="f20a1be0-39b0-445b-87ba-d2068cb167fa" class="toggle"><li><details open=""><summary>코드</summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="6c143e5c-78fc-41b4-b987-c4a71b86fe63" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+
+model = AutoModelForSeq2SeqLM.from_pretrained(&#x27;eenzeenee/t5-base-korean-summarization&#x27;)
+tokenizer = AutoTokenizer.from_pretrained(&#x27;eenzeenee/t5-base-korean-summarization&#x27;)
+
+# 모델한테 해야하는 작업을 알려주는 키워드
+# prefix = &#x27;summarize&#x27; &gt;&gt; 요약 작업을 할 것이야
+# prefix에 쓰이는 키워드 종류가 존재(번역, 요약, 분류 등등)
+prefix = &#x27;summarize&#x27;
+
+# 작업을 수행할 샘플 데이터
+sample=&#x27;&#x27;&#x27;
+대학교 축제 현장에서 술에 취해 행패를 부린 30대 남성이 경찰에 붙잡혔다.
+30일 뉴스1에 따르면 이날 광주 동부경찰서는 폭행 혐의로 30대 남성 A씨를 불구속 입건했다.
+A씨는 지난 29일 오후 11시쯤 광주 조선대학교 축제 현장에서 술에 취해 50대 B씨를 밀친 혐의를 받고 있다.
+가수 싸이 공연을 보던 A씨는 &#x27;싸이가 싫다&#x27;며 불만을 표출했고 B씨 쪽으로 담배꽁초를 던지면서 시비가 붙었다. B씨가 항의하자 A씨는 상의를 벗은 채 행패를 부린 것으로 전해졌다.
+이 과정에서 &#x27;싸이 경호원과 시민이 싸움하고 있다&#x27;는 신고가 접수되기도 했다. 하지만 이는 A씨 체형 때문에 빚어진 오해로 알려졌다.
+경찰은 A씨를 상대로 정확한 사건 경위를 조사할 방침이다.
+&#x27;&#x27;&#x27;
+
+# 할 작업명 + 작업될 샘플 데이터
+inputs = [prefix + sample]
+
+# 1. 일단 inputs 을 토큰화 한다.
+inputs = tokenizer(inputs, max_length=512, truncation=True, return_tensors=&#x27;pt&#x27;)
+# max_length=512 : 최대 토큰의 길이를 지정 &gt;&gt; 512개의 토큰이 최대 길이
+# truncation=True : max_length보다 길면 잘라낸다
+# return_tensors=&#x27;pt&#x27; : 결과를 pytorch 텐서 형식으로 변환
+
+# 2. 1단계에서 토큰화한 데이터를 특정 알고리즘을 적용해서 최적의 값을 찾는다
+output = model.generate(**inputs, num_beams=3, do_sample=True, min_length=10, max_length=64)
+# **inputs : 이전 단계(tokenizer에서 생성된 inputs)에서 생성된 입력(텐서) 전달
+# num_beams=3 : beam search라는 알고리즘으로 탐색(샘플링해서)해서 3개 찾아내겠다.
+# beam search : 다수의 후보를 탐색하여 최적의 출력값을 찾는 알고리즘
+
+# 3. 결과값을 우리가 볼 수 있게 디코딩해준다.
+decoded_output = tokenizer.batch_decode(output, skip_special_tokens=True)[0]
+# special_tokens : [cls], [sos], [eos], [sep]
+# skip_special_tokens=True : special_tokens는 제외하고 일반 단어토큰만 뽑아줘
+
+# 4. 디코딩된 결과값
+result = nltk.sent_tokenize(decoded_output.strip())[0]
+# sent_tokenizer() : sentence(문장) 단위별로 토큰화 &gt;&gt; 양쪽 공백 제거 &gt;&gt; 첫번째 문장을 가져와줘
+
+print(result)</code></pre></details></li></ul><ul id="dc8b0a3b-ea16-46e6-a528-021efdff54a6" class="toggle"><li><details open=""><summary>답변</summary><p id="40b6622e-acb7-49ab-ac5e-1a8017229176" class="">물론입니다. 코드를 한 줄씩 자세히 설명해 드리겠습니다.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="244d9014-27b6-4919-90ff-2c24248c141f" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+</code></pre><ul id="356991ac-ddc1-41c9-b57a-5b258785efb6" class="bulleted-list"><li style="list-style-type:disc"><code>transformers</code> 라이브러리에서 <code>AutoTokenizer</code>와 <code>AutoModelForSeq2SeqLM</code> 클래스를 임포트합니다.</li></ul><ul id="c73bd945-39c2-440f-9233-cc014726ea05" class="bulleted-list"><li style="list-style-type:disc"><code>AutoTokenizer</code>는 텍스트를 토큰으로 변환하고, <code>AutoModelForSeq2SeqLM</code>은 텍스트 생성 모델을 로드하는 데 사용됩니다.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="5f5c3704-fd33-4a6f-96c5-e592dd4adce7" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">model = AutoModelForSeq2SeqLM.from_pretrained(&#x27;eenzeenee/t5-base-korean-summarization&#x27;)
+</code></pre><ul id="7e066422-62de-4d0a-a3bb-94845ae94d4c" class="bulleted-list"><li style="list-style-type:disc">사전 학습된 한국어 요약 모델을 로드합니다.</li></ul><ul id="f4918472-1934-4ae9-bd50-098aff51634c" class="bulleted-list"><li style="list-style-type:disc">모델은 &#x27;eenzeenee/t5-base-korean-summarization&#x27;이라는 이름으로 저장되어 있습니다.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="291c6e5f-0879-439b-8035-7565ff343f54" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">tokenizer = AutoTokenizer.from_pretrained(&#x27;eenzeenee/t5-base-korean-summarization&#x27;)
+</code></pre><ul id="75023640-dce6-430a-82ff-f43a766943df" class="bulleted-list"><li style="list-style-type:disc">해당 모델과 일치하는 토크나이저를 로드합니다.</li></ul><ul id="728680ca-ad6f-45a9-aa7f-d8b2cbd0116a" class="bulleted-list"><li style="list-style-type:disc">토크나이저는 텍스트를 모델 입력으로 변환하는 데 사용됩니다.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="25c1b70d-cd2e-466e-86b2-ef0425a810c1" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">prefix = &#x27;summarize&#x27;
+</code></pre><ul id="84d3e700-186f-4de1-a75d-b4a9f0b16556" class="bulleted-list"><li style="list-style-type:disc">요약 작업을 위한 프리픽스를 설정합니다.</li></ul><ul id="112b1d19-030a-47b1-9605-761d758fdca2" class="bulleted-list"><li style="list-style-type:disc">&#x27;summarize&#x27;는 모델이 요약 작업임을 인식하도록 하는 키워드입니다.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ae8feaf5-4193-427c-a24c-6e41f0afd894" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">sample = &#x27;&#x27;&#x27;
+대학교 축제 현장에서 술에 취해 행패를 부린 30대 남성이 경찰에 붙잡혔다.
+30일 뉴스1에 따르면 이날 광주 동부경찰서는 폭행 혐의로 30대 남성 A씨를 불구속 입건했다.
+A씨는 지난 29일 오후 11시쯤 광주 조선대학교 축제 현장에서 술에 취해 50대 B씨를 밀친 혐의를 받고 있다.
+가수 싸이 공연을 보던 A씨는 &#x27;싸이가 싫다&#x27;며 불만을 표출했고 B씨 쪽으로 담배꽁초를 던지면서 시비가 붙었다. B씨가 항의하자 A씨는 상의를 벗은 채 행패를 부린 것으로 전해졌다.
+이 과정에서 &#x27;싸이 경호원과 시민이 싸움하고 있다&#x27;는 신고가 접수되기도 했다. 하지만 이는 A씨 체형 때문에 빚어진 오해로 알려졌다.
+경찰은 A씨를 상대로 정확한 사건 경위를 조사할 방침이다.
+&#x27;&#x27;&#x27;
+</code></pre><ul id="65f085f8-9aac-4656-b892-223c3d8942c8" class="bulleted-list"><li style="list-style-type:disc">요약할 텍스트 샘플을 설정합니다.</li></ul><ul id="d781bf03-37b2-47b0-a2d9-25e4a8e4ddaf" class="bulleted-list"><li style="list-style-type:disc">이 샘플은 대학 축제에서 발생한 사건에 대한 뉴스 기사입니다.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="75ade36c-0175-4804-9c4e-3ce161e9daaf" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">inputs = [prefix + sample]
+</code></pre><ul id="7739864b-dc62-4912-a908-190ef21198b1" class="bulleted-list"><li style="list-style-type:disc">프리픽스와 샘플 텍스트를 결합하여 입력 리스트를 만듭니다.</li></ul><ul id="475381c2-e3b9-4118-8ba4-b45c8e26a019" class="bulleted-list"><li style="list-style-type:disc">입력 텍스트는 &#x27;summarize&#x27;로 시작하여 모델이 요약 작업임을 인식하게 합니다.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="26127a73-2349-4fa2-bf15-045fbc3ca8d7" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">inputs = tokenizer(inputs, max_length=512, truncation=True, return_tensors=&#x27;pt&#x27;)
+</code></pre><ul id="d3b1790c-176f-48d2-8c84-ec2f5e4468d4" class="bulleted-list"><li style="list-style-type:disc">입력 텍스트를 토큰화합니다.</li></ul><ul id="706b2007-ffbd-400c-8051-d76586ccf2a2" class="bulleted-list"><li style="list-style-type:disc"><code>max_length=512</code>: 최대 512개의 토큰 길이로 제한합니다.</li></ul><ul id="8f4a4a34-1145-4bef-94bf-58e95d8f0211" class="bulleted-list"><li style="list-style-type:disc"><code>truncation=True</code>: 입력 텍스트가 512개 토큰을 초과하면 잘라냅니다.</li></ul><ul id="a787153e-3631-43ab-b5ee-35a4490457c6" class="bulleted-list"><li style="list-style-type:disc"><code>return_tensors=&#x27;pt&#x27;</code>: 결과를 파이토치 텐서 형식으로 반환합니다.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="b3573dd2-98ae-49c1-887b-3daa58d61e9c" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">output = model.generate(**inputs, num_beams=3, do_sample=True, min_length=10, max_length=64)
+</code></pre><ul id="31df4e1b-5188-49f4-ba20-26754bdf29ad" class="bulleted-list"><li style="list-style-type:disc">토큰화된 입력을 사용하여 텍스트를 생성합니다.</li></ul><ul id="c02f65e0-7285-4c21-9f86-b15c2fe67970" class="bulleted-list"><li style="list-style-type:disc"><code>*inputs</code>: 이전 단계에서 생성된 입력 텐서를 전달합니다.</li></ul><ul id="87488505-ad97-47da-8440-f52c0c653445" class="bulleted-list"><li style="list-style-type:disc"><code>num_beams=3</code>: 빔 서치를 사용하여 3개의 빔을 탐색합니다.</li></ul><ul id="efa983e3-3394-4a46-ac34-7ffda190524e" class="bulleted-list"><li style="list-style-type:disc"><code>do_sample=True</code>: 샘플링을 사용하여 텍스트를 생성합니다.</li></ul><ul id="9062f47a-0731-4293-b626-07714df5c820" class="bulleted-list"><li style="list-style-type:disc"><code>min_length=10</code>: 생성된 텍스트의 최소 길이를 10으로 설정합니다.</li></ul><ul id="b2e5146a-79e6-4df7-b25d-653e4de1da76" class="bulleted-list"><li style="list-style-type:disc"><code>max_length=64</code>: 생성된 텍스트의 최대 길이를 64로 설정합니다.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="f7c1f884-b3f0-4bef-ac0a-9b4db878fcc5" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">decoded_output = tokenizer.batch_decode(output, skip_special_tokens=True)[0]
+</code></pre><ul id="4703bfe4-22b5-46de-9315-3f3d5e3667da" class="bulleted-list"><li style="list-style-type:disc">생성된 텍스트를 디코딩합니다.</li></ul><ul id="498a0c79-22f3-46c5-afdf-61d844fc08dd" class="bulleted-list"><li style="list-style-type:disc"><code>skip_special_tokens=True</code>: 특별 토큰([CLS], [SEP] 등)을 제거하고 일반 단어 토큰만 디코딩합니다.</li></ul><ul id="c543009c-b51c-4bb8-be88-d7c0079bdcc2" class="bulleted-list"><li style="list-style-type:disc"><code>[0]</code>: 디코딩된 출력 리스트에서 첫 번째 문장을 선택합니다.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="26499557-737e-478f-a697-9e1077b7933a" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">result = nltk.sent_tokenize(decoded_output.strip())[0]
+</code></pre><ul id="e7fca5f0-6efb-448a-a808-f07f1bd9d422" class="bulleted-list"><li style="list-style-type:disc"><code>nltk.sent_tokenize</code>: NLTK 라이브러리를 사용하여 디코딩된 텍스트를 문장 단위로 토큰화합니다.</li></ul><ul id="d9253203-2ce3-4a49-8166-a863b192cf7e" class="bulleted-list"><li style="list-style-type:disc"><code>decoded_output.strip()</code>: 양쪽 공백을 제거합니다.</li></ul><ul id="143123c4-920b-41aa-b9b3-a763b060ea36" class="bulleted-list"><li style="list-style-type:disc"><code>[0]</code>: 첫 번째 문장을 선택합니다.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="54d5ff95-7c51-4b1f-bc51-3dc5c94399ce" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">print(result)
+</code></pre><ul id="be7051e6-1546-4a92-af16-d33d7957c1d0" class="bulleted-list"><li style="list-style-type:disc">최종 결과인 첫 번째 문장을 출력합니다.</li></ul><p id="4ae545e7-88fa-4c51-9e27-cbb676a2e72a" class="">위 설명을 참고하여 코드의 각 부분이 어떻게 작동하는지 이해하실 수 있습니다. 혹시 더 궁금한 부분이 있으면 알려주세요!</p></details></li></ul><ul id="23350412-86c9-420d-8f0b-24ae0d873f8d" class="toggle"><li><details open=""><summary>꼬리질문</summary><ul id="3a86a4e3-cb0a-48bc-8d6a-8cdef1ae0e85" class="toggle"><li><details open=""><summary>prefix 란?</summary><p id="79505cad-c235-4dd4-b738-ad09f46abbbe" class="">모델에 따라 사용할 수 있는 프리픽스(prefix) 키워드는 다양합니다. 일반적으로, 프리픽스는 모델에게 수행할 작업을 지정하는 데 사용됩니다. 특히 T5 모델의 경우 다양한 작업을 지원하며, 각 작업에 해당하는 프리픽스를 사용할 수 있습니다. 아래는 T5 모델에서 자주 사용하는 몇 가지 프리픽스 예시입니다:</p><ol type="1" id="39d6013e-597e-4854-83fd-f709b2c7c24c" class="numbered-list" start="1"><li><strong>텍스트 요약 (Summarization)</strong>:<ul id="b6e8c746-f801-4bb9-9099-cd9e5d665d34" class="bulleted-list"><li style="list-style-type:disc"><code>&quot;summarize&quot;</code></li></ul><ul id="97cb748b-8df0-4902-86e8-fc9d27fb652f" class="bulleted-list"><li style="list-style-type:disc"><code>&quot;summarize: &quot;</code> (공백 포함)</li></ul></li></ol><ol type="1" id="93a7bc31-ae70-495c-bd7f-1676ff1e95b5" class="numbered-list" start="2"><li><strong>번역 (Translation)</strong>:<ul id="868e3e02-af23-4158-a20e-386cb61cc894" class="bulleted-list"><li style="list-style-type:disc"><code>&quot;translate English to German: &quot;</code></li></ul><ul id="eb8edba4-af0f-420b-9ece-79bd7bbb24d4" class="bulleted-list"><li style="list-style-type:disc"><code>&quot;translate English to French: &quot;</code></li></ul><ul id="682cf624-4d09-44ea-a8d2-a58081e5fb85" class="bulleted-list"><li style="list-style-type:disc"><code>&quot;translate English to Korean: &quot;</code></li></ul></li></ol><ol type="1" id="ca8005fe-7b53-4ece-86be-defc248c63ee" class="numbered-list" start="3"><li><strong>질문 생성 (Question Generation)</strong>:<ul id="207bdf52-5034-48c0-9475-d051a9853c48" class="bulleted-list"><li style="list-style-type:disc"><code>&quot;generate question: &quot;</code></li></ul></li></ol><ol type="1" id="ac45211e-1f69-4b76-88ed-289e872fdcb2" class="numbered-list" start="4"><li><strong>질문 답변 (Question Answering)</strong>:<ul id="fb9e3e91-0606-4a76-9039-0b3bbfb93599" class="bulleted-list"><li style="list-style-type:disc"><code>&quot;answer question: &quot;</code></li></ul></li></ol><ol type="1" id="34bec4ae-db9b-49db-84cc-7a8b809324b7" class="numbered-list" start="5"><li><strong>문장 완성 (Sentence Completion)</strong>:<ul id="ae85e0f5-647f-41ec-aca6-5b5141e0393a" class="bulleted-list"><li style="list-style-type:disc"><code>&quot;complete the sentence: &quot;</code></li></ul></li></ol><ol type="1" id="0dec7fd8-3444-4b87-8abc-aec64fb4d219" class="numbered-list" start="6"><li><strong>텍스트 분류 (Text Classification)</strong>:<ul id="91a1d39c-0821-466d-a512-0076efbb733b" class="bulleted-list"><li style="list-style-type:disc"><code>&quot;classify the text: &quot;</code></li></ul></li></ol><ol type="1" id="dde1be14-cf0e-4102-a655-f88f64ba2f46" class="numbered-list" start="7"><li><strong>이름 엔티티 인식 (Named Entity Recognition)</strong>:<ul id="f0c91cf1-e276-4e8b-9254-a723b51235c5" class="bulleted-list"><li style="list-style-type:disc"><code>&quot;extract entities: &quot;</code></li></ul></li></ol><ol type="1" id="7ac16bf8-3ac5-43da-81b9-1715e06938ff" class="numbered-list" start="8"><li><strong>문법 수정 (Grammar Correction)</strong>:<ul id="9843b7df-aa3a-4cb9-9606-8bd671bac721" class="bulleted-list"><li style="list-style-type:disc"><code>&quot;correct grammar: &quot;</code></li></ul></li></ol><ol type="1" id="e76f5c61-1d36-4435-a00c-193f935ca9fc" class="numbered-list" start="9"><li><strong>다중 선택 질문 (Multiple Choice Question)</strong>:<ul id="e9faa475-5a28-479f-9194-2bbf3026fb2a" class="bulleted-list"><li style="list-style-type:disc"><code>&quot;choose the best answer: &quot;</code></li></ul></li></ol><p id="5c322fc1-ba00-443e-96ea-1d838a1323f8" class="">프리픽스를 사용할 때는 모델이 해당 작업을 이해하도록 설정하는 것이 중요합니다. 모델에 따라 다를 수 있으므로, 사용 중인 특정 모델의 문서를 참조하는 것이 좋습니다.</p><p id="f356ff89-312f-46ad-a9d3-eaae857854a1" class="">지금 사용 중인 &#x27;eenzeenee/t5-base-korean-summarization&#x27; 모델이 기본적으로 요약 작업에 최적화되어 있으므로, <code>&quot;summarize&quot;</code> 프리픽스를 사용하는 것이 적절합니다. 하지만, 모델이 다른 작업을 지원한다면 위와 같은 다른 프리픽스도 사용할 수 있습니다.</p><p id="b30f1e03-3b8f-41b6-baef-4db01b785f02" class="">이와 같이 프리픽스를 설정하여 다양한 작업을 모델에게 지시할 수 있습니다. 특정 작업에 대해 궁금한 점이 있거나 추가적인 도움을 원하시면 알려주세요!</p></details></li></ul><ul id="e0541c24-94ff-4970-a28a-e9ee16fa2ba2" class="toggle"><li><details open=""><summary>Beam Search 알고리즘이란?</summary><p id="36851f7a-f2e7-41a6-bf8d-1bb33171abfe" class="">Beam Search는 텍스트 생성 및 기타 시퀀스 생성 작업에서 사용되는 탐색 알고리즘 중 하나입니다. 일반적으로 기계 번역, 문장 생성, 음성 인식 등과 같은 자연어 처리 작업에서 사용됩니다. Beam Search는 가능한 모든 시퀀스를 탐색하는 대신, 더 빠르고 효율적인 대안을 제공합니다.</p><h3 id="ca371192-4347-4dd7-bd8f-0d41e619bc9c" class="">동작 원리</h3><ol type="1" id="b7fbca0d-be36-41d4-a4ab-2e71248a978f" class="numbered-list" start="1"><li><strong>시퀀스 생성</strong>: 먼저 모델은 입력 시퀀스를 받아들이고 첫 번째 토큰을 생성합니다.</li></ol><ol type="1" id="2bb1ee12-6d92-44dd-927d-a765601b0e24" class="numbered-list" start="2"><li><strong>Beam Expansion</strong>: Beam Search는 여러 후보를 추적합니다. 각 후보에 대해 가능한 모든 다음 토큰 후보를 생성하고 각 후보의 점수를 계산합니다.</li></ol><ol type="1" id="9d9e1be8-b772-422c-8380-7b52e83e16db" class="numbered-list" start="3"><li><strong>Beam Pruning</strong>: Beam Search는 이 점수를 사용하여 후보를 정렬하고 가장 높은 점수를 가진 상위 N개의 후보를 선택합니다. 이렇게 하면 가능한 토큰의 수를 줄이면서 후보의 수를 제한할 수 있습니다.</li></ol><ol type="1" id="860d0718-bef5-4996-8b97-f06bce799546" class="numbered-list" start="4"><li><strong>계속 탐색</strong>: 선택된 상위 N개의 후보에 대해 다음 토큰을 생성하고 절차를 반복합니다.</li></ol><ol type="1" id="a3daa29b-3b01-4a73-8e5f-2755b657fd05" class="numbered-list" start="5"><li><strong>종료 조건</strong>: 모든 후보가 종료 토큰(예: <code>[EOS]</code>)을 생성하거나 최대 길이에 도달할 때까지 계속합니다.</li></ol><h3 id="2c3494e4-edb4-49b6-9226-76729032d723" class="">Beam Search의 특징</h3><ul id="6a5f8ccb-ad3f-4fab-80e2-a91177b905c2" class="bulleted-list"><li style="list-style-type:disc"><strong>확장성</strong>: 빠르고 효율적인 대안을 제공하며, 가능한 모든 시퀀스를 탐색하는 것보다 효율적입니다.</li></ul><ul id="17f2b6df-0a1d-4a5c-811a-c0195322ccc1" class="bulleted-list"><li style="list-style-type:disc"><strong>제약 조건</strong>: Beam의 크기를 조절하여 생성되는 후보의 수를 조절할 수 있습니다. 더 큰 Beam 크기는 더 많은 후보를 추적하지만 계산 비용이 증가합니다.</li></ul><ul id="cec041f6-43de-4cf4-b023-00852c1e5ee3" class="bulleted-list"><li style="list-style-type:disc"><strong>단점</strong>: Beam Search는 가장 높은 점수를 가진 시퀀스만을 고려하기 때문에 최적의 해를 보장하지 않습니다. 때로는 더 낮은 점수를 가진 시퀀스가 실제로 더 나은 결과를 내는 경우가 있을 수 있습니다.</li></ul><h3 id="b7b91a8a-9e23-4b6c-b8bc-078f22114e6b" class="">예시</h3><p id="6f6d9b26-a0ff-46a7-9579-5d351576dd09" class="">예를 들어, 문장 생성 작업에서 Beam Search를 사용하여 다음 단어를 예측하는 과정은 다음과 같습니다.</p><ol type="1" id="091f1919-c794-422c-8acd-2f83aa8539e8" class="numbered-list" start="1"><li>입력 시퀀스: <code>[SOS]</code></li></ol><ol type="1" id="8ffbc610-70cb-438c-9f95-d9ee49f5d174" class="numbered-list" start="2"><li>후보 1: <code>[SOS] the</code></li></ol><ol type="1" id="a939d0d9-4f05-4fb6-9ac6-c630a31ae3d3" class="numbered-list" start="3"><li>후보 2: <code>[SOS] a</code></li></ol><ol type="1" id="d61d30e5-0d28-4a89-99d9-0bf9495bde68" class="numbered-list" start="4"><li>후보 3: <code>[SOS] an</code></li></ol><ol type="1" id="7617e6fb-4a1e-4e87-8ad0-e8f5e1fd5b98" class="numbered-list" start="5"><li>각 후보에 대해 다음 단어를 예측하고 점수를 계산합니다.</li></ol><ol type="1" id="bc2637ae-3401-4580-9e36-834d084d8240" class="numbered-list" start="6"><li>상위 N개의 후보를 선택합니다.</li></ol><ol type="1" id="037213c9-81d7-44af-a23b-69b1c265bf70" class="numbered-list" start="7"><li>선택된 후보에 대해 다음 단어를 예측하고 점수를 계산합니다.</li></ol><ol type="1" id="98bb7551-d0c9-4c2e-8bfc-7710f054c390" class="numbered-list" start="8"><li>이러한 과정을 반복하고, 최종적으로 최대 길이에 도달하거나 종료 토큰을 만날 때까지 계속합니다.</li></ol><p id="647c036c-af41-4c8b-a2f0-ecb22af53c49" class="">이렇게 함으로써 Beam Search는 가능한 모든 시퀀스를 탐색하는 대신, 효율적으로 좋은 후보를 선택하여 시간을 절약하면서도 어느 정도의 품질을 유지할 수 있습니다. Beam Search는 자연어 처리 및 기타 시퀀스 생성 작업에서 널리 사용되는 중요한 알고리즘 중 하나입니다.</p></details></li></ul><ul id="9dccd8a9-d13b-40de-8f29-c03512c8c85c" class="toggle"><li><details open=""><summary>special_tokens 란?</summary><p id="afba66c3-b449-4f43-92f8-6956cef59a86" class="">딥러닝에서 자연어 처리(NLP) 모델을 학습할 때, 특정 토큰들을 추가하여 모델이 문장의 시작, 끝, 구분 등을 쉽게 이해할 수 있도록 도와줍니다. 이 토큰들은 <strong>special tokens</strong>이라고 불립니다. 대표적인 special tokens에는 <code>[CLS]</code>, <code>[SOS]</code>, <code>[EOS]</code>, <code>[SEP]</code> 등이 있습니다. 각각의 역할을 살펴보겠습니다.</p><h3 id="23a69048-64d0-40c9-9dbd-7ef8d63b62a2" class="">1. <code>[CLS]</code> (Classification Token)</h3><ul id="05688a3c-a693-40c6-ab66-7268aee91a2c" class="bulleted-list"><li style="list-style-type:disc"><strong>역할</strong>: 문장의 시작을 나타내며, 주로 문장 또는 문서의 전체 의미를 요약하는 데 사용됩니다.</li></ul><ul id="f85c2b5e-4494-4a7c-827e-b83ada3193dc" class="bulleted-list"><li style="list-style-type:disc"><strong>사용처</strong>: BERT(Bidirectional Encoder Representations from Transformers) 모델에서 많이 사용됩니다.</li></ul><ul id="4d308729-00de-408e-a0bb-5d2c01144946" class="bulleted-list"><li style="list-style-type:disc"><strong>위치</strong>: 입력 문장의 맨 앞에 위치합니다.</li></ul><ul id="210a4984-cf44-4a8d-8a74-8ab3fb18733e" class="bulleted-list"><li style="list-style-type:disc"><strong>예시</strong>: <code>[CLS] This is an example sentence.</code></li></ul><ul id="6a0522df-b29e-4d76-b14b-1d01d3138868" class="bulleted-list"><li style="list-style-type:disc"><strong>용도</strong>: 주로 문장 분류 작업에서 사용됩니다. 예를 들어, 입력 문장의 감정 분석, 문서 분류 등의 작업에서 <code>[CLS]</code> 토큰의 출력을 사용합니다.</li></ul><h3 id="dc57ff68-0926-498e-b5b0-0b7785a50d90" class="">2. <code>[SOS]</code> (Start of Sentence Token)</h3><ul id="6495325e-d733-4226-8536-55005917028b" class="bulleted-list"><li style="list-style-type:disc"><strong>역할</strong>: 문장의 시작을 나타냅니다.</li></ul><ul id="8b66aa87-f793-4aa0-be27-86bb859751ef" class="bulleted-list"><li style="list-style-type:disc"><strong>사용처</strong>: Seq2Seq(Sequence-to-Sequence) 모델에서 많이 사용됩니다.</li></ul><ul id="dcaee884-1d65-4797-86fb-c53c3208a53c" class="bulleted-list"><li style="list-style-type:disc"><strong>위치</strong>: 입력 문장의 맨 앞에 위치합니다.</li></ul><ul id="8174933b-2de8-47a2-8091-541835b61023" class="bulleted-list"><li style="list-style-type:disc"><strong>예시</strong>: <code>[SOS] This is an example sentence.</code></li></ul><ul id="bde495aa-1c71-4391-aa97-b8ffa692eeb0" class="bulleted-list"><li style="list-style-type:disc"><strong>용도</strong>: 주로 텍스트 생성 작업에서 사용됩니다. 예를 들어, 번역 모델에서 입력 문장의 시작을 표시하여 디코더가 문장 생성을 시작하도록 합니다.</li></ul><h3 id="9ff8a22f-f51f-40a7-bdd0-ae21071e6484" class="">3. <code>[EOS]</code> (End of Sentence Token)</h3><ul id="e159d6bf-0b82-48ad-ac3c-53b743ffe559" class="bulleted-list"><li style="list-style-type:disc"><strong>역할</strong>: 문장의 끝을 나타냅니다.</li></ul><ul id="8c2e7e42-e712-46b5-906e-a7b3602d5d22" class="bulleted-list"><li style="list-style-type:disc"><strong>사용처</strong>: Seq2Seq 모델에서 많이 사용됩니다.</li></ul><ul id="b43da1e6-2f61-4c3c-8ece-ec363111dd07" class="bulleted-list"><li style="list-style-type:disc"><strong>위치</strong>: 입력 문장의 맨 뒤에 위치합니다.</li></ul><ul id="5851021b-c937-4e4c-ac2e-7c42324e5632" class="bulleted-list"><li style="list-style-type:disc"><strong>예시</strong>: <code>This is an example sentence. [EOS]</code></li></ul><ul id="ef912c23-1580-49b6-8f89-b51a267c0ca9" class="bulleted-list"><li style="list-style-type:disc"><strong>용도</strong>: 주로 텍스트 생성 작업에서 사용됩니다. 모델이 문장 생성을 종료해야 할 시점을 알려줍니다.</li></ul><h3 id="0272d5b7-c884-4e0f-bfab-ae80872c0900" class="">4. <code>[SEP]</code> (Separator Token)</h3><ul id="8c9f9916-14c8-42ca-be3a-4df45cdd6a43" class="bulleted-list"><li style="list-style-type:disc"><strong>역할</strong>: 두 문장 또는 문단 사이를 구분합니다.</li></ul><ul id="7e261ddf-9d45-42f2-ac7e-bbaa77626e6d" class="bulleted-list"><li style="list-style-type:disc"><strong>사용처</strong>: BERT 모델 등에서 많이 사용됩니다.</li></ul><ul id="71285038-a160-430b-92c7-296e075e0ab5" class="bulleted-list"><li style="list-style-type:disc"><strong>위치</strong>: 두 문장 또는 문단 사이에 위치합니다.</li></ul><ul id="909166d7-33d0-4df0-8eb0-0aea335f3f33" class="bulleted-list"><li style="list-style-type:disc"><strong>예시</strong>: <code>[CLS] This is the first sentence. [SEP] This is the second sentence.</code></li></ul><ul id="a293e8d7-ec4b-4113-8434-a78e15c41c68" class="bulleted-list"><li style="list-style-type:disc"><strong>용도</strong>: 문장 쌍 입력 작업에서 사용됩니다. 예를 들어, 질문-응답 쌍, 문장 간 유사성 판단 등의 작업에서 문장들을 구분합니다.</li></ul><h3 id="1379d1b3-1a0e-4b41-b469-436150e536a4" class="">예시를 통한 설명</h3><h3 id="1753d557-b316-474b-ada0-3747a24aef6f" class="">BERT 모델 예시</h3><p id="5d3c59a2-e264-4720-990e-ac3f33d25475" class="">BERT 모델에서 <code>[CLS]</code>와 <code>[SEP]</code> 토큰을 사용하는 예시는 다음과 같습니다:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="05c31345-21e9-4ca0-925a-377ef2baeb69" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">[CLS] How are you? [SEP] I am fine. [SEP]
+</code></pre><ul id="e4e3b586-0222-4b2d-a2f4-56f5b639df50" class="bulleted-list"><li style="list-style-type:disc">여기서 <code>[CLS]</code> 토큰은 전체 입력의 의미를 요약하는 데 사용되며, <code>[SEP]</code> 토큰은 문장을 구분하는 데 사용됩니다.</li></ul><h3 id="2bb8a744-3ba2-4d14-8ffe-56dd2df4c67b" class="">Seq2Seq 모델 예시</h3><p id="a7e102ed-6e49-4598-a36b-fa443aa07d17" class="">Seq2Seq 모델에서 <code>[SOS]</code>와 <code>[EOS]</code> 토큰을 사용하는 예시는 다음과 같습니다:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="c0bbe0ff-1c58-41da-a971-161790bf7525" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">Input:  [SOS] This is an example. [EOS]
+Output: [SOS] C&#x27;est un exemple. [EOS]
+</code></pre><ul id="7925c393-fd3d-4481-a37c-ffc9f27dc2b1" class="bulleted-list"><li style="list-style-type:disc">여기서 <code>[SOS]</code> 토큰은 문장의 시작을 나타내며, <code>[EOS]</code> 토큰은 문장의 끝을 나타냅니다. 번역 모델에서 디코더가 <code>[EOS]</code> 토큰을 만나면 문장 생성을 종료합니다.</li></ul><h3 id="a90667e0-afb2-4893-a21b-7ca9ba5fb39f" class="">요약</h3><ul id="112769a0-9f1d-4693-874c-e32f0f075602" class="bulleted-list"><li style="list-style-type:disc"><code><strong>[CLS]</strong></code>: 문장의 시작을 나타내며, 문장 분류 작업에서 문장의 전체 의미를 요약하는 데 사용됩니다.</li></ul><ul id="eacc8b6e-dccd-4c14-82ae-5658fe9db85b" class="bulleted-list"><li style="list-style-type:disc"><code><strong>[SOS]</strong></code>: 문장의 시작을 나타내며, 주로 텍스트 생성 작업에서 사용됩니다.</li></ul><ul id="69d63d67-6b31-4642-9271-7e490da857d7" class="bulleted-list"><li style="list-style-type:disc"><code><strong>[EOS]</strong></code>: 문장의 끝을 나타내며, 주로 텍스트 생성 작업에서 문장 종료를 알리는 데 사용됩니다.</li></ul><ul id="238a7c3d-7d62-4ed5-91b2-846e284cb6d5" class="bulleted-list"><li style="list-style-type:disc"><code><strong>[SEP]</strong></code>: 두 문장 또는 문단을 구분하는 데 사용되며, 주로 문장 쌍 입력 작업에서 사용됩니다.</li></ul><p id="7e909732-184c-497a-9661-b9de34e74133" class="">이러한 special tokens은 NLP 모델이 문장의 구조를 이해하고, 특정 작업을 수행하는 데 중요한 역할을 합니다.</p></details></li></ul><ul id="2d7cb704-76aa-49a4-b868-3080bb896608" class="toggle"><li><details open=""><summary>**inputs 과 inputs의 차이점</summary><ul id="8ab5fc55-f80b-4ced-b10c-8282ebcb499e" class="bulleted-list"><li style="list-style-type:disc"><code>*inputs</code>과 <code>inputs</code>의 차이는 함수 호출 시에 사용되는 인자 전달 방식에 있습니다.</li></ul><ol type="1" id="864c2c68-5f91-4210-8dc4-680c866c5bbc" class="numbered-list" start="1"><li><code>*inputs</code>: 딕셔너리 언패킹<ul id="ad4bbecb-6216-4b24-9003-8969147c4279" class="bulleted-list"><li style="list-style-type:disc">이것은 딕셔너리를 &quot;언패킹&quot;하여 함수에 여러 키워드 인자로 전달합니다.</li></ul><ul id="3ae20d9e-52df-4aec-a6aa-143174544f0b" class="bulleted-list"><li style="list-style-type:disc">딕셔너리를 전달할 때, 각 키가 함수의 인자 이름에 매핑됩니다.</li></ul><ul id="5e0e7849-5e44-4267-a4e2-428f4de09ba0" class="bulleted-list"><li style="list-style-type:disc">예를 들어, <code>{&#x27;num_beams&#x27;: 3, &#x27;do_sample&#x27;: True, &#x27;min_length&#x27;: 10, &#x27;max_length&#x27;: 64}</code>와 같이 딕셔너리로 전달됩니다.</li></ul><ul id="a7fe55e8-e016-4e49-b26e-c4f9f6d24d83" class="bulleted-list"><li style="list-style-type:disc">이 방식은 함수가 인자를 받을 때 딕셔너리의 키를 인자 이름으로 사용하여 편리합니다.</li></ul></li></ol><ol type="1" id="f16d11ef-5dbe-4054-afca-fbe63428ef7a" class="numbered-list" start="2"><li><code>inputs</code>: 단순한 인자<ul id="f4397116-11e3-4a95-922f-8568deeb70de" class="bulleted-list"><li style="list-style-type:disc">이것은 <code>inputs</code>라는 하나의 인자를 함수에 직접 전달합니다.</li></ul><ul id="102d2031-3900-4a2e-b218-93de35b9c3fe" class="bulleted-list"><li style="list-style-type:disc">함수는 이 인자를 받고 하나의 값으로 사용합니다.</li></ul><ul id="249c7ff6-d0f2-42cf-a312-06e3137394a7" class="bulleted-list"><li style="list-style-type:disc">이 경우에는 딕셔너리로 묶인 여러 개의 인자가 아니라 하나의 인자로 전달됩니다.</li></ul></li></ol><p id="46aafebf-418d-4126-9870-f62c6a351aba" class="">따라서 코드에서 <code>**inputs</code>는 딕셔너리를 키워드 인자로 전달하여 모델에 입력으로 사용됩니다. <code>inputs</code>는 딕셔너리 자체를 인자로 전달하여 모델에 입력으로 사용됩니다.</p><p id="31d07488-37ba-4621-b42a-ea1e647c145e" class="">결론적으로, <code>model.generate(**inputs, num_beams=3, do_sample=True, min_length=10, max_length=64)</code>는 <code>inputs</code> 딕셔너리에 추가적인 키워드 인자들을 더하여 모델에 전달합니다. 반면에 <code>model.generate(inputs, num_beams=3, do_sample=True, min_length=10, max_length=64)</code>는 <code>inputs</code> 딕셔너리 자체를 인자로 전달합니다.</p></details></li></ul><ul id="87de99de-bdfe-4739-8301-5f8746c82a72" class="toggle"><li><details open=""><summary></summary></details></li></ul><p id="4a09d99c-7c48-4285-ac07-9581b377a06e" class="">
+</p></details></li></ul></details></li></ul><p id="2cec6721-dc83-47ed-8cc5-d2fbb9b902bf" class="">
+</p><p id="6473159b-254f-4890-8630-07b3e70d5048" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
