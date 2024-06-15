@@ -1,0 +1,732 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>24.06.05</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1a17323b-70ad-4fd8-817f-21999d5a73ed" class="page sans"><header><h1 class="page-title">24.06.05</h1><p class="page-description"></p></header><div class="page-body"><ul id="6fabbc5d-939d-4033-ba7c-04effc11cdd0" class="toggle"><li><details open=""><summary>텍스트 마이닝</summary><ul id="c4dfd86c-9b0b-4f8c-96f2-d044f0b3a126" class="bulleted-list"><li style="list-style-type:disc">자연어 - 우리가 일상 생활에서 사용하는 언어</li></ul><ul id="4d51fab0-2270-4413-b012-8eb2f172c81f" class="bulleted-list"><li style="list-style-type:disc">자연어 처리 - 자연어의 의미를 분석하여 컴퓨터가 처리할 수 있도록 하는 일</li></ul><ul id="412fb7c6-d4a6-45cb-aaf5-510b5354a69b" class="bulleted-list"><li style="list-style-type:disc">활용분야 - 음성 인식, 내용 요약, 번역, 사용자의 감성 분석, 텍스트 분류 작업, 질의 응답 시스템, 챗봇</li></ul></details></li></ul><ul id="d490b033-7de3-4ffa-bb8c-34607b480572" class="toggle"><li><details open=""><summary>필요한 프레임 워크 &amp; 라이브러리</summary><ul id="27db7046-9ce6-4b4c-8b90-50e5c6025ab7" class="bulleted-list"><li style="list-style-type:disc">텐서플로우(Tensorflow)</li></ul><ul id="ce955b3b-8da7-41fc-8400-59e492d60d70" class="bulleted-list"><li style="list-style-type:disc">케라스(keras)</li></ul><ul id="ef76575f-9c0e-4f42-ad35-ff30761f7807" class="bulleted-list"><li style="list-style-type:disc">젠심(Gensim)</li></ul><ul id="4535e615-f514-4009-9002-842a81fd5901" class="bulleted-list"><li style="list-style-type:disc">사이킷런(Scikit-learn)</li></ul></details></li></ul><ul id="4e4b67eb-02eb-4a37-bd09-a57391c686f4" class="toggle"><li><details open=""><summary>NLTK &amp; KoNLPy</summary><ul id="015bb2b7-c3ea-452c-86cb-75b382fd76a9" class="bulleted-list"><li style="list-style-type:disc">NLTK - 자연어 처리를 위한 파이썬 패키지<ul id="209e5557-10fb-4528-8032-a1fcbfa9a13d" class="bulleted-list"><li style="list-style-type:circle">NLTK Data - NLTK 실습에 필요한 각종 패키지와 코퍼스 다운로드</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="fb39e320-e325-47b1-b76c-113badbc9782" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">In [3]: nltk.download()</code></pre></li></ul><ul id="e0578f68-af45-42a1-bd12-ed23598409c8" class="bulleted-list"><li style="list-style-type:disc">KoNLPy - 한국어 자연어 처리를 위한 형태소 분석기 패키지<ul id="13b94aaa-d8e9-4c02-88e4-6a60f83f376c" class="bulleted-list"><li style="list-style-type:circle">형태소 분석 / 품사 태깅 / 명사 추출/ 구문 분석</li></ul><ul id="063c77a5-f086-4cba-83cf-fa46d0396088" class="bulleted-list"><li style="list-style-type:circle">주요 형태소 분석기<ul id="fe07636f-593b-49c9-a7fd-ba572dfe366a" class="bulleted-list"><li style="list-style-type:square"><strong>Hannanum</strong>: 한나눔 형태소 분석기</li></ul><ul id="e80f65a4-0fa2-460a-8e45-023b5774f90e" class="bulleted-list"><li style="list-style-type:square"><strong>Kkma</strong>: 꼬꼬마 형태소 분석기</li></ul><ul id="3e92346f-709c-4232-ad85-207b4cd32112" class="bulleted-list"><li style="list-style-type:square"><strong>Komoran</strong>: 코모란 형태소 분석기</li></ul><ul id="b16cabb3-a2ed-4017-aaba-8892e37f4aa2" class="bulleted-list"><li style="list-style-type:square"><strong>Okt (Twitter)</strong>: Open Korean Text 형태소 분석기</li></ul><ul id="75370eb2-d982-4b9a-8381-16e3ea29ebda" class="toggle"><li><details open=""><summary>각 형태소 분석기 요약</summary><p id="347393a6-f12f-4546-bd18-1ebc41984cc5" class="">KoNLPy에서 제공하는 주요 형태소 분석기는 각기 다른 장단점을 가지고 있어, 사용 목적에 따라 적합한 분석기를 선택하는 것이 중요합니다. 아래에 각 형태소 분석기의 특징을 정리했습니다:</p><h3 id="47087453-0cc3-4c43-b7a1-3b7993aab882" class="">1. Hannanum (한나눔)</h3><p id="7fdd9924-4ee7-40ab-babf-1f7189e242c3" class=""><strong>특징:</strong></p><ul id="d7d4ea28-de71-4b26-9e4a-2a36f6fa9366" class="bulleted-list"><li style="list-style-type:disc">한글 정보 처리 시스템 연구실에서 개발한 형태소 분석기.</li></ul><ul id="dc64eac2-e783-4bae-9b3f-810cbebcaaed" class="bulleted-list"><li style="list-style-type:disc">비교적 오래된 분석기지만 여전히 신뢰성이 높음.</li></ul><ul id="19cfa35a-52c7-4edc-9a8f-f2f42b370c35" class="bulleted-list"><li style="list-style-type:disc">다소 무거운 편이라 대용량 데이터 처리에 시간이 걸릴 수 있음.</li></ul><p id="b9583352-2197-4494-b358-9e818a4d6046" class=""><strong>장점:</strong></p><ul id="a7b21dc7-681f-4c57-b58f-184981283250" class="bulleted-list"><li style="list-style-type:disc">안정적이고 신뢰성 있는 결과 제공.</li></ul><ul id="f49635d2-6aa0-4439-9a63-f118fb9efae4" class="bulleted-list"><li style="list-style-type:disc">다양한 기능 제공 (예: 구문 분석).</li></ul><p id="bd7dd81a-e306-49cd-adc7-08ddb30e7afa" class=""><strong>단점:</strong></p><ul id="8c8b92be-bf66-4627-9309-52de66149605" class="bulleted-list"><li style="list-style-type:disc">최신 분석기보다 속도가 느림.</li></ul><ul id="df872866-e4dd-44b6-af59-f4440efd0c26" class="bulleted-list"><li style="list-style-type:disc">일부 최신 언어 표현에 대한 처리 능력이 부족할 수 있음.</li></ul><h3 id="eca6b46b-6c74-4cd9-9cd2-034208ae8a7f" class="">2. Kkma (꼬꼬마)</h3><p id="bc09f6ee-0206-4164-a832-5f3f8d3981fb" class=""><strong>특징:</strong></p><ul id="455281d4-acda-422d-9ed2-2f6411178a6d" class="bulleted-list"><li style="list-style-type:disc">서울대학교 IDS 연구실에서 개발한 형태소 분석기.</li></ul><ul id="1a49925c-20cc-4c97-9cb8-76e26e007c9f" class="bulleted-list"><li style="list-style-type:disc">문장 분리, 구문 분석, 형태소 분석 등 다양한 기능 제공.</li></ul><p id="94d1ae2d-8e1c-4000-9166-fdfe1af27bb5" class=""><strong>장점:</strong></p><ul id="6af90076-263b-4dc6-95c8-ae797b6a0b18" class="bulleted-list"><li style="list-style-type:disc">다양한 분석 기능 제공.</li></ul><ul id="332a267f-7db7-4106-9154-8943b06f809a" class="bulleted-list"><li style="list-style-type:disc">학술 연구 등에 자주 사용됨.</li></ul><p id="c6b0ab34-d57f-490c-ad8a-2227d64115ea" class=""><strong>단점:</strong></p><ul id="0bd47d29-90fc-4f3b-b7a2-af27e52c3bfb" class="bulleted-list"><li style="list-style-type:disc">처리 속도가 비교적 느림.</li></ul><ul id="a4a681cb-7c85-4fd9-b66c-a7eb523810b3" class="bulleted-list"><li style="list-style-type:disc">설정이 다소 복잡할 수 있음.</li></ul><h3 id="099cdc16-f1a2-4a6e-ba79-7645d3c784f3" class="">3. Komoran (코모란)</h3><p id="ac076a26-9e87-4edb-952a-b230e3d547e2" class=""><strong>특징:</strong></p><ul id="92cfdb92-683a-4ec0-9503-4c1ffcfb509f" class="bulleted-list"><li style="list-style-type:disc">Shineware에서 개발한 형태소 분석기.</li></ul><ul id="875d383b-9011-488f-9a8d-79039b22bd28" class="bulleted-list"><li style="list-style-type:disc">빠른 처리 속도를 자랑하며, 대용량 데이터 처리에 적합.</li></ul><p id="e9326b30-b07f-438e-b094-f474021bcda5" class=""><strong>장점:</strong></p><ul id="396d32af-0d55-4240-8e9d-61732b334ccf" class="bulleted-list"><li style="list-style-type:disc">처리 속도가 빠름.</li></ul><ul id="f2f96052-3bb9-4ea1-b6b8-2d03836e3b4d" class="bulleted-list"><li style="list-style-type:disc">정확도가 높은 편임.</li></ul><ul id="c4005f6a-f193-4a45-97c8-852d1fcb6880" class="bulleted-list"><li style="list-style-type:disc">최신 한국어 데이터를 반영하여 지속적으로 업데이트됨.</li></ul><p id="f36834b4-b812-4a0c-9a51-30db01c8e421" class=""><strong>단점:</strong></p><ul id="61617819-4e9f-4b69-b475-1e1d9395b149" class="bulleted-list"><li style="list-style-type:disc">분석 결과의 해석이 다소 복잡할 수 있음.</li></ul><h3 id="c10cff98-5e6a-4be9-8412-b822111ced12" class="">4. Okt (Open Korean Text, Twitter)</h3><p id="8b697062-7cd0-4e7a-8bc5-5fd4b54b8439" class=""><strong>특징:</strong></p><ul id="945c055a-6d21-49d1-9fd5-107a1ce1b9ea" class="bulleted-list"><li style="list-style-type:disc">원래는 트위터에서 개발된 분석기.</li></ul><ul id="6619db98-4e87-4646-88ec-0eda1aa3489b" class="bulleted-list"><li style="list-style-type:disc">캐주얼한 텍스트, 특히 SNS 데이터 분석에 적합.</li></ul><p id="fdb83298-5d62-4c57-a9cf-57da235fea75" class=""><strong>장점:</strong></p><ul id="05186ad6-8295-4adc-8802-3c9627471dd7" class="bulleted-list"><li style="list-style-type:disc">비교적 빠르고 가벼움.</li></ul><ul id="31d45a76-0819-44b4-916f-c2e5692c0650" class="bulleted-list"><li style="list-style-type:disc">최신 한국어 표현, 신조어 등에 강함.</li></ul><ul id="fa993c41-c4b6-428f-b2f2-0da50ddecece" class="bulleted-list"><li style="list-style-type:disc">사용하기 간편하고 직관적임.</li></ul><p id="3ef87cc0-07b2-4afa-a0d7-128c5508ae89" class=""><strong>단점:</strong></p><ul id="0710702d-5c94-4ff0-9b8a-647504a2cbad" class="bulleted-list"><li style="list-style-type:disc">다른 분석기보다 다소 낮은 정확도.</li></ul><ul id="ed1f3682-23fc-4b3a-a69c-639c6a88be83" class="bulleted-list"><li style="list-style-type:disc">학술적인 목적보다는 캐주얼한 텍스트 분석에 더 적합.</li></ul><h3 id="59fcc781-f82c-465a-ad90-bd8a70b9471a" class="">추천</h3><ul id="e13375b4-e74c-449d-847c-f798a712f6ed" class="bulleted-list"><li style="list-style-type:disc"><strong>속도</strong>가 중요하다면: <strong>Komoran</strong></li></ul><ul id="3beee247-08d5-48a3-a4ee-a67c7607d7c5" class="bulleted-list"><li style="list-style-type:disc"><strong>신조어</strong>와 <strong>SNS 데이터</strong> 분석이 필요하다면: <strong>Okt (Twitter)</strong></li></ul><ul id="9446d21f-e2d4-47be-8366-2627cb430bd0" class="bulleted-list"><li style="list-style-type:disc"><strong>전반적인 안정성</strong>과 <strong>다양한 기능</strong>이 필요하다면: <strong>Hannanum</strong> 또는 <strong>Kkma</strong></li></ul><p id="ee0229c2-a71b-42cb-9b77-7f0b4886aebe" class="">일반적인 사용 목적이라면 <strong>Okt</strong>를 추천합니다. 사용하기 쉽고 빠르며, 최신 한국어 표현에 강하기 때문입니다. 하지만 대규모 데이터나 학술적인 분석이 필요하다면 <strong>Komoran</strong>이나 <strong>Kkma</strong>가 더 적합할 수 있습니다.</p><h3 id="b1877249-220b-490a-ba97-9644dfab6feb" class="">예제: Okt 사용</h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2844998d-3ecc-4107-b391-02f757df2d0d" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">from konlpy.tag import Okt
+
+# Okt 형태소 분석기 객체 생성
+okt = Okt()
+
+# 분석할 텍스트
+text = &quot;자연어 처리는 정말 재미있는 분야입니다.&quot;
+
+# 형태소 분석
+morphs = okt.morphs(text)
+print(&quot;형태소 분석:&quot;, morphs)
+
+# 품사 태깅
+pos = okt.pos(text)
+print(&quot;품사 태깅:&quot;, pos)
+
+# 명사 추출
+nouns = okt.nouns(text)
+print(&quot;명사 추출:&quot;, nouns)
+</code></pre><p id="ddd697e2-045a-40f8-86cf-28e16563bd64" class="">이 예제는 Okt 분석기를 사용하여 텍스트를 분석하는 방법을 보여줍니다. 다른 분석기를 사용하고 싶다면, <code>from konlpy.tag import Okt</code> 부분을 해당 분석기로 변경하면 됩니다.</p></details></li></ul><ul id="1c99a2d1-df4b-4f99-97be-3a351a936725" class="toggle"><li><details open=""><summary>Mecab</summary><p id="34f35a79-b7e1-46df-ad2b-90faa4688d6b" class="">Mecab은 KoNLPy에서 지원하는 주요 형태소 분석기 중 하나이며, 매우 인기 있는 형태소 분석기입니다. Mecab은 특히 빠른 처리 속도와 높은 정확성으로 많은 사용자들 사이에서 선호됩니다. 다만, Mecab은 KoNLPy에 기본적으로 포함되어 있지 않고, 별도로 설치해야 합니다.</p><h3 id="acc6963d-6716-43ca-8501-c784b9a798fa" class="">Mecab의 특징</h3><p id="2041a1c1-b914-4371-b323-68a5bb12b953" class=""><strong>특징:</strong></p><ul id="0b81f4b7-ef3a-4705-b486-9f03c99a32ac" class="bulleted-list"><li style="list-style-type:disc">일본어 형태소 분석기로 시작하여, 한국어 버전으로도 개발됨.</li></ul><ul id="72d51600-9e5a-4f81-842f-badebf27f6b7" class="bulleted-list"><li style="list-style-type:disc">매우 빠르고 효율적이며, 메모리 사용량이 적음.</li></ul><ul id="5cecd4ad-24d9-4048-83b4-e7e29097f34e" class="bulleted-list"><li style="list-style-type:disc">다양한 한국어 말뭉치 데이터를 기반으로 높은 정확성을 제공.</li></ul><p id="daa7a0ca-b15d-41ba-9571-6575531f565a" class=""><strong>장점:</strong></p><ul id="13b4b05c-c299-4b36-9eb5-1927cc6d3404" class="bulleted-list"><li style="list-style-type:disc"><strong>빠른 처리 속도</strong>: 대용량 데이터 처리에 매우 적합.</li></ul><ul id="0abc0a29-5683-455f-aeaa-ef434f09eded" class="bulleted-list"><li style="list-style-type:disc"><strong>높은 정확도</strong>: 신뢰성 있는 결과를 제공.</li></ul><ul id="aa2203b9-ccb2-427d-944f-f2ba1dd3e165" class="bulleted-list"><li style="list-style-type:disc"><strong>경량</strong>: 메모리 사용량이 적고, 리소스 효율적.</li></ul><p id="78f747a5-d0af-42d9-b441-6ceb63522b40" class=""><strong>단점:</strong></p><ul id="04c352f6-9be5-40b3-8da0-4d272ba64a4a" class="bulleted-list"><li style="list-style-type:disc">설치 과정이 다소 복잡할 수 있음.</li></ul><ul id="a3cfc99c-a8cb-465b-ad99-4bc2fe10c3cd" class="bulleted-list"><li style="list-style-type:disc">일부 최신 한국어 표현이나 신조어에 대한 처리에서 제한적일 수 있음.</li></ul><h3 id="c87a67e6-d9c7-4fd0-bfa9-43ec2aaf76bd" class="">Mecab 설치 및 사용 예제</h3><p id="66297deb-8111-4787-b3f6-a45cbeffaa2f" class="">Mecab은 KoNLPy와 함께 사용할 수 있으며, 설치 과정은 다른 분석기보다 조금 더 복잡하지만, 한 번 설치하면 매우 효율적으로 사용할 수 있습니다.</p><h3 id="43eba919-5060-42f4-8002-f3f7b4283772" class="">설치 방법</h3><p id="39da3718-e5a0-4e51-b581-1e2df39ab022" class="">먼저, Mecab과 한국어 모델을 설치해야 합니다. 여기서는 Ubuntu를 예로 들어 설명하겠습니다:</p><ol type="1" id="96e5d866-488d-4ce4-b842-2d965b4816eb" class="numbered-list" start="1"><li><strong>Mecab 설치:</strong></li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="d88dcce5-917a-44ef-831d-a8e7739dd59c" class="code"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all"># Mecab 설치
+sudo apt-get install -y mecab libmecab-dev mecab-ipadic-utf8
+
+# 한국어 모델 설치
+sudo apt-get install -y git curl xz-utils
+cd /tmp
+git clone &lt;https://github.com/Pusnow/mecab-ko-dic.git&gt;
+cd mecab-ko-dic
+./tools/add-user-dic.sh
+./configure
+make
+sudo make install
+</code></pre><ol type="1" id="e583136e-c2e3-467c-9cee-d707268126f9" class="numbered-list" start="1"><li><strong>KoNLPy와 Mecab 파이썬 패키지 설치:</strong></li></ol><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="6d4b1218-7afa-4ae7-a6be-275d7a00bba3" class="code"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">pip install konlpy
+pip install mecab-python3
+</code></pre><h3 id="b65c7b23-57ee-486e-b73c-b86f4190d149" class="">사용 예제</h3><p id="c0be3b50-d67b-4712-8c65-31921eece82a" class="">설치 후, KoNLPy에서 Mecab을 사용하는 예제 코드는 다음과 같습니다:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="768d7baf-4677-487c-b559-426e358fb977" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">from konlpy.tag import Mecab
+
+# Mecab 형태소 분석기 객체 생성
+mecab = Mecab()
+
+# 분석할 텍스트
+text = &quot;자연어 처리는 정말 재미있는 분야입니다.&quot;
+
+# 형태소 분석
+morphs = mecab.morphs(text)
+print(&quot;형태소 분석:&quot;, morphs)
+
+# 품사 태깅
+pos = mecab.pos(text)
+print(&quot;품사 태깅:&quot;, pos)
+
+# 명사 추출
+nouns = mecab.nouns(text)
+print(&quot;명사 추출:&quot;, nouns)
+</code></pre><h3 id="54a2f35d-dbf1-4499-8b3b-a9e4a6dbbe79" class="">결과</h3><p id="404f5b55-00ed-4bed-b9aa-45dff9231c49" class="">이 코드는 다음과 같은 결과를 출력합니다:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="cb1ff235-d23d-41a0-adab-4e8c71997711" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">형태소 분석: [&#x27;자연어&#x27;, &#x27;처리&#x27;, &#x27;는&#x27;, &#x27;정말&#x27;, &#x27;재미있는&#x27;, &#x27;분야&#x27;, &#x27;입니다&#x27;, &#x27;.&#x27;]
+품사 태깅: [(&#x27;자연어&#x27;, &#x27;NNG&#x27;), (&#x27;처리&#x27;, &#x27;NNG&#x27;), (&#x27;는&#x27;, &#x27;JX&#x27;), (&#x27;정말&#x27;, &#x27;MAG&#x27;), (&#x27;재미있는&#x27;, &#x27;VA+ETM&#x27;), (&#x27;분야&#x27;, &#x27;NNG&#x27;), (&#x27;입니다&#x27;, &#x27;VCP+EF&#x27;), (&#x27;.&#x27;, &#x27;SF&#x27;)]
+명사 추출: [&#x27;자연어&#x27;, &#x27;처리&#x27;, &#x27;분야&#x27;]
+</code></pre><p id="a9e35302-30d5-4c9b-ae3e-079b17be87f9" class="">이와 같이 Mecab은 매우 빠르고 정확한 형태소 분석을 제공하여, 대규모 데이터 처리나 높은 정확도가 요구되는 작업에 적합합니다. 사용 목적에 따라 Mecab을 선택하는 것이 좋은 선택일 수 있습니다.</p></details></li></ul></li></ul></li></ul></details></li></ul><ul id="79df03b9-aeb2-458e-86ae-036a89e47333" class="toggle"><li><details open=""><summary>머신 러닝 워크 플로우</summary><figure id="95b52eb4-445a-4401-a776-5fe5e61a710d" class="image"><a href="24%2006%2005%201a17323b70ad4fd8817f21999d5a73ed/Untitled.png"><img style="width:829px" src="24%2006%2005%201a17323b70ad4fd8817f21999d5a73ed/Untitled.png"/></a></figure><ol type="1" id="ab4c66dd-da84-4a7d-8078-2ac9ef4e27e8" class="numbered-list" start="1"><li>수집(Acquisition) : 기계에 학습시킬 데이터 수집(말뭉치, corpus)</li></ol><ol type="1" id="80ffa499-f0af-4837-afd2-37d913e930fa" class="numbered-list" start="2"><li>점검 및 탐색(Inspection and exploration) : 데이터의 구조, 노이즈 데이터, 머신 러닝 적용을 위해 데이터를 어떻게 정제할 것인가 - EDA(독립 변수, 종속 변수, 변수 유형, 변수의 데이터 타입 등을 점검하며 데이터의 특징과 내재하는 구조적 관계를 알아내는 과정을 의미)</li></ol><ol type="1" id="0d2dfa11-d742-49c3-a9e8-3b51ec961a91" class="numbered-list" start="3"><li>전처리 및 정제(Preprocessing and Cleaning) : </li></ol><ol type="1" id="ca077fef-8a6f-4187-8046-0b888d388a01" class="numbered-list" start="4"><li>모델링 및 훈련(Modeling and Training)</li></ol><ol type="1" id="2f033a1a-edb6-402a-b47b-68773a64b0c3" class="numbered-list" start="5"><li>평가(Evaluation)</li></ol><ol type="1" id="04dd9214-d2d8-4cb8-b649-e908cc0ae843" class="numbered-list" start="6"><li>배포(Deployment)</li></ol></details></li></ul></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
