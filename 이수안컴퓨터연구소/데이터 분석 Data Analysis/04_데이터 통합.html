@@ -1,0 +1,677 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>데이터 통합</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="d409b4c5-f96e-4bd8-bbfb-14a37372e7e9" class="page sans"><header><h1 class="page-title">데이터 통합</h1><p class="page-description"></p></header><div class="page-body"><h3 id="f0492bfe-0e08-451b-b299-5c35e4d54c6a" class="">Data Integration</h3><h3 id="ad43b7b4-154a-4875-8f2c-9e6b9fe8343d" class="">개체 식별 문제(Entity Identification Problem)</h3><ul id="91c91d2e-bc3d-466a-b7b0-158e125e013e" class="bulleted-list"><li style="list-style-type:disc">데이터 통합(data integration)은 여러 데이터 저장소로부터 온 데이터의 합병</li></ul><ul id="02befd9f-b85d-429d-a23a-547052b86161" class="bulleted-list"><li style="list-style-type:disc">데이터 웨어하우스(data ware house)나 데이터 마이닝(data mining) 같은 데이터 분석 작업은 다수의 원천 데이터로부터 하나의 통일된 데이터 저장소로 결합시키는 통합 작업 필요</li></ul><ul id="90fae78b-0f6d-4d04-88b3-2a1b8dea0aca" class="bulleted-list"><li style="list-style-type:disc">데이터 원천은 데이터베이스, 데이터 큐브(data cube), 플랫 파일(flat file) 등 다양한 형태로 존재</li></ul><ul id="c362fb35-1179-4215-8363-ce463c9a4702" class="bulleted-list"><li style="list-style-type:disc">여러 데이터 원천들로부터 데이터를 통합할 때, 동일한 의미의 개체들이 서로 다르게 표현되어 있을 경우 어떻게 일치시킬 수 있을까? → <strong>개체 식별 문제(Entity Identification Problem)</strong></li></ul><figure id="e49b2c51-0ac5-4fdd-be86-6fe2ebc5e3cf" class="image"><a href="%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%20%E1%84%90%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%86%B8%20d409b4c5f96e4bd8bbfb14a37372e7e9/Untitled.png"><img style="width:1079px" src="%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%20%E1%84%90%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%86%B8%20d409b4c5f96e4bd8bbfb14a37372e7e9/Untitled.png"/></a></figure><ul id="454628bf-1195-4f0a-b926-b4f3c9750726" class="bulleted-list"><li style="list-style-type:disc">A, B 두 개의 DB에서 같은 ‘고객’이라는 의미의 table의 이름이 각각 {customer_id : customer} , {cust_number : cust}일 때 즉, 개체의 의미는 같은데 개체의 이름과 key 이름이 다를 때 개체 식별 문제가 발생함</li></ul><ul id="20a142d5-595c-44f2-b7cc-de9bd791de79" class="bulleted-list"><li style="list-style-type:disc">데이터 분석가나 컴퓨터가 개체들이 같은 것인지 식별할 수 있을까?</li></ul><ul id="dcecc9f6-7947-4616-8d96-4d75014715eb" class="bulleted-list"><li style="list-style-type:disc">메타데이터의 활용이 중요</li></ul><ul id="7563b0ff-c2eb-475c-883b-857480d9bcba" class="bulleted-list"><li style="list-style-type:disc">각 속성의 메타데이터는 이름과 의미, 데이터 타입, 허용되는 값의 범위, 무규칙(null rule) 등을 포함</li></ul><ul id="79e0c5b7-4fa8-43db-8b83-7159ea5989e6" class="bulleted-list"><li style="list-style-type:disc">스키마 통합 과정에서 오류를 피하기 위해 메타데이터 활용 필요</li></ul><ul id="c4be1f12-6c09-4875-bdef-63b6451b5694" class="bulleted-list"><li style="list-style-type:disc">메타데이터를 이용해 데이터 변환에서도 사용<ul id="7896fdd6-30af-4b0a-91c3-a2854ce61941" class="bulleted-list"><li style="list-style-type:circle">A 데이터베이스는 성별 값으로 ‘M’, ‘F’ 사용</li></ul><ul id="3b27032e-93dd-42f0-874a-d500ebf3f82d" class="bulleted-list"><li style="list-style-type:circle">B 데이터베이스는 성별 값으로 ‘1’, ‘2’ 사용</li></ul></li></ul><ul id="304f59e0-db47-40e1-8f48-4e7ed5da7250" class="bulleted-list"><li style="list-style-type:disc">A 데이터베이스의 customer 테이블의 customer_id와 B 데이터베이스의 cust 테이블의 cust_number가 기본키(primary key)이고 두 속성 모두 동일한 데이터 타입과 도메인을 가지고 있다면 두 속성은 이름은 다르지만 동일한 속성으로 판단 가능</li></ul><ul id="b8767297-17bf-4762-a810-218d135a5c9c" class="bulleted-list"><li style="list-style-type:disc">데이터 통합시 일원화된 속성으로 정의 가능</li></ul><ul id="09bf75c2-7cf0-4425-8653-0f129862320a" class="bulleted-list"><li style="list-style-type:disc">customer 테이블과 cust 테이블 간의 튜플 연계도 가능</li></ul><ul id="50e58a90-39a1-4664-bf2a-e8d441388693" class="bulleted-list"><li style="list-style-type:disc">데이터베이스의 어떤 속성을 다른 데이터베이스의 속성과 동일성 여부 판단 시 종합적으로 고려할 사항<ul id="83c20d4d-fdd7-49f1-8674-8b0715924c58" class="bulleted-list"><li style="list-style-type:circle">속성의 데이터 타입과 도메인</li></ul><ul id="be6700cf-c7c7-4512-a112-9b8facf2f048" class="bulleted-list"><li style="list-style-type:circle">기본키 여부</li></ul><ul id="96bf3e49-325c-4e91-9d6e-635cc43de3f6" class="bulleted-list"><li style="list-style-type:circle">참조 무결성(referential constraint) : 참조하는 테이블의 외래키(foreign key)의 속성 값은 반드시 참조하는 테이블의 기본 키(primary key) 속성 값 중 하나여야 함</li></ul><ul id="75364251-c511-48cb-aac5-3cf90c3af80b" class="bulleted-list"><li style="list-style-type:circle">함수적 종속 관계(functional dependency)</li></ul></li></ul><h3 id="87881186-e1b3-4292-be8f-ccc1c4388ec6" class="">함수적 종속성(Functional Dependency)</h3><ul id="c8a7ba75-d439-4b58-8482-5595f619fea8" class="bulleted-list"><li style="list-style-type:disc">속성 X,Y에 대하여 x1=x2(x1,x2∈X)이면, y1=y2(y1,y2∈Y)임을 보장할 때 속성 Y는 함수적으로 종속됨</li></ul><ul id="81942242-fe9a-467b-b479-48d7b34de37d" class="bulleted-list"><li style="list-style-type:disc">X→Y로 표기</li></ul><ul id="0a0f15ba-51b0-4488-98bd-ea166b2e66f6" class="bulleted-list"><li style="list-style-type:disc">X는 결정자(determinant)</li></ul><ul id="9768bf21-8173-4b9a-9e06-a345dff4a568" class="bulleted-list"><li style="list-style-type:disc">Y는 의존자(dependent)</li></ul><ul id="d0c4c00c-b1f6-4ab0-bce9-b8299c39e53d" class="bulleted-list"><li style="list-style-type:disc">X가 Y를 함수적으로 결정</li></ul><ul id="effc0c4f-062b-4986-94a4-4939e787f4ff" class="bulleted-list"><li style="list-style-type:disc">Y가 X에 함수적으로 종속</li></ul><figure id="0087bac3-b3dd-413a-9fad-1c5273915457" class="image"><a href="%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%20%E1%84%90%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%86%B8%20d409b4c5f96e4bd8bbfb14a37372e7e9/Untitled%201.png"><img style="width:708px" src="%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%20%E1%84%90%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%86%B8%20d409b4c5f96e4bd8bbfb14a37372e7e9/Untitled%201.png"/></a></figure><ul id="5f94aaa7-082f-4202-92ef-4971fe58b39d" class="bulleted-list"><li style="list-style-type:disc">학번에 의해 학생 이름과 학과는 고유하게 구분</li></ul><ul id="1dc973be-2e7d-4ff3-a184-3ac171574972" class="bulleted-list"><li style="list-style-type:disc">학과 속성은 학번에 함수적으로 종속</li></ul><ul id="7bed42db-59f3-470a-ae93-2ae65d5b7f16" class="bulleted-list"><li style="list-style-type:disc">학번은 결정자, 학생이름과 학과는 종속자</li></ul><ul id="ef1b658f-06c2-44d1-b798-22d52b2aeb65" class="bulleted-list"><li style="list-style-type:disc">학번→{학생이름, 학과} 로 표기</li></ul><figure id="c9ee0894-80c8-4ec3-9804-9067365e3229" class="image"><a href="%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%20%E1%84%90%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%86%B8%20d409b4c5f96e4bd8bbfb14a37372e7e9/Untitled%202.png"><img style="width:1197px" src="%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%20%E1%84%90%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%86%B8%20d409b4c5f96e4bd8bbfb14a37372e7e9/Untitled%202.png"/></a></figure><ul id="6e05c949-5938-4f12-b9ee-355f0b4644a2" class="bulleted-list"><li style="list-style-type:disc">학번→학생이름</li></ul><ul id="ff3f948f-4feb-44d9-a0f1-6e7f09f023fb" class="bulleted-list"><li style="list-style-type:disc">{학번,과목코드}→성적</li></ul><ul id="ad2cb981-4d31-4dcd-9681-dccbb470d56a" class="bulleted-list"><li style="list-style-type:disc">{학번,과목코드}→학생이름</li></ul><ul id="b0df7a72-34ac-46f7-8a42-05aedecfa6a5" class="bulleted-list"><li style="list-style-type:disc">학생이름을 결정짓는 요소는 학번</li></ul><ul id="69c6e928-febc-496e-b41a-0507cd137b0e" class="bulleted-list"><li style="list-style-type:disc">성적을 결정짓는 요소는 학번과 과목코드 (학번 하나 또는 과목코드 하나만으로는 구분 불가능하다 학번과 과목코드를 동시에 고려해야 구분 가능) &gt;&gt; 완전 함수적 종속</li></ul><ul id="7c2f8e2c-230a-41d7-a4b0-5fdb087898ff" class="bulleted-list"><li style="list-style-type:disc">학생이름은 학번과 과목코드에 의해서도 고유하게 구분 가능 → 학생이름의 경우 함수적 종속성이 두개 (학생 이름은 학번과 과목코드에 의해서도 고유하게 구분 가능하지만 학번과 과목코드의 일부인 학번으로도 구분이 가능) &gt;&gt; 부분 함수적 종속</li></ul><figure id="86841442-89d0-48a5-9ff4-fde362d19f8d" class="image"><a href="%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%20%E1%84%90%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%86%B8%20d409b4c5f96e4bd8bbfb14a37372e7e9/Untitled%203.png"><img style="width:1088px" src="%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%20%E1%84%90%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%86%B8%20d409b4c5f96e4bd8bbfb14a37372e7e9/Untitled%203.png"/></a></figure><ul id="c0dd7e69-e285-4bab-b192-292f2a91bfda" class="toggle"><li><details open=""><summary>추가 공부</summary><p id="de96eb77-0498-40da-82cf-892494a71584" class="">함수적 종속성(Functional Dependency, FD)은 데이터베이스 설계에서 매우 중요한 개념으로, 데이터베이스 테이블의 특정 속성들이 다른 속성들에 의해 고유하게 결정되는 관계를 의미합니다. 함수적 종속성은 데이터베이스의 정규화를 이해하고 수행하는 데 핵심적인 역할을 합니다.</p><h3 id="0a8a81df-fb43-4380-b533-2d8e6ca7ccc8" class="">함수적 종속성의 정의</h3><p id="a4d4ea85-5134-42e0-9e3e-18044d994904" class="">함수적 종속성은 다음과 같이 정의할 수 있습니다:</p><ul id="186b75a4-3dc2-402f-8334-3ef90c8027af" class="bulleted-list"><li style="list-style-type:disc"><strong>함수적 종속성</strong>: 속성 집합 X가 속성 집합 Y를 함수적으로 결정한다고 할 때, X의 값이 동일하면 Y의 값도 항상 동일합니다. 이를 X→Y로 표현합니다.<ul id="22c9d53c-5d09-4b53-b003-3efe371dda84" class="bulleted-list"><li style="list-style-type:circle">속성 집합 X의 값이 속성 집합 Y의 값을 함수적으로 결정한다 → X의 속성으로 Y의 속성이 결정된다 즉, Major→Advisor에서 Major가 뭐냐에 따라 Advisor가 결정된다</li></ul></li></ul><ul id="29dac778-9aa8-4ed6-9e94-8ac5570b8ee0" class="bulleted-list"><li style="list-style-type:disc">즉, 테이블에서 X가 같은 두 행은 항상 Y도 같아야 합니다.</li></ul><h3 id="42d971bc-29d0-4cd8-bf79-d95c3e44df00" class="">예제</h3><p id="93a4f766-ccd0-4a08-8653-db9a0f9f279c" class="">예를 들어, 학생 정보 데이터베이스에서 다음과 같은 테이블을 고려해봅시다:</p><table id="41d3ad7a-9781-4729-ac25-f8615f27d77f" class="simple-table"><tbody><tr id="5c6100db-46ed-4e8f-a513-53186fd2894a"><td id="}XFw" class="">StudentID</td><td id=":rJ{" class="">StudentName</td><td id="n;Mw" class="">Major</td><td id="CWSf" class="">Advisor</td></tr><tr id="ecda79f0-6ab0-4502-8a95-644fdbb1cf1b"><td id="}XFw" class="">1</td><td id=":rJ{" class="">Alice</td><td id="n;Mw" class="">Math</td><td id="CWSf" class="">Dr. Smith</td></tr><tr id="54552696-99a7-4e25-86da-114960122b4c"><td id="}XFw" class="">2</td><td id=":rJ{" class="">Bob</td><td id="n;Mw" class="">Physics</td><td id="CWSf" class="">Dr. Johnson</td></tr><tr id="07b89740-93b6-4b71-9214-09495daeb586"><td id="}XFw" class="">3</td><td id=":rJ{" class="">Charlie</td><td id="n;Mw" class="">Math</td><td id="CWSf" class="">Dr. Smith</td></tr><tr id="8bb8ed5c-9b30-4750-8399-c02afc995bd3"><td id="}XFw" class="">4</td><td id=":rJ{" class="">David</td><td id="n;Mw" class="">CS</td><td id="CWSf" class="">Dr. Wang</td></tr></tbody></table><p id="f871f872-b070-4008-8f0e-4ff1c8b1e53d" class="">여기서 다음과 같은 함수적 종속성을 찾을 수 있습니다:</p><ul id="ab250592-b767-4c60-956b-577aaa2986d2" class="bulleted-list"><li style="list-style-type:disc">StudentID → StudentName, Major, Advisor : 학생 ID가 같으면 학생 이름, 전공, 지도 교수도 같습니다. 즉, <code>StudentID</code>가 유일한 식별자입니다. (StudentID에 따라서 StudentName, Major, Advisor가 결정이 된다)</li></ul><ul id="10678c17-b533-4c46-a511-78bfb80eca68" class="bulleted-list"><li style="list-style-type:disc">Major → Advisor : 전공이 같으면 지도 교수도 같습니다. 즉, <code>Major</code>가 <code>Advisor</code>를 결정합니다.</li></ul><h3 id="e413710a-135a-41c4-a82e-b43057ff3767" class="">함수적 종속성의 유형</h3><ol type="1" id="7962c8ae-2c4b-491d-8b25-c5a2e7db2af7" class="numbered-list" start="1"><li><strong>완전 함수적 종속성 (Full Functional Dependency)</strong>:<ul id="30aedc31-2122-417f-96ea-fc7170ea7ea6" class="bulleted-list"><li style="list-style-type:disc">속성 집합 Y가 X 전체에 함수적으로 종속되지만,  X의 어떤 진부분집합에도 종속되지 않을 때 이를 완전 함수적 종속성이라 합니다.</li></ul><ul id="1409d015-e271-41f5-b416-b3cd1f554f86" class="bulleted-list"><li style="list-style-type:disc">예: StudentID → StudentName (여기서 <code>StudentID</code> 전체가 <code>StudentName</code>을 결정하고, 부분 집합인 <code>StudentID</code>의 일부는 <code>StudentName</code>을 결정하지 않습니다.)</li></ul></li></ol><ol type="1" id="c29252ea-cf65-4606-b535-0308611422d2" class="numbered-list" start="2"><li><strong>부분 함수적 종속성 (Partial Functional Dependency)</strong>:<ul id="0da7ceca-75f4-48ec-a955-f68b1061af52" class="bulleted-list"><li style="list-style-type:disc">속성 집합 Y가 X 전체에 종속되지만, X의 진부분집합에도 종속될 때 이를 부분 함수적 종속성이라 합니다.</li></ul><ul id="6fb70602-64a5-4570-9270-7887da45f5d6" class="bulleted-list"><li style="list-style-type:disc">예: StudentID, CourseID → Grade가 있지만, 실제로는 CourseID → Grade도 성립할 때, 이는 부분 함수적 종속성입니다.</li></ul></li></ol><ol type="1" id="d460c728-b714-4c55-ae92-8b22b1029b5a" class="numbered-list" start="3"><li><strong>이행적 함수적 종속성 (Transitive Functional Dependency)</strong>:<ul id="edde3d7b-5eb3-4432-9240-6724d6052983" class="bulleted-list"><li style="list-style-type:disc">X→Y이고 Y→Z일 때, X→Z 를 이행적 함수적 종속성이라 합니다.</li></ul><ul id="7fb85f4c-9f36-4800-aee7-407e67f59135" class="bulleted-list"><li style="list-style-type:disc">예: StudentID → Major이고 Major → Advisor일 때, StudentID → Advisor도 성립합니다.</li></ul></li></ol><h3 id="708f02bf-8a4c-4383-99e0-fc5b6d09edba" class="">함수적 종속성의 활용</h3><p id="cd07f746-9248-4145-9445-e8faffc97371" class="">함수적 종속성은 데이터베이스 정규화(normalization)의 기초입니다. 정규화는 데이터 중복을 최소화하고, 데이터베이스의 구조를 개선하여 데이터 무결성을 유지하는 과정입니다. 함수적 종속성은 정규화 과정에서 여러 정규형(normal form)을 정의하는 데 사용됩니다:</p><ol type="1" id="6a0268da-c6a1-4bba-bd17-185801426826" class="numbered-list" start="1"><li><strong>제1 정규형 (1NF)</strong>: 모든 속성이 원자 값을 가져야 합니다.</li></ol><ol type="1" id="bcec3b9c-de80-4a39-b5c0-a84922130abf" class="numbered-list" start="2"><li><strong>제2 정규형 (2NF)</strong>: 제1 정규형을 만족하고, 부분 함수적 종속성이 제거되어야 합니다.</li></ol><ol type="1" id="119d58af-e1ea-40e6-984d-1424908c02c2" class="numbered-list" start="3"><li><strong>제3 정규형 (3NF)</strong>: 제2 정규형을 만족하고, 이행적 함수적 종속성이 제거되어야 합니다.</li></ol><ol type="1" id="e1286726-9f82-4e99-9710-81155b8838bb" class="numbered-list" start="4"><li><strong>BCNF</strong>: 모든 결정자가 후보 키(candidate key)여야 합니다.</li></ol><h3 id="fb89dd5b-4346-4a8e-8d30-6faef2216505" class="">결론</h3><p id="53176770-bc8b-4faf-abea-c442a3c32d9c" class="">함수적 종속성은 데이터베이스 설계에서 속성 간의 관계를 명확히 하고, 데이터의 일관성과 무결성을 유지하는 데 중요한 역할을 합니다. 이를 통해 정규화를 수행하고, 효율적이고 중복 없는 데이터베이스 구조를 설계할 수 있습니다. 데이터베이스의 성능을 최적화하고 데이터 무결성을 유지하려면 함수적 종속성에 대한 이해가 필수적입니다.</p></details></li></ul><h3 id="75a8325f-cd06-452c-bf93-1d14d6b7d377" class="">유도 속성(derived attribute)</h3><ul id="cd4395a1-f82d-437f-beab-b131b6a3af6b" class="bulleted-list"><li style="list-style-type:disc">어떤 속성은 다른 속성이나 속성의 집합으로부터 유도 가능<ul id="73fe6661-61c3-477d-9817-1516df41ebeb" class="bulleted-list"><li style="list-style-type:circle">연령 속성은 생년월일 속성의 유도 속성</li></ul><ul id="5a2f9284-1092-4434-8ebf-2a174fdb250e" class="bulleted-list"><li style="list-style-type:circle">총점 속성은 각 과목 점수 속성 집합의 유도 속성</li></ul></li></ul><ul id="d8a3e8fa-793b-46ca-91f8-9383d8dcc542" class="bulleted-list"><li style="list-style-type:disc">일반적으로 데이터베이스 조회 성능을 높이기 위해 반정규화 과정에서 유도 속성 정의</li></ul><ul id="664d348f-2ae6-47a9-8612-99289e71a136" class="bulleted-list"><li style="list-style-type:disc">반정규화(de-normalization)<ul id="67453598-4bf8-480f-afeb-6050b1fa0114" class="bulleted-list"><li style="list-style-type:circle">정규화(nomalization)의 반대 개념으로 유도 속성의 정의</li></ul><ul id="4d378054-4b73-4488-864e-dc314da0cbe2" class="bulleted-list"><li style="list-style-type:circle">릴레이션의 수직/수평 분할 등이 존대</li></ul><ul id="9a5995f8-7a92-4861-b0b6-bbb27a53add7" class="bulleted-list"><li style="list-style-type:circle">일반적으로 정규화는 데이터 중복을 제거하는 과정</li></ul><ul id="2f1d163f-9f7e-495c-b98c-b0b70bf3f913" class="bulleted-list"><li style="list-style-type:circle">반정규화는 성능 향상을 위해 중복을 허용하는 과정</li></ul></li></ul><ul id="102dc662-3fd0-4727-9c22-ffebcbc539cb" class="bulleted-list"><li style="list-style-type:disc">유도 속성은 성능 향상에 도움이 되지만 데이터 중복을 허용하는 과정으로 데이터 불일치 문제 발생<ul id="32bacd53-2818-4d3e-acaf-5435ee2c6643" class="bulleted-list"><li style="list-style-type:circle">월소득 속성값이 100만원인데 연소득 속성값이 1,000만원 (둘 중 하나의 속성값에 오류가 존재)</li></ul></li></ul><h3 id="0aa438ca-dcea-4a63-94e0-5eff67bba34a" class="">정규화되지 않은 테이블</h3><ul id="d7815497-a41a-47f9-bbe4-93661a0d5173" class="bulleted-list"><li style="list-style-type:disc">테이블 정규화 : 데이터베이스 내의 테이블 구조를 개선하여 데이터 중복을 최소화하고 데이터의 일관성과 무결성을 유지하고 데이터 구조의 명확성을 높이는 것을 의미<ul id="029e2624-2183-4948-8faf-9768a42c23cf" class="bulleted-list"><li style="list-style-type:circle">종류 : 제1 정규화(1NF), 제2 정규화(2NF), 제3 정규화(3NF)</li></ul></li></ul><ul id="5f9d767c-37d7-4894-8257-4311baf11915" class="bulleted-list"><li style="list-style-type:disc">정규화되지 않은 테이블의 사용은 데이터 중복의 원인이 됨</li></ul><ul id="68c4613c-ac88-4bbf-a3d0-7e5142606b90" class="bulleted-list"><li style="list-style-type:disc">일부러 정규화하지 않은 채 테이블을 사용하는 경우, 조인을 피함으로 성능을 향상시키지만 이러한 테이블 구조는 데이터 중복으로 인한 데이터 일관성 저해 문제 발생</li></ul><ul id="18807d3d-f379-4c56-87a6-9ad33cd5fc87" class="bulleted-list"><li style="list-style-type:disc">예시) 이름과 주소 정보를 키로 사용하여 구매자 주문을 저장하는 데이터베이스<ul id="5c4f985e-a1d0-4a1a-ac1d-c096c65e4ef2" class="bulleted-list"><li style="list-style-type:circle">같은 이름에 다른 주소를 갖는 경우데 대해 데이터 불일 치 발생</li></ul><ul id="c5db2b41-ea6f-46ec-9a46-1dccc4286676" class="bulleted-list"><li style="list-style-type:circle">정규화 관점에서 구매자 주소는 구매자의 구매 품목과는 별개의 테이블에 저장 필요</li></ul><ul id="028a839c-84e9-4017-8dfd-4dff7ae262f0" class="bulleted-list"><li style="list-style-type:circle">구매 테이블의 키가(구매자 번호 + 구매 일시)라고 가정할 때, 주소는 키에 부분 함수적 종속 관계에 있으므로 제2정규화 원칙에 따라 구매자 번호화 함께 별도의 테이블로 분리 설계해야함</li></ul><ul id="29fa7f14-258e-4fef-b505-d07e654e4de9" class="bulleted-list"><li style="list-style-type:circle">그러나 조회 성능 향상을 위해 테이블을 분리하지 않았을 때에는 같은 구매자 번호에 대해서 다른 주소가 존재할 가능성은 언제든지 있음</li></ul></li></ul><h3 id="4258b2ca-2b25-4dec-b105-957d6d4b45e4" class="">정규화가 필요한 이유</h3><ul id="b63d6623-3641-44d8-8296-a56163ecb2f1" class="bulleted-list"><li style="list-style-type:disc">불필요한 데이터 중복으로 공간 낭비와 이상(anomaly) 발생</li></ul><ul id="45523f07-659a-41f8-97d9-119763bc5398" class="bulleted-list"><li style="list-style-type:disc">삽입이상(Insertion Anomaly) : 새 데이터를 삽입하기 위해 불필요한 데이터도 삽입하는 문제</li></ul><ul id="611aa5ab-3467-4bb7-ba4d-201f0862f429" class="bulleted-list"><li style="list-style-type:disc">갱신이상(Update Anomaly) : 중복 튜플 중 일부만 변경하여 데이터가 불일치되는 모순의 문제</li></ul><ul id="99a0a0ad-accd-44dd-ba1e-1459b862bbfb" class="bulleted-list"><li style="list-style-type:disc">삭제이상(Delete Anomaly) : 튜플 삭제 시 필요한 데이터까지 함께 삭제되는 데이터 손실<figure id="3308f02a-3924-4cfd-92c6-2c903011cce0" class="image"><a href="%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%20%E1%84%90%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%86%B8%20d409b4c5f96e4bd8bbfb14a37372e7e9/Untitled%204.png"><img style="width:1195px" src="%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%20%E1%84%90%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%86%B8%20d409b4c5f96e4bd8bbfb14a37372e7e9/Untitled%204.png"/></a></figure><h3 id="7f6ed70f-ba1b-4c03-bce4-3d3172560acb" class="">삽입 이상</h3><ul id="519939f3-772e-427f-a0f0-00b0f9009c0d" class="bulleted-list"><li style="list-style-type:circle">아직 수업을 하나도 수강하지 않은 학생의 경우 primary key가 student_id(학번), course_id(과목코드)로 사용되고 있으므로 삽입 불가(학번은 존재하나 과목코드가 없으므로 기본키 컬럼음 NULL 불가) → 삽입이상</li></ul><ul id="bd41ca7b-b885-466e-97c9-feeae7e830b3" class="bulleted-list"><li style="list-style-type:circle">삽입 하려면 ‘수강 미정’과 같은 과목코드를 불필요하게 삽입해야함</li></ul><h3 id="44a3c0c7-868e-40f2-b532-5a458f572e2d" class="">갱신 이상</h3><ul id="adb48d0b-bd1f-465a-aabd-fb6c7d865864" class="bulleted-list"><li style="list-style-type:circle">‘이순신’이 ‘기계공학과’에서 ‘컴퓨터공학과’로 전과하면 전체 학과 정보 변경 필요</li></ul><ul id="2250344c-45a8-4c98-a1fd-2d690c10822a" class="bulleted-list"><li style="list-style-type:circle">모두 변경하지 않은 경우(테이블의 일부만 변경할 경우) ‘이순신’이 ‘기계공학과’인지 ‘컴퓨터공학과’인지 알 수 없음(데이터의 불일치)</li></ul><h3 id="12eed2c6-097a-4929-afcc-edb8efd2c07b" class="">삭제 이상</h3><ul id="543ae79b-380a-4379-acf8-aefd7f5bccba" class="bulleted-list"><li style="list-style-type:circle">‘김철수’가 ‘1800100’ 과목을 수강취소할 경우 ‘김철수’에 대한 행을 삭제하게 됨</li></ul><ul id="9063a6e3-85bb-4403-a7ea-55bb0f9ec1d4" class="bulleted-list"><li style="list-style-type:circle">수강취소를 반영하기 위해서 ‘김철수’학생 정보가 전부 삭제되는 이상 발생</li></ul></li></ul><h3 id="e2408915-398d-4cf0-94cf-85772e60b561" class="">정규화(Normal Form)</h3><ul id="6c841d06-7676-47e0-829b-b0e6023901f9" class="bulleted-list"><li style="list-style-type:disc">중복 요소를 찾아 제거해 나가는 과정</li></ul><ul id="443fa30e-5e97-4f4f-aa82-be309d626135" class="bulleted-list"><li style="list-style-type:disc">제1정규화 : 하나의 속성이 원자값(atomic value)을 갖도록 설계를 변경하는 과정</li></ul><ul id="6e728197-fc9b-4572-8c10-2358708722d0" class="bulleted-list"><li style="list-style-type:disc">제2정규화 : 주식별자가 아닌 속성들 중에서 주식별자 전체가 아닌 일부 속성에 종속된 속성을 찾아 제거하는 과정</li></ul><ul id="b72a3e3f-c803-40fe-bdce-153c80ee2a68" class="bulleted-list"><li style="list-style-type:disc">제3정규화 : 주식별자가 아닌 속성들 중에서 종속관계에 있는 속성을 찾아 제거하는 과정</li></ul><h3 id="64e2c73a-6ee8-4bc7-bbfc-1459ef0d84dd" class="">제1정규화(1NF, First Normal Form)</h3><figure id="6e9b2bb6-54cd-4533-9d73-710ab68ceb25" class="image"><a href="%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%20%E1%84%90%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%86%B8%20d409b4c5f96e4bd8bbfb14a37372e7e9/Untitled%205.png"><img style="width:1193px" src="%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%20%E1%84%90%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%86%B8%20d409b4c5f96e4bd8bbfb14a37372e7e9/Untitled%205.png"/></a></figure><ul id="d3cfdd29-b882-41aa-8f67-d7aee42a6b2b" class="bulleted-list"><li style="list-style-type:disc">학번 ‘201814231’과 ‘201859341’의 과목코드와 성적이 원자값을 갖고 있지 않다(여러 속성이 존재한다)</li></ul><h3 id="ed7bd19a-8e62-47e5-8bb8-69f2e168c6c6" class="">제2정규화(2NF, Second Normal Form)</h3><figure id="7ec8b2c3-7de5-42f6-891c-e6385646ad71" class="image"><a href="%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%20%E1%84%90%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%86%B8%20d409b4c5f96e4bd8bbfb14a37372e7e9/Untitled%206.png"><img style="width:708px" src="%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%20%E1%84%90%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%86%B8%20d409b4c5f96e4bd8bbfb14a37372e7e9/Untitled%206.png"/></a></figure><ul id="f66f26c7-dfff-43b7-b7e0-6789736bf336" class="bulleted-list"><li style="list-style-type:disc">제1정규화를 거친 테이블에서 부분 함수 종속성을 찾아 제거해준다</li></ul><figure id="5732f32a-b846-46fc-9088-d43faaa8dcd9" class="image"><a href="%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%20%E1%84%90%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%86%B8%20d409b4c5f96e4bd8bbfb14a37372e7e9/Untitled%207.png"><img style="width:1184px" src="%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%20%E1%84%90%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%86%B8%20d409b4c5f96e4bd8bbfb14a37372e7e9/Untitled%207.png"/></a></figure><ul id="b26005e7-b2c9-41bf-ac2c-6dac9aa55926" class="bulleted-list"><li style="list-style-type:disc">그러나 여전히 삽입 이상과 삭제 이상이 남아있다</li></ul><h3 id="33e55883-a877-4510-89ed-a7395e5b5ef7" class="">제3정규화(3NF, Third Normal Form)</h3><figure id="76a9bafe-301b-4876-9b6f-1e82e988b99e" class="image"><a href="%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%20%E1%84%90%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%86%B8%20d409b4c5f96e4bd8bbfb14a37372e7e9/Untitled%208.png"><img style="width:1194px" src="%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%20%E1%84%90%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%86%B8%20d409b4c5f96e4bd8bbfb14a37372e7e9/Untitled%208.png"/></a></figure><ul id="706928dd-7320-490c-a180-179967afa198" class="bulleted-list"><li style="list-style-type:disc">학번 → 학과 → 등록금 : 학번 → 등록금이라는 이행적 종속 관계가 존재</li></ul><ul id="cf6fab34-6f1b-41db-8fd5-c6374c34c37f" class="bulleted-list"><li style="list-style-type:disc">[학번, 학과] table과 [학과, 등록금] table로 분리해준다</li></ul><ul id="dd6e4bb1-8118-48bf-97ca-c80df5d4bfb9" class="bulleted-list"><li style="list-style-type:disc">삽입 이상 : 새로운 학과가 생겨도 [학과, 등록금] table에 학과와 등록금만 입력해주면 해결됨</li></ul><ul id="27e2c0f4-fcc0-4e53-93e3-b6004cb1421f" class="bulleted-list"><li style="list-style-type:disc">삭제 이상 : ‘201911214’ 학번이 자퇴해서 데이터를 삭제해도 경영학과에 대한 정보는 [학과, 등록금] table에 여전히 남아있으므로 해결됨</li></ul><hr id="77581440-81ec-4a0e-a0b7-f0aa2c862c4c"/><h3 id="731bb4e2-548f-46ef-873d-a6545d88dd9a" class="">상관 분석(Correlation Analysis)</h3><ul id="53f0d378-71df-47e6-a20c-6ec22c3ef63f" class="bulleted-list"><li style="list-style-type:disc">두 속성간의 엄격한 함수적 종속 관계가 성립하지 않지만 상관 분석을 통해 한 속성이 다른 속성을 얼마나 강하게 암시하는지를 데이터를 통해 측정</li></ul><ul id="c83cf814-dc0d-40ac-98ea-ae8aab53dbf7" class="bulleted-list"><li style="list-style-type:disc">두 속성 간에 상관도가 높다면 두 속성을 중복으로 보고 그 중 하나의 속성을 제거할 수 있음</li></ul><ul id="c343139d-d0eb-4e3f-a76f-c452844427ee" class="bulleted-list"><li style="list-style-type:disc">두 속성 간의 상관도는 데이터 타입에 따라 다르게 구함</li></ul><figure id="16b7058e-2322-487a-bdc5-330313841131" class="image"><a href="%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%20%E1%84%90%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%86%B8%20d409b4c5f96e4bd8bbfb14a37372e7e9/Untitled%209.png"><img style="width:630px" src="%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%20%E1%84%90%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%86%B8%20d409b4c5f96e4bd8bbfb14a37372e7e9/Untitled%209.png"/></a></figure><ul id="88bda7c5-0c1e-4a87-ab34-dbdfc20c0f63" class="bulleted-list"><li style="list-style-type:disc">수치 속성에 대해서 속성 A와 B의 상관계수</li></ul><figure id="5c38202a-7aab-4db3-9258-b7883bc116fc" class="image"><a href="%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%20%E1%84%90%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%86%B8%20d409b4c5f96e4bd8bbfb14a37372e7e9/Untitled%2010.png"><img style="width:1108px" src="%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%20%E1%84%90%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%86%B8%20d409b4c5f96e4bd8bbfb14a37372e7e9/Untitled%2010.png"/></a></figure><ul id="36320828-4f50-4b38-aaf0-6c8483fd8693" class="bulleted-list"><li style="list-style-type:disc">상관계수의 절대값이 클수록 더 강한 상관성이 있다는 의미</li></ul><ul id="d8e29155-4519-4e68-8fc2-61a8534507bd" class="bulleted-list"><li style="list-style-type:disc">일반적으로 두 속성 산 상관성이 클수록 중복 속성으로 판단해서 하나의 속성을 분석 대상에서 배제해도 분석 결과에 큰 영향을 주지 않음</li></ul><ul id="acdf2c3e-db45-4daa-ac26-3c5106e56bed" class="bulleted-list"><li style="list-style-type:disc">상관관계가 인과관계를 직접 의미하는 것은 아님(상관 관계가 높다 → 안과 관계가 높다 X 알 수 없다 O)</li></ul><ul id="fe0a16c4-33cd-4bf0-b05e-baaedddaeed3" class="bulleted-list"><li style="list-style-type:disc">어떤 지역의 병원 수와 자동차 수 사이에 상관관계를 발견해도 병원 수와 자동차 수 사이의 어떤 인과가 존재한다기 보다는 두 속성 다 인구에 대한 인과관계로 보는 것이 타당</li></ul><ul id="67944908-355f-4046-b830-bf3c9c920225" class="bulleted-list"><li style="list-style-type:disc">상관분석상 강한 상관관계를 나타낸다고 하더라도 중복 속성 여부를 판단할 때는 해당 분야 도메인 지식을 충분히 고려해서 최종 판단하는 것이 바람직함</li></ul><h3 id="b7b3c2a9-63d1-452b-b47e-a370a90d902c" class="">카이제곱 검정(Chi-Square Tests)</h3><ul id="8eb7033c-c86e-41c4-96c1-1e06d2efdc4d" class="bulleted-list"><li style="list-style-type:disc">데이터가 수치형일 때는 상관계수를 구하는 것이 가능하지만 범주형(이산형)일 때는 불가능</li></ul><ul id="e9df34ea-2bbf-4ebc-93ce-58c7cbd3bca7" class="bulleted-list"><li style="list-style-type:disc">범주형(이산형) 데이터인 경우 속성 A와 B사이의 상관관계는 피어슨(Pearson)의 카이 제곱 검정에 의해 측정 가능</li></ul><ul id="a63a8f7e-ad5f-487d-af9a-125fc925dfdd" class="bulleted-list"><li style="list-style-type:disc">속성 A가 c개의 범주 값 a1, a2,…,ac를 가진다고 가정</li></ul><ul id="447ddd6d-07ab-496c-b026-ea01393af152" class="bulleted-list"><li style="list-style-type:disc">속성 B가 r개의 범주 값 b1, b2,…,br를 가진다고 가정</li></ul><ul id="e0713a58-ac85-40fb-82ea-8b2e7abffa1a" class="bulleted-list"><li style="list-style-type:disc">속성 A와 B에 의해 구성되는 튜플은 c개의 열과 r개의 행으로 구성되는 분할표로 표현</li></ul><figure id="081f4537-caee-4a9e-82a3-1e45b3567dce" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mo stretchy="false">(</mo><msub><mi>A</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi>B</mi><mi>j</mi></msub><mo stretchy="false">)</mo><mtext>를속성</mtext><mi>A</mi><mtext>가</mtext><msub><mi>a</mi><mi>i</mi></msub><mtext>를가지고속성</mtext><mi>B</mi><mtext>가</mtext><msub><mi>b</mi><mi>j</mi></msub><mtext>를가지는튜플이라고할때</mtext><msup><mi>X</mi><mn>2</mn></msup><mtext>의정의</mtext><mspace linebreak="newline"></mspace><msup><mi>X</mi><mn>2</mn></msup><mo>=</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>c</mi></munderover><munderover><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mi>r</mi></munderover><mfrac><mrow><mo stretchy="false">(</mo><msub><mi>o</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>−</mo><mi>e</mi><mrow><mi>i</mi><mi>j</mi></mrow><msup><mo stretchy="false">)</mo><mn>2</mn></msup></mrow><msub><mi>e</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mfrac><mspace linebreak="newline"></mspace><mstyle mathsize="0.9em"><mrow><msub><mi>o</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>:</mo><mo stretchy="false">(</mo><msub><mi>A</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi>B</mi><mi>j</mi></msub><mo stretchy="false">)</mo><mtext>에</mtext><mtext> </mtext><mtext>대한</mtext><mtext> </mtext><mtext>관측도수</mtext><mo stretchy="false">(</mo><mi>o</mi><mi>b</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>v</mi><mi>e</mi><mi>d</mi><mtext> </mtext><mi>f</mi><mi>r</mi><mi>e</mi><mi>q</mi><mi>u</mi><mi>e</mi><mi>n</mi><mi>c</mi><mi>y</mi><mo stretchy="false">)</mo><mo separator="true">;</mo><mtext>실제로</mtext><mtext> </mtext><mtext>존재하는</mtext><mo stretchy="false">(</mo><msub><mi>A</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi>B</mi><mi>j</mi></msub><mo stretchy="false">)</mo><mtext>튜플</mtext><mtext> </mtext><mtext>수</mtext></mrow><mspace linebreak="newline"></mspace><mstyle mathsize="0.9em"><mrow><msub><mi>e</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>:</mo><mo stretchy="false">(</mo><msub><mi>A</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi>B</mi><mi>j</mi></msub><mo stretchy="false">)</mo><mtext>에</mtext><mtext> </mtext><mtext>대한</mtext><mtext> </mtext><mtext>기대도수</mtext><mo stretchy="false">(</mo><mi>e</mi><mi>x</mi><mi>p</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>e</mi><mi>d</mi><mtext> </mtext><mi>f</mi><mi>r</mi><mi>e</mi><mi>q</mi><mi>u</mi><mi>e</mi><mi>n</mi><mi>c</mi><mi>y</mi><mo stretchy="false">)</mo><mo separator="true">;</mo><mtext>확률적으로</mtext><mtext> </mtext><mtext>기대되는</mtext><mo stretchy="false">(</mo><msub><mi>A</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi>B</mi><mi>j</mi></msub><mo stretchy="false">)</mo><mtext>튜플</mtext><mtext> </mtext><mtext>수</mtext><mspace linebreak="newline"></mspace></mrow></mstyle></mstyle></mrow><annotation encoding="application/x-tex">(A_i,B_j)를 속성 A가 a_i를 가지고 속성 B가 b_j를 가지는 튜플이라고 할때 X^2의 정의\\X^2={\sum\limits_{i=1}^c}{\sum\limits_{j=1}^r}\frac{(o_{ij}-e{ij})^2}{e_{ij}}\\\small{o_{ij}:(A_i,B_j)에\,대한\,관측도수(observed\,frequency);실제로\,존재하는(A_i,B_j)튜플\,수}\\\small{e_{ij}:(A_i,B_j)에\,대한\,기대도수(expected\,frequency);확률적으로\,기대되는(A_i,B_j)튜플\,수\\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1502em;vertical-align:-0.2861em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0502em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord hangul_fallback">를속성</span><span class="mord mathnormal">A</span><span class="mord hangul_fallback">가</span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord hangul_fallback">를가지고속성</span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mord hangul_fallback">가</span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mord hangul_fallback">를가지는튜플이라고할때</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mord hangul_fallback">의정의</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.8641em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8641em;"><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:3.0652em;vertical-align:-1.4138em;"></span><span class="mord"><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6514em;"><span style="top:-1.8723em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2777em;"><span></span></span></span></span></span></span><span class="mord"><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.6514em;"><span style="top:-1.8723em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span><span class="mrel mtight">=</span><span class="mord mtight">1</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span><span style="top:-4.3em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.4138em;"><span></span></span></span></span></span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.4911em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">o</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal">e</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05724em;">ij</span></span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.9721em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.9267em;vertical-align:-0.2517em;"></span><span class="mord sizing reset-size6 size5"><span class="mord"><span class="mord mathnormal">o</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2897em;"><span style="top:-2.45em;margin-left:0em;margin-right:0.0556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2796em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2897em;"><span style="top:-2.45em;margin-left:0em;margin-right:0.0556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2897em;"><span style="top:-2.45em;margin-left:-0.0502em;margin-right:0.0556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2796em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord hangul_fallback">에</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">대한</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">관측도수</span><span class="mopen">(</span><span class="mord mathnormal">o</span><span class="mord mathnormal">b</span><span class="mord mathnormal" style="margin-right:0.02778em;">ser</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mord mathnormal">e</span><span class="mord mathnormal">d</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal">re</span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="mord mathnormal">u</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mord mathnormal" style="margin-right:0.03588em;">cy</span><span class="mclose">)</span><span class="mpunct">;</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">실제로</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">존재하는</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2897em;"><span style="top:-2.45em;margin-left:0em;margin-right:0.0556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2897em;"><span style="top:-2.45em;margin-left:-0.0502em;margin-right:0.0556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2796em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord hangul_fallback">튜플</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">수</span></span></span><span class="mspace newline sizing reset-size6 size5"></span><span class="base"><span class="strut" style="height:0.9267em;vertical-align:-0.2517em;"></span><span class="mord sizing reset-size6 size5"><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2897em;"><span style="top:-2.45em;margin-left:0em;margin-right:0.0556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2796em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2897em;"><span style="top:-2.45em;margin-left:0em;margin-right:0.0556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2897em;"><span style="top:-2.45em;margin-left:-0.0502em;margin-right:0.0556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2796em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord hangul_fallback">에</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">대한</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">기대도수</span><span class="mopen">(</span><span class="mord mathnormal">e</span><span class="mord mathnormal">x</span><span class="mord mathnormal">p</span><span class="mord mathnormal">ec</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span><span class="mord mathnormal">d</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord mathnormal">re</span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="mord mathnormal">u</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mord mathnormal" style="margin-right:0.03588em;">cy</span><span class="mclose">)</span><span class="mpunct">;</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">확률적으로</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">기대되는</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2897em;"><span style="top:-2.45em;margin-left:0em;margin-right:0.0556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2897em;"><span style="top:-2.45em;margin-left:-0.0502em;margin-right:0.0556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2796em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord hangul_fallback">튜플</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">수</span><span class="mspace newline"></span></span></span></span></span></span></div></figure><ul id="930fe492-01dd-421b-87be-0f53bd0fbe20" class="bulleted-list"><li style="list-style-type:disc">기대도수 eij 계산식</li></ul><figure id="30788e9c-987a-4dd2-8ade-8ef05aba2a8a" class="image"><a href="%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%20%E1%84%90%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%86%B8%20d409b4c5f96e4bd8bbfb14a37372e7e9/Untitled%2011.png"><img style="width:708px" src="%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%20%E1%84%90%E1%85%A9%E1%86%BC%E1%84%92%E1%85%A1%E1%86%B8%20d409b4c5f96e4bd8bbfb14a37372e7e9/Untitled%2011.png"/></a></figure><ul id="1fe19873-008c-4435-90e5-60cbf0bf9f96" class="bulleted-list"><li style="list-style-type:disc">X^2 통계량은 속성 A와 B가 독립이라는 가설을 검증</li></ul><ul id="11fd914e-c068-4c88-829f-5e8f1f25ca86" class="bulleted-list"><li style="list-style-type:disc">카이제곱 검정은 자유도(r-1) x (c-1)을 갖는 유의수준에 근거하여 검정</li></ul><hr id="390a3248-da71-43e9-ae4c-b9ce990c6322"/><h3 id="52850e21-5a1e-4849-9f2d-e903b74b323c" class="">데이터 값 충돌 탐지 및 해결</h3><ul id="04c51281-a721-4464-b1ee-e6d65974d310" class="bulleted-list"><li style="list-style-type:disc">서로 다른 데이터 원천의 데이터들을 통합할 때 동일한 개체에 대해서도 속성값이 다를 수 있음 → 표현(representation), 척도(scaling), 부호화(encoding) 등의 차이<ul id="8b9d3322-d334-4e6e-af3b-863f85b15b4d" class="bulleted-list"><li style="list-style-type:circle">거리를 나타내는 속성으로 어느 DB에서는 미터(meter)단위로 다른 DB에서는 마일(mile)단위로 저장</li></ul><ul id="be959fd3-e947-4676-822c-1b43a82aac8b" class="bulleted-list"><li style="list-style-type:circle">학생 성적 데이터로 어느 DB에서는 과목별 점수가 저장되고 다른 DB에서는 총점과 평균만 저장</li></ul></li></ul><ul id="22292359-4529-484e-9197-f71174558e24" class="bulleted-list"><li style="list-style-type:disc">동일한 개체의 동일한 값이 데이터 원천에 따라 다르게 표현되어 있는 경우, 데이터 통합시에 기준을 정하여 데이터 값을 변환하여 통합시키는 것이 필요</li></ul><ul id="73c7ff87-3de7-4090-a373-ad9c3f307f0f" class="bulleted-list"><li style="list-style-type:disc">통합 과정에서 DB의 속성을 일치시킬 때 데이터 구조에도 주의를 기울여야 함</li></ul><ul id="c4d6538f-29c1-4465-9ae8-6b7f84075f2a" class="bulleted-list"><li style="list-style-type:disc">원천 시스템의 기능적 종속성과 제약 사항들이 목표 통합 시스쳄의 것과 일치해야 함<ul id="ba26e967-65cc-4138-b50f-02a6cb0176ba" class="bulleted-list"><li style="list-style-type:circle">어느 시스템에서는 할인이 총 주문 금액에 적용되는 반면 다른 시스템에서는 주문을 구성하는 개별 항목에 적용</li></ul></li></ul><ul id="13dee6cf-71d5-49f3-9942-fc2429e3b7f8" class="bulleted-list"><li style="list-style-type:disc">데이터의 의미적 이질성과 데이터 구조는 데이터 통합 시에 여러 문제를 발생시킴</li></ul><ul id="f5dd4a2d-0c06-4850-94f9-121106455201" class="bulleted-list"><li style="list-style-type:disc">여러 유형의 문제들을 신중하게 해결하여 통합 데이터의 중복과 불일치 문제를 최소화</li></ul></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
