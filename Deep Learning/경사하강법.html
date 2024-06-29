@@ -1,0 +1,710 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>경사 하강법</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(0, 0, 0, 0.06); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="f9789496-72b6-483d-bda7-0c7e8ba9a371" class="page sans"><header><h1 class="page-title">경사 하강법</h1><p class="page-description"></p></header><div class="page-body"><h3 id="8448b542-fec8-432a-a20c-6525ee7fb71f" class="">출처 및 참고 자료</h3><p id="1a13cff7-dbe5-4bc1-8285-1d24d81a3937" class=""><a href="https://blogik.netlify.app/BoostCamp/U_stage/05_gradient_descent/">https://blogik.netlify.app/BoostCamp/U_stage/05_gradient_descent/</a></p><h3 id="c1a14aed-d62c-4674-8c73-be43ff74cff4" class="">Gradient Descent</h3><ul id="d554360d-daca-4200-9ecc-5ae291ee53af" class="bulleted-list"><li style="list-style-type:disc">경사 하강법은 최적화 알고리즘 중 하나로, 손실함수(Loss Function)의 값을 최소화하는 파라미터(가중치-weight, 편향-bias)를 구하기 위해 손실함수에 대한 각 매개변수의 기울기를 이용하는 방법</li></ul><ul id="85e6b08c-df17-4020-a3da-5cc7ed0a2555" class="bulleted-list"><li style="list-style-type:disc">기울기가 0인 기점인 손실함수의 값이 최저인 곳이므로 그 지점에 도달하기 위해 매개변수는 기울기의 반대방향으로 움직여야 함</li></ul><ul id="2ffd3057-3e4d-4849-af17-4d585c085821" class="bulleted-list"><li style="list-style-type:disc">따라서 경사하강법에서 미분값의 - 만큼 빼주는 값으로 가중치를 업데이트 하는 것(편향에 대해서도 동일하게 적용됨)<figure id="1d577a5d-e906-4421-9524-ffb3c304ac51" class="image" style="text-align:center"><a href="%E1%84%80%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%20%E1%84%92%E1%85%A1%E1%84%80%E1%85%A1%E1%86%BC%E1%84%87%E1%85%A5%E1%86%B8%20f978949672b6483dbda70c7e8ba9a371/image.png"><img style="width:624px" src="%E1%84%80%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%20%E1%84%92%E1%85%A1%E1%84%80%E1%85%A1%E1%86%BC%E1%84%87%E1%85%A5%E1%86%B8%20f978949672b6483dbda70c7e8ba9a371/image.png"/></a></figure></li></ul><h3 id="15f4f9cd-862c-4175-a5d1-3d04dc2f903a" class="">미분(differentiation)</h3><ul id="29f9e3f9-05a8-4b08-a1bd-c4a6c4379e85" class="bulleted-list"><li style="list-style-type:disc">미분은 볌수의 움직임에 따른 함수값의 변화를 측정하기 위한 도구로 최적화에서 많이 사용되는 기법</li></ul><ul id="15217a6e-1788-4048-bd0c-c4e58192e8d9" class="bulleted-list"><li style="list-style-type:disc">python에서는 sympy.diff를 이용해 미분을 계산할 수 있다.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="50b8c094-86f0-4303-888e-6b15f8b47a71" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">import sympy as sym
+from sympy.abc import x
+sym.diff(sym.poly(3*(x**2) + 5*x + 1), x) # 다항함수를 x로 미분하라
+# Poly(6𝑥+5,𝑥,𝑑𝑜𝑚𝑎𝑖𝑛=ℤ)</code></pre><h3 id="f02e0081-84a5-42c2-9adc-9bfcd60544f6" class="">미분의 의미</h3><ul id="956ee004-b8a0-4ce4-8018-b51a30820c51" class="bulleted-list"><li style="list-style-type:disc">미분은 함수의 주어진 점 (x, f(x))에서의 접선의 기울기를 구하는 과정</li></ul><ul id="5726e549-707d-4f9b-a1c7-cb520f2ccc92" class="bulleted-list"><li style="list-style-type:disc">한 점에서의 기울기를 알면 어느 방향으로 움직여야 함수값이 증가 또는 감소 하는지 알 수 있음<figure id="43d36543-cfe3-451a-b940-41acf8d100c6" class="image" style="text-align:center"><a href="%E1%84%80%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%20%E1%84%92%E1%85%A1%E1%84%80%E1%85%A1%E1%86%BC%E1%84%87%E1%85%A5%E1%86%B8%20f978949672b6483dbda70c7e8ba9a371/download.png"><img style="width:384px" src="%E1%84%80%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%20%E1%84%92%E1%85%A1%E1%84%80%E1%85%A1%E1%86%BC%E1%84%87%E1%85%A5%E1%86%B8%20f978949672b6483dbda70c7e8ba9a371/download.png"/></a></figure></li></ul><ul id="3b970c73-81b4-44e1-8539-f61c9c152ada" class="bulleted-list"><li style="list-style-type:disc">2차원에서는 그래프만 봐도 방향을 파악할 수 있지만 고차원으로 갈 수록 그래프를 그리기도 힘들기 때문에 미분값을 구함으로 값의 변경 방향을 파악<figure id="999dc4fd-8758-492e-850c-d6e7f6e1e300" class="image"><a href="%E1%84%80%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%20%E1%84%92%E1%85%A1%E1%84%80%E1%85%A1%E1%86%BC%E1%84%87%E1%85%A5%E1%86%B8%20f978949672b6483dbda70c7e8ba9a371/diff_graph.png"><img style="width:1024px" src="%E1%84%80%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%20%E1%84%92%E1%85%A1%E1%84%80%E1%85%A1%E1%86%BC%E1%84%87%E1%85%A5%E1%86%B8%20f978949672b6483dbda70c7e8ba9a371/diff_graph.png"/></a></figure></li></ul><ul id="7e4e1f84-fef8-4bcc-8964-5a0f5ded1e1c" class="bulleted-list"><li style="list-style-type:disc">미분값에 따른 데이터 변화<figure id="600aadd8-196d-4ebf-af17-f4c2cb026cb7" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mstyle mathsize="0.9em"><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mtext>의</mtext><mtext> </mtext><mtext>미분값</mtext><mo>=</mo><msup><mi>f</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><mspace linebreak="newline"></mspace><mstyle mathsize="0.9em"><mrow><mn>1</mn><mo stretchy="false">)</mo><msup><mi>f</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>&gt;</mo><mn>0</mn><mtext>이면</mtext><mo separator="true">,</mo><mtext> </mtext><mtext>증가하는</mtext><mtext> </mtext><mtext>기울기에</mtext><mtext> </mtext><mtext>있으므로</mtext></mrow><mspace linebreak="newline"></mspace><mstyle mathsize="0.9em"><mrow><msub><mi>i</mi><mi>a</mi></msub><mo stretchy="false">)</mo><mtext>미분값을</mtext><mtext> </mtext><mtext>더했을때</mtext><mi>x</mi><mo>+</mo><msup><mi>f</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>&gt;</mo><mi>x</mi><mo separator="true">,</mo><mtext>오른쪽으로</mtext><mtext> </mtext><mtext>이동하여</mtext><mtext> </mtext><mtext>함수값이</mtext><mtext> </mtext><mtext>증가</mtext></mrow><mspace linebreak="newline"></mspace><mstyle mathsize="0.9em"><mrow><msub><mi>i</mi><mi>b</mi></msub><mo stretchy="false">)</mo><mtext>미분값을</mtext><mtext> </mtext><mtext>뺏을때</mtext><mi>x</mi><mo>−</mo><msup><mi>f</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>&lt;</mo><mi>x</mi><mo separator="true">,</mo><mtext>왼쪽으로</mtext><mtext> </mtext><mtext>이동하여</mtext><mtext> </mtext><mtext>함수값이</mtext><mtext> </mtext><mtext>감소</mtext></mrow><mspace linebreak="newline"></mspace><mstyle mathsize="0.9em"><mrow><mn>2</mn><mo stretchy="false">)</mo><msup><mi>f</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>&lt;</mo><mn>0</mn><mtext>이면</mtext><mo separator="true">,</mo><mtext> </mtext><mtext>감소하는</mtext><mtext> </mtext><mtext>기울기에</mtext><mtext> </mtext><mtext>있으므로</mtext></mrow><mspace linebreak="newline"></mspace><mstyle mathsize="0.9em"><mrow><msub><mi>j</mi><mi>a</mi></msub><mo stretchy="false">)</mo><mtext>미분값을</mtext><mtext> </mtext><mtext>더했을때</mtext><mi>x</mi><mo>+</mo><msup><mi>f</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>&lt;</mo><mi>x</mi><mo separator="true">,</mo><mtext>왼쪽으로</mtext><mtext> </mtext><mtext>이동하여</mtext><mtext> </mtext><mtext>함수값이</mtext><mtext> </mtext><mtext>감소</mtext></mrow><mspace linebreak="newline"></mspace><mstyle mathsize="0.9em"><mrow><msub><mi>j</mi><mi>b</mi></msub><mo stretchy="false">)</mo><mtext>미분값을</mtext><mtext> </mtext><mtext>뺏을때</mtext><mi>x</mi><mo>−</mo><msup><mi>f</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>&gt;</mo><mi>x</mi><mo separator="true">,</mo><mtext>오른쪽으로</mtext><mtext> </mtext><mtext>이동하여</mtext><mtext> </mtext><mtext>함수값이</mtext><mtext> </mtext><mtext>증가</mtext></mrow></mstyle></mstyle></mstyle></mstyle></mstyle></mstyle></mstyle></mrow><annotation encoding="application/x-tex">\small{f(x)의\, 미분값 = f&#x27;(x)}\\\small{1) f&#x27;(x) &gt; 0이면,\,증가하는\,기울기에\,있으므로} \\\small{i_a)미분값을\, 더했을때 x+f&#x27;(x)&gt;x, 오른쪽으로\,이동하여\,함수값이\,증가} \\\small{i_b)미분값을\, 뺏을때 x-f&#x27;(x)&lt;x, 왼쪽으로\,이동하여\,함수값이\,감소}\\\small{2) f&#x27;(x) &lt; 0이면,\,감소하는\,기울기에\,있으므로} \\\small{j_a)미분값을\, 더했을때 x+f&#x27;(x)&lt;x, 왼쪽으로\,이동하여\,함수값이\,감소} \\\small{j_b)미분값을\, 뺏을때 x-f&#x27;(x)&gt;x, 오른쪽으로\,이동하여\,함수값이\,증가}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.93em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mord hangul_fallback">의</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">미분값</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7834em;"><span style="top:-3.013em;margin-right:0.0556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span><span class="mspace newline sizing reset-size6 size5"></span><span class="base"><span class="strut" style="height:0.93em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5"><span class="mord">1</span><span class="mclose">)</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7834em;"><span style="top:-3.013em;margin-right:0.0556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord">0</span><span class="mord hangul_fallback">이면</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">증가하는</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">기울기에</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">있으므로</span></span></span><span class="mspace newline sizing reset-size6 size5"></span><span class="base"><span class="strut" style="height:0.93em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5"><span class="mord"><span class="mord mathnormal">i</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.137em;"><span style="top:-2.45em;margin-left:0em;margin-right:0.0556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mathnormal mtight">a</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord hangul_fallback">미분값을</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">더했을때</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7834em;"><span style="top:-3.013em;margin-right:0.0556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">오른쪽으로</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">이동하여</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">함수값이</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">증가</span></span></span><span class="mspace newline sizing reset-size6 size5"></span><span class="base"><span class="strut" style="height:0.93em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5"><span class="mord"><span class="mord mathnormal">i</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.313em;"><span style="top:-2.45em;margin-left:0em;margin-right:0.0556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mathnormal mtight">b</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord hangul_fallback">미분값을</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">뺏을때</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7834em;"><span style="top:-3.013em;margin-right:0.0556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">왼쪽으로</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">이동하여</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">함수값이</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">감소</span></span></span><span class="mspace newline sizing reset-size6 size5"></span><span class="base"><span class="strut" style="height:0.93em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5"><span class="mord">2</span><span class="mclose">)</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7834em;"><span style="top:-3.013em;margin-right:0.0556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord">0</span><span class="mord hangul_fallback">이면</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">감소하는</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">기울기에</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">있으므로</span></span></span><span class="mspace newline sizing reset-size6 size5"></span><span class="base"><span class="strut" style="height:0.93em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5"><span class="mord"><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.137em;"><span style="top:-2.45em;margin-left:-0.0572em;margin-right:0.0556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mathnormal mtight">a</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord hangul_fallback">미분값을</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">더했을때</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7834em;"><span style="top:-3.013em;margin-right:0.0556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">왼쪽으로</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">이동하여</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">함수값이</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">감소</span></span></span><span class="mspace newline sizing reset-size6 size5"></span><span class="base"><span class="strut" style="height:0.93em;vertical-align:-0.225em;"></span><span class="mord sizing reset-size6 size5"><span class="mord"><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.313em;"><span style="top:-2.45em;margin-left:-0.0572em;margin-right:0.0556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mathnormal mtight">b</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord hangul_fallback">미분값을</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">뺏을때</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7834em;"><span style="top:-3.013em;margin-right:0.0556em;"><span class="pstrut" style="height:2.6em;"></span><span class="sizing reset-size5 size2 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">오른쪽으로</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">이동하여</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">함수값이</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">증가</span></span></span></span></span></span></div></figure><ul id="046255ac-0a70-4ab4-9fc7-8786704a0000" class="bulleted-list"><li style="list-style-type:circle"><figure id="29935bbb-9271-410e-99a5-c606c6b90438" class="image"><a href="%E1%84%80%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%20%E1%84%92%E1%85%A1%E1%84%80%E1%85%A1%E1%86%BC%E1%84%87%E1%85%A5%E1%86%B8%20f978949672b6483dbda70c7e8ba9a371/1_-Cq_FSUYV-8yt2YLI8w4dg.webp"><img style="width:240px" src="%E1%84%80%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%20%E1%84%92%E1%85%A1%E1%84%80%E1%85%A1%E1%86%BC%E1%84%87%E1%85%A5%E1%86%B8%20f978949672b6483dbda70c7e8ba9a371/1_-Cq_FSUYV-8yt2YLI8w4dg.webp"/></a></figure><figure id="011ffe67-1a00-4c08-852a-dd76a03eed20"><div class="source"><a href="https://www.notion.soundefined"></a></div></figure></li></ul></li></ul><h3 id="a43b4f91-bdc9-4ca1-ad8e-d48e1a01e38b" class="">미분의 활용</h3><ul id="ca248e00-8e2f-4b52-a3f9-4218786fa511" class="bulleted-list"><li style="list-style-type:disc">미분값을 더하는 것을 경사상승법(Gradient Ascent)라고 하며 함수의 극대값 위치를 구할 때 사용</li></ul><ul id="b2fc7a89-43e3-4054-b9e4-ca2fa4a1ddd4" class="bulleted-list"><li style="list-style-type:disc">미분값을 빼는 것을 경사하강법(Gradient Descent)라고 하며 함수의 극소값 위치를 구할 때 사용</li></ul><ul id="899c4b42-1b8f-43ff-a592-b6f81c28b912" class="bulleted-list"><li style="list-style-type:disc">→ Full Batch Gradient Descent(BGD - 배치 경사 하강법)</li></ul><ul id="7a5d3fa5-f20e-4290-8c92-231978ac5499" class="bulleted-list"><li style="list-style-type:disc">경사상승법, 경사하강법은 극값에 도달하면 미분값이 0이므로 더이상 업데이트가 되지 않아 움직임을 멈춘다 즉, 목적함수 최적화가 자동으로 끝났음을 의미</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="c434543d-0891-4f56-8009-cdbb915c1e38" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">&#x27;&#x27;&#x27;
+Input: gradient, init, lr, eps
+Output: var
+&#x27;&#x27;&#x27;
+# gradient : 미분을 계산하는 함수
+# init : 시작점, lr : 학습률, eps : 알고리즘 종료 조건
+var = init
+grad = gradient(var)
+# 컴퓨터로 계산할 때 미분이 정확히 0이되는 것은 불가능하다.
+# 따라서, 충분히 작을 때(eps보다 작을때) 종료하는 조건이 필요하다.
+while(abs(grad) &gt; eps):
+    # lr은 학습률로, 미분을 통해 업데이트하는 &#x27;속도&#x27;를 조절한다.
+    var = var - lr * grad
+    # 종료조건이 성립하기 전까지는 미분값을 계속 업데이트한다.
+    grad = gradient(var)</code></pre><h3 id="c6f0c317-d280-4c8a-9a7d-212b98bc0611" class="">Gradient 벡터</h3><ul id="11bda0f4-dae9-4683-bbb3-8b23118e87ae" class="bulleted-list"><li style="list-style-type:disc">입력값이 이차원 공간의 점이 아닌 n차원 공간의 점인 벡터일 경우 그래프를 따라 왼쪽 오른쪽으로만 이동하지 않고 n차원 만큼 굉장히 많은 방향으로 이동할 수 있게 됨</li></ul><ul id="954e1670-164a-49a8-8063-ad624b672c66" class="bulleted-list"><li style="list-style-type:disc">따라서 이 경우 단순한 미분으로는 함수값의 변화를 측정하기 어려움</li></ul><ul id="07bfd1a8-1fa4-426b-bb05-2eeb3564e32f" class="bulleted-list"><li style="list-style-type:disc">이처럼 벡터가 입력값인 다변수 함수의 경우 편미분(partial differentiation)을 사용</li></ul><figure id="153cfbf2-4bd8-496a-89c4-d0dfbcfa15db" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi mathvariant="normal">∂</mi><mrow><mi>x</mi><mi>i</mi></mrow></msub><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><munder><mrow><mi>lim</mi><mo>⁡</mo></mrow><mrow><mi>h</mi><mo>→</mo><mn>0</mn></mrow></munder><mfrac><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mi>h</mi><msub><mi>e</mi><mi>i</mi></msub><mo stretchy="false">)</mo><mo>−</mo><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><mi>h</mi></mfrac><mspace linebreak="newline"></mspace><mtext>이때</mtext><mo separator="true">,</mo><msub><mi>e</mi><mi>i</mi></msub><mtext>는</mtext><mtext> </mtext><mi>i</mi><mtext>번째</mtext><mtext> </mtext><mtext>값만</mtext><mtext> </mtext><mn>1</mn><mtext>이고</mtext><mtext> </mtext><mtext>나머지는</mtext><mtext> </mtext><mn>0</mn><mtext>인</mtext><mtext> </mtext><mtext>단위벡터</mtext><mo stretchy="false">(</mo><mi>I</mi><mo stretchy="false">)</mo><mtext>를</mtext><mtext> </mtext><mtext>의미</mtext></mrow><annotation encoding="application/x-tex">∂_{xi}f(x) = \lim_{h \to 0}\frac{f(x+he_i)-f(x)}{h}\\이때, e_i는\,i번째\,값만\,1이고\,나머지는\,0인\,단위벡터(I)를\,의미</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0556em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">x</span><span class="mord mathnormal mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.1791em;vertical-align:-0.7521em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6944em;"><span style="top:-2.3479em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">h</span><span class="mrel mtight">→</span><span class="mord mtight">0</span></span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop">lim</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7521em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">h</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal">h</span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord hangul_fallback">이때</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord hangul_fallback">는</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">i</span><span class="mord hangul_fallback">번째</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">값만</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span><span class="mord hangul_fallback">이고</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">나머지는</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0</span><span class="mord hangul_fallback">인</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">단위벡터</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mclose">)</span><span class="mord hangul_fallback">를</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">의미</span></span></span></span></span></div></figure><ul id="da98e604-6c7a-4fc1-812f-b76c18cf5962" class="bulleted-list"><li style="list-style-type:disc">편미분 역시 sym.diff호 가능함 → x,y 등의 변수를 여러 개 사용한 다변수 함수(sim.poly)를 집어넣으면 된다.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="51e18b15-aded-4f34-b2d5-cb13ba293098" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all">import sympy as sym
+from sympy.abc import x,y
+sym.diff(sym.poly(3*(x**2) + 5*x*y + 2*y + 1) + sym.cos(2*x + 2*y), x)
+# 6𝑥+5𝑦−2sin(2𝑥+2𝑦)</code></pre><figure id="3077e67c-8927-47d8-a518-29cd30ccc335" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi mathvariant="normal">∇</mi><mi>f</mi><mo>=</mo><mo stretchy="false">(</mo><mi mathvariant="normal">∂</mi><mi>x</mi><mn>1</mn><mtext>​​</mtext><mi>f</mi><mo separator="true">,</mo><mi mathvariant="normal">∂</mi><mi>x</mi><mn>2</mn><mtext>​​</mtext><mi>f</mi><mo separator="true">,</mo><mo>⋯</mo><mo separator="true">,</mo><mi mathvariant="normal">∂</mi><mi>x</mi><mi>d</mi><mtext>​​</mtext><mi>f</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">∇f=(∂x1​​f,∂x2​​f,⋯,∂xd​​f)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord">∇</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord mathnormal">x</span><span class="mord">1​​</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord mathnormal">x</span><span class="mord">2​​</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner">⋯</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord mathnormal">x</span><span class="mord mathnormal">d</span><span class="mord">​​</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mclose">)</span></span></span></span></span></div></figure><ul id="ce17552e-5e70-4d45-82ca-0d8de03cd608" class="bulleted-list"><li style="list-style-type:disc">각 변수별로 편미분을 계산한 gradient 벡터를 경사하강법/경사상승법에 이용할 수 있음</li></ul><ul id="f2ff1d69-1091-4281-8c44-def3d518e57d" class="bulleted-list"><li style="list-style-type:disc">위의 식에서 삼각형을 뒤집어놓은 모양의 기호(∇)를 ‘nabla’라고 하는데 f’(x)대신 벡터∇를 이용해서 변수를 동시에 업데이트 할 수 있음<figure id="5cf2ac03-ee35-41eb-bf88-ba30a73ad17c" class="image"><a href="%E1%84%80%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%20%E1%84%92%E1%85%A1%E1%84%80%E1%85%A1%E1%86%BC%E1%84%87%E1%85%A5%E1%86%B8%20f978949672b6483dbda70c7e8ba9a371/gradient_vector_1.png"><img style="width:1024px" src="%E1%84%80%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%20%E1%84%92%E1%85%A1%E1%84%80%E1%85%A1%E1%86%BC%E1%84%87%E1%85%A5%E1%86%B8%20f978949672b6483dbda70c7e8ba9a371/gradient_vector_1.png"/></a></figure><ul id="379cffef-90e0-4b1f-b49d-fe8cd7ff2fbd" class="bulleted-list"><li style="list-style-type:circle">등고선으로 표현<figure id="46748be4-1ea5-4252-8e8e-226dbc0113e5" class="image"><a href="%E1%84%80%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%20%E1%84%92%E1%85%A1%E1%84%80%E1%85%A1%E1%86%BC%E1%84%87%E1%85%A5%E1%86%B8%20f978949672b6483dbda70c7e8ba9a371/gradient_vector_2.png"><img style="width:1024px" src="%E1%84%80%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%20%E1%84%92%E1%85%A1%E1%84%80%E1%85%A1%E1%86%BC%E1%84%87%E1%85%A5%E1%86%B8%20f978949672b6483dbda70c7e8ba9a371/gradient_vector_2.png"/></a></figure></li></ul><ul id="cef72cbc-e7bf-4409-98c1-e8b5215e0c28" class="bulleted-list"><li style="list-style-type:circle">gradient 벡터 ∇f(x,y)는 각 점(x,y)에서 가장 빨리 증가하는 방향과 같다</li></ul><ul id="0186960e-7003-4e51-a103-c056ef2b58f7" class="bulleted-list"><li style="list-style-type:circle">gradient 벡터 -∇f는 ∇(-f)와 같고 이는 각 점 (x,y)에서 가장 빨리 감소하는 방향과 같다</li></ul></li></ul><h3 id="2ba74f10-4e23-409c-b48b-7ffae3344ec2" class="">변수가 벡터일 때의 경사하강법</h3><ul id="ec2fe15f-d912-413c-90bb-ab66fbdb4474" class="bulleted-list"><li style="list-style-type:disc">변수가 벡터로 바뀌었을 때, 경사하강법의 알고리즘은 종료 조건 하나만 바뀌면 됨</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="c99662bc-7096-44aa-b638-8b5086ade9ee" class="code"><code class="language-Python" style="white-space:pre-wrap;word-break:break-all"># 경사하강법 with 벡터
+&#x27;&#x27;&#x27;
+Input: gradient, init, lr, eps
+Output: var
+&#x27;&#x27;&#x27;
+# gradient : &quot;Gradient 벡터&quot;를 계산하는 함수
+# init : 시작점, lr : 학습률, eps : 알고리즘 종료 조건
+var = init
+grad = gradient(var)
+# 절대값(abs) 대신 norm을 계산해서 종료 조건을 설정한다.
+while(norm(grad) &gt; eps):
+    var = var - lr * grad
+    grad = gradient(var)</code></pre><h3 id="1c5da34e-5349-4643-b6c7-431a47afcb8d" class="">경사하강법이 수렴하지 않을 때 - 확률적 경사하강법(SGD)</h3><figure id="a671e784-d12f-4c46-af65-b9e1a22ee05f" class="image"><a href="%E1%84%80%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%20%E1%84%92%E1%85%A1%E1%84%80%E1%85%A1%E1%86%BC%E1%84%87%E1%85%A5%E1%86%B8%20f978949672b6483dbda70c7e8ba9a371/gra_des_img.png"><img style="width:1024px" src="%E1%84%80%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%20%E1%84%92%E1%85%A1%E1%84%80%E1%85%A1%E1%86%BC%E1%84%87%E1%85%A5%E1%86%B8%20f978949672b6483dbda70c7e8ba9a371/gra_des_img.png"/></a></figure><ul id="b3566294-252f-454e-8f96-2d9fbbc65db8" class="bulleted-list"><li style="list-style-type:disc"></li></ul><hr id="61720809-bade-4cc9-b264-9dcf7754a302"/><h2 id="c17f24e6-61ca-477f-978a-469059d804b9" class="">경사하강법 종류(BGD, SGD, MGD)</h2><figure id="489a63df-e486-42a4-bca3-215c37037939" class="image"><a href="%E1%84%80%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%20%E1%84%92%E1%85%A1%E1%84%80%E1%85%A1%E1%86%BC%E1%84%87%E1%85%A5%E1%86%B8%20f978949672b6483dbda70c7e8ba9a371/1_bKSddSmLDaYszWllvQ3Z6A.webp"><img style="width:708px" src="%E1%84%80%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%20%E1%84%92%E1%85%A1%E1%84%80%E1%85%A1%E1%86%BC%E1%84%87%E1%85%A5%E1%86%B8%20f978949672b6483dbda70c7e8ba9a371/1_bKSddSmLDaYszWllvQ3Z6A.webp"/></a></figure><h3 id="3664714c-89d2-45f5-ad29-46629493d75e" class="">배치 경사 하강법(Batch Gradient Descent, BGD)</h3><ul id="4361f2e6-331e-44fb-adaf-6dbdcf5c0fb0" class="bulleted-list"><li style="list-style-type:disc">배치 경사 하강법은 경사 하강법의 손실 함수의 기울기 계산에 전체 학습 데이터 셋의 크기와 동일하게 잡는 방법(경사 하강법 대상의 크기 = 배치 크기)</li></ul><ul id="2379c57b-7197-4e3b-8a9f-a94a25691882" class="bulleted-list"><li style="list-style-type:disc">데이터셋 모두를 대상으로  하다보니 파라미터가 한번 이동할 때마다 계산해야할 값이 지나치게 많으므로 계산 시간도 엄청 길어지고 소모되는 메모리도 엄청나다</li></ul><ul id="3c12cdac-dbd7-47bc-a8a1-63a1084fb20f" class="bulleted-list"><li style="list-style-type:disc">mini batch 안 모든 데이터를 대상으로 경사 하강법을 실시하므로 안정적으로 수렴한다</li></ul><ul id="044d0ca1-ddf3-4606-9bb6-4901faa4d0b2" class="bulleted-list"><li style="list-style-type:disc">안정적으로 수렴하므로 수렴까지 발생하는 총 파라미터 업데이트 수는 매우 적다</li></ul><ul id="f994598f-4008-4082-b4e4-f2bf3f7ce854" class="bulleted-list"><li style="list-style-type:disc">그러나 지역 최소해(Local Minimum)에 빠지더라도 안정적으로 움직이므로 빠져나오기 힘들다 즉, Lcal Optima 문제가 발생할 가능성이 높다</li></ul><ul id="a43ae448-b310-425a-990c-5e58aaf7edbf" class="bulleted-list"><li style="list-style-type:disc">또한 학습 데이터 셋이 커질수록 시간과 리소스(메모리 등)의 소모가 지나치게 커진다</li></ul><h3 id="a5e131fd-46b5-4643-9e8a-bf3615978f34" class="">확률적 경사 하강법(Stochastic Gradient Descent, SGD)</h3><ul id="36d9d8e4-f34c-42a5-9f9f-d1da1554dce6" class="bulleted-list"><li style="list-style-type:disc">전체 훈련 데이터셋을 대상으로 학습하는 것은 한정된 리소스를 가지고 있는 우리의 분석 환경에서 매우 비효율적이며, 파라미터 업데이트 수가 적다는 것은 랜덤하게 뽑힌 시작 위치의 가중치 수도 적으므로 Local minimum 현상이 발생할 확률도 높다는 것 → 배치 경사 하강법의 문제점</li></ul><ul id="34e42644-3014-45b5-96e6-b7e073c09f33" class="bulleted-list"><li style="list-style-type:disc">이를 해결하기 위해 학습 데이터셋에서 무작위로 한 개의 샘플 데이터를 추출하고 그 샘플에 대해서만 기울기를 계산한것이 확률적 경사 하강법이다</li></ul><ul id="a8dd76fa-b083-45b1-a3c1-3f9294c6f7b7" class="bulleted-list"><li style="list-style-type:disc">샘플 데이터셋에 대해서만 경사를 계산하므로 매번 반복에서 다뤄야할 데이터 수가 매우 적어 학습 속도가 매우 빠르다</li></ul><ul id="12226be3-8f05-47f7-9679-53e0c79bd385" class="bulleted-list"><li style="list-style-type:disc">또한 하나의 샘플만 대상으로 경사를 계산하므로 매모리 소모량이 매우 낮으며 매우 큰 훈련 데이터 셋이라 할지라도 학습이 가능하다</li></ul><ul id="068e6b93-1a88-4c56-979f-58f1ea8d99ad" class="bulleted-list"><li style="list-style-type:disc">그러나 무작위 추출된 샘플에 대해서 경사를 구하므로 배치 경사 하강법보다 훨씬 불안정하게 움직인다.</li></ul><ul id="14d2fa36-6f26-4f01-bb8a-2c03a1b136d2" class="bulleted-list"><li style="list-style-type:disc">손실 함수가 최소값에 다다를 때까지 위아래로 요동치며 움직이다 보니 학습이 진행되다 보면 최적해에 매우 근접하게 움직이긴 하겠으나 최적해(Global minimum)에 정확히 도달하지 못할 가능성이 있다</li></ul><ul id="74908085-ba14-44de-9ff5-359c5351dd25" class="bulleted-list"><li style="list-style-type:disc">지역 최소값(Local minimum)에 빠지더라도 쉽게 빠져나올 수 있으며 그로 인해 전역 최소값(Global minimum)을 찾을 가능성이 BGD에 비해 더 높다</li></ul><ul id="1ec06acd-cf70-49b9-b34a-e6aedf63c2c4" class="bulleted-list"><li style="list-style-type:disc">속도가 매우 빠르고 메모리를 적게 사용한다는 장점이 있으나 경사를 구할 때 무작위성을 띄므로 지역 최소값의 탈출은 쉽지만 전역 최소값에 다다르기 힘들다는 단점이 있다</li></ul><h3 id="635738e7-2e6c-4b9c-a24c-2983176c0490" class="">미니 배치 경사 하강법(mini-Batch Gradient Descent)</h3><ul id="30598e36-ef54-490c-9277-584882894f0e" class="bulleted-list"><li style="list-style-type:disc">앞서 이야기한 배치 하강법이나 확률적 경사 하강법은 모두 배치 크기가 학습 데이터 셋 크기와 동일하였으나 미니 배치 경사하강법은 배치 크기를 줄이고 확률적 경사 하강법을 사용하는 기법이다.</li></ul><ul id="d0a9f679-aec7-4a94-8a73-7b808018c7ba" class="bulleted-list"><li style="list-style-type:disc">예시) 학습데이터가 1000개고 batch size를 100으로 잡았다고 할때 총 10개의 mini batch가 나오게 된다 → 이 mini batch 하나당 한번씩 SGD를 진행, 1 에포크(epoch : 전체 데이터 셋이 학습 완료하는 횟수)당 총 10번의 SGD를 진행한다고 할 수 있다.</li></ul><ul id="e45961f6-0c3d-43c5-bd7b-be20f3363d56" class="bulleted-list"><li style="list-style-type:disc">일반적으로 우리가 부르는 확률적 경사 하강법(SGD)은 실제론 미니 배치 경사 하강법이다</li></ul><ul id="4d2a8a11-bf85-4146-b04d-6a03e8f89e22" class="bulleted-list"><li style="list-style-type:disc">전체 데이터셋을 대상으로 한 SGD보다 파라미터 공간에서 Shooting이 줄어들게 되는데 이는 한 미니 배치의 손실 값 평균에 대해 경사 하강을 진행하기 때문</li></ul><ul id="5d73badb-b220-469f-a03e-da950bda864e" class="bulleted-list"><li style="list-style-type:disc">그로 인해 최적해에 더 가까이 도달할 수 있으나, Local optima 현상이 발생할 수 있음 → SGD의 장점을 이용하여 학습량을 늘리는 방식으로 해결</li></ul><ul id="d3ce039e-14f4-4aae-a05d-4c704d647763" class="bulleted-list"><li style="list-style-type:disc">배치 크기는 총 학습 데이터셋의 크기를 배치 크기로 나눴을 때 딱 떨어지는 크기로 하는 것이 좋다 → 만약 1050개의 데이터를 100개로 배치 크기를 나누면 마지막 50개의 데이터 셋에 과도한 평가가 이뤄질 수 있음 → 따라서 이런경우 50개는 버림(버릴 50개는 완전 무작위로 선정)</li></ul><p id="7675a5a0-03b9-4458-a3da-b102f5bed2ba" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
