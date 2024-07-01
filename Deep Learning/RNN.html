@@ -1,0 +1,680 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>RNN</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(0, 0, 0, 0.06); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="0efe5800-4992-4264-9236-80bae1d9992c" class="page sans"><header><h1 class="page-title">RNN</h1><p class="page-description"></p></header><div class="page-body"><p id="21bce1ff-c550-4669-893c-2bb78d6f1982" class="">Recurrent Neural Networks → ‘Recurrent’ : 재귀성, 반복되는 → 시간에 따라 가중치(w)가 반복되고 사용된다</p><ul id="6b837fc3-04e8-4f30-8f8f-7ae7a8203097" class="toggle"><li><details open=""><summary>가중치와 활성화 함수의 관계</summary><ul id="b3ad9998-777f-4589-9b11-62bae274837f" class="bulleted-list"><li style="list-style-type:disc">가중치란?<ul id="34517577-4d1f-474e-90ca-afe1a57aca74" class="bulleted-list"><li style="list-style-type:circle">모델의 학습 과정에서 매우 중요한 역할을 하는 파라미터</li></ul><ul id="22b4fa00-2808-4a7c-bec2-a9dab5e7c8af" class="bulleted-list"><li style="list-style-type:circle">신경망의 각 뉴런 간 연결의 강도를 나타내며 입력 데이터에서 출력으로의 변환을 조정</li></ul><h3 id="2f03fc47-1eb7-46f5-8499-48b41a103e35" class="">1. 가중치의 역할</h3><ul id="fac21fa8-4b35-4aea-bfe6-a2c94f95928f" class="bulleted-list"><li style="list-style-type:circle">가중치는 입력 신호를 변환하여 출력으로 전달하는 데 사용</li></ul><ul id="497ea31d-fe3a-4ae6-868b-1072401d5726" class="bulleted-list"><li style="list-style-type:circle">신경망의 기본 단위인 뉴런은 다음과 같은 방식으로 작동<ul id="24723e88-1001-4cec-b49a-4b6db6e81255" class="bulleted-list"><li style="list-style-type:square">각 입력 값 x_i에 가중치 w_i를 곱합니다.</li></ul><ul id="f39a8fa9-2a27-4eb2-b798-ffca0873844d" class="bulleted-list"><li style="list-style-type:square">이 값들을 모두 더한 다음, 바이어스(bias) b를 더합니다.</li></ul><ul id="90471c06-6392-4070-b372-ebf014c4a13d" class="bulleted-list"><li style="list-style-type:square">그 결과에 활성화 함수(Activation Function)를 적용하여 최종 출력을 생성합니다.</li></ul></li></ul><p id="3b862cf8-2652-448f-885b-1b765c5cf960" class="">수식으로 표현하면:</p><figure id="5733bf6e-780a-4372-b2e9-aca673255be9" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>y</mi><mo>=</mo><mi>f</mi><mrow><mo fence="true">(</mo><munder><mo>∑</mo><mi>i</mi></munder><msub><mi>w</mi><mi>i</mi></msub><msub><mi>x</mi><mi>i</mi></msub><mo>+</mo><mi>b</mi><mo fence="true">)</mo></mrow><mspace linebreak="newline"></mspace><mtext>여기서</mtext><mi>f</mi><mtext>는활성화함수입니다</mtext><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">y = f\left(\sum_{i} w_i x_i + b\right) \\ 여기서 f는 활성화 함수입니다.</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:3.0277em;vertical-align:-1.2777em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size4">(</span></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.05em;"><span style="top:-1.8723em;margin-left:0em;"><span class="pstrut" style="height:3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span style="top:-3.05em;"><span class="pstrut" style="height:3.05em;"></span><span><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.2777em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal">b</span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size4">)</span></span></span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord hangul_fallback">여기서</span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mord hangul_fallback">는활성화함수입니다</span><span class="mord">.</span></span></span></span></span></div></figure><h3 id="872b7c1e-426f-415c-9648-a840f39b7abd" class="">2. 가중치 초기화</h3><ul id="e82813ef-c1c2-4c86-9c45-963b63b2a429" class="bulleted-list"><li style="list-style-type:circle">가중치의 초기화는 신경망의 학습 과정에 큰 영향을 미칩니다. 초기화 방법은 여러 가지가 있으며, 대표적인 방법은 다음과 같습니다:<ul id="03585cdd-6f20-47ed-88c1-7119d9e4279e" class="bulleted-list"><li style="list-style-type:square"><strong>무작위 초기화 (Random Initialization)</strong>: 가중치를 작은 무작위 값으로 초기화합니다. 이는 대칭성 문제를 피하고 학습을 시작할 수 있게 합니다.</li></ul><ul id="980fa888-439c-4814-b329-dc85d4233ae9" class="bulleted-list"><li style="list-style-type:square"><strong>He 초기화</strong>: ReLU 활성화 함수를 사용하는 신경망에서 주로 사용되며, 가중치를 평균이 0이고 분산이 2/n인 정규 분포에서 초기화합니다.</li></ul><ul id="caec4c66-1a71-4c1f-8633-4319b4778dcf" class="bulleted-list"><li style="list-style-type:square"><strong>Xavier 초기화 (Glorot 초기화)</strong>: 시그모이드나 tanh 같은 활성화 함수를 사용하는 신경망에서 주로 사용되며, 가중치를 평균이 0이고 분산이 2/(n_in + n_out)인 정규 분포에서 초기화합니다. 여기서 n_in은 입력 뉴런의 수, n_out은 출력 뉴런의 수입니다.</li></ul></li></ul><h3 id="55f110ee-0600-4ee1-a286-4891d07edd4c" class="">3. 가중치 학습</h3><ul id="9f870789-8839-4b18-88d5-65f672f55e8e" class="bulleted-list"><li style="list-style-type:circle">신경망의 학습 과정에서 가중치는 훈련 데이터를 통해 조정</li></ul><ul id="97488a57-4cb4-4d15-9f1f-65ac18e059ae" class="bulleted-list"><li style="list-style-type:circle">이는 주로 역전파 알고리즘(Backpropagation)을 통해 이루어짐<ul id="0bfa6352-4221-40b7-a8b1-10dfd174e6b9" class="bulleted-list"><li style="list-style-type:square"><strong>순전파 (Forward Propagation)</strong>: 입력 데이터를 네트워크에 통과시켜 출력을 계산합니다.</li></ul><ul id="c3ce5164-44cf-4e90-9065-aa4b03923c4b" class="bulleted-list"><li style="list-style-type:square"><strong>손실 계산 (Loss Calculation)</strong>: 예측된 출력과 실제 값을 비교하여 손실(오차)을 계산합니다.</li></ul><ul id="2ddbd083-d724-4177-a3ba-d1c02fa90395" class="bulleted-list"><li style="list-style-type:square"><strong>역전파 (Backpropagation)</strong>: 손실을 미분하여 각 가중치에 대한 그래디언트를 계산합니다.</li></ul><ul id="045e32bf-0049-4ff2-8674-be7e5b9b9822" class="bulleted-list"><li style="list-style-type:square"><strong>가중치 업데이트 (Weight Update)</strong>: 그래디언트 디센트(Gradient Descent) 등의 최적화 알고리즘을 사용하여 가중치를 업데이트합니다.</li></ul></li></ul><p id="6139f7c8-de5f-405c-9ed6-3243d933e246" class="">가중치 업데이트 수식은 다음과 같습니다</p><figure id="e560ef59-dfef-401d-8d19-ee80e2671cef" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>w</mi><mi>i</mi></msub><mo>=</mo><msub><mi>w</mi><mi>i</mi></msub><mo>−</mo><mi>η</mi><mfrac><mrow><mi mathvariant="normal">∂</mi><mi>L</mi></mrow><mrow><mi mathvariant="normal">∂</mi><msub><mi>w</mi><mi>i</mi></msub></mrow></mfrac><mspace linebreak="newline"></mspace><mtext>여기서</mtext><mtext> </mtext><mi>η</mi><mtext>는</mtext><mtext> </mtext><mtext>학습률</mtext><mo stretchy="false">(</mo><mi>L</mi><mi>e</mi><mi>a</mi><mi>r</mi><mi>n</mi><mi>i</mi><mi>n</mi><mi>g</mi><mi>R</mi><mi>a</mi><mi>t</mi><mi>e</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><mtext> </mtext><mi>L</mi><mtext>은손실함수입니다</mtext><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">w_i = w_i - \eta \frac{\partial L}{\partial w_i} \\ 여기서\, \eta는\, 학습률(Learning Rate), \,L은 손실 함수입니다.</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:2.2074em;vertical-align:-0.836em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">η</span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.0269em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord mathnormal">L</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.836em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord hangul_fallback">여기서</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">η</span><span class="mord hangul_fallback">는</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">학습률</span><span class="mopen">(</span><span class="mord mathnormal">L</span><span class="mord mathnormal">e</span><span class="mord mathnormal">a</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="mord mathnormal">nin</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mord mathnormal">a</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">L</span><span class="mord hangul_fallback">은손실함수입니다</span><span class="mord">.</span></span></span></span></span></div></figure><h3 id="73fce9b2-2f30-4e0b-b772-c9df2e5ae6ae" class="">4. 최적화 방법</h3><ul id="3cc4dde2-3775-4b72-89e6-470e8e3b3cab" class="bulleted-list"><li style="list-style-type:circle"><strong>경사하강법 (Gradient Descent)</strong>: 가장 기본적인 방법으로, 미분을 사용하여 손실을 최소화하는 방향으로 가중치를 조정합니다.</li></ul><ul id="55b359d9-bc9c-448c-af40-d1604513f9ff" class="bulleted-list"><li style="list-style-type:circle"><strong>모멘텀 (Momentum)</strong>: 이전 기울기 값도 고려하여 가중치를 업데이트함으로써 수렴 속도를 높이고 진동을 줄입니다.</li></ul><ul id="7fff65a5-d93b-4165-ad1c-3da6a14e78ed" class="bulleted-list"><li style="list-style-type:circle"><strong>Adam (Adaptive Moment Estimation)</strong>: 학습률을 적응적으로 조정하며, 모멘텀과 RMSProp을 결합한 방법입니다.</li></ul><h3 id="167cd6f3-4f0a-4a3d-9796-42bcef43fea8" class="">5. 가중치가 신경망 성능에 미치는 영향</h3><ul id="8ecc9f48-2755-49ff-bf74-d4d5af1eb451" class="bulleted-list"><li style="list-style-type:circle"><strong>초기화</strong>: 적절한 초기화가 없으면 신경망이 학습을 시작하기 어렵거나 매우 느리게 학습될 수 있습니다.</li></ul><ul id="12cd67ff-aad4-4027-af45-c82c572b3fd6" class="bulleted-list"><li style="list-style-type:circle"><strong>학습률</strong>: 학습률이 너무 크면 발산할 수 있고, 너무 작으면 수렴 속도가 느려질 수 있습니다.</li></ul><ul id="8ec1fd2b-9d2d-4fe4-8a21-2b19b2206831" class="bulleted-list"><li style="list-style-type:circle"><strong>과적합/과소적합</strong>: 가중치가 학습 데이터에 너무 맞춰지면 과적합(overfitting)이 발생할 수 있고, 반대로 너무 일반적이면 과소적합(underfitting)이 발생할 수 있습니다.</li></ul><h3 id="8de7ebac-2db9-4b48-8837-f0f2852de518" class="">요약</h3><ul id="f2822aea-94b6-4ea9-8b32-5130c4c97863" class="bulleted-list"><li style="list-style-type:circle"><strong>가중치(Weights)</strong>: 신경망에서 입력과 출력 간의 연결 강도를 나타내는 파라미터.</li></ul><ul id="0009a556-0c2d-42b0-a51e-cf6a6130a099" class="bulleted-list"><li style="list-style-type:circle"><strong>초기화</strong>: 무작위 초기화, He 초기화, Xavier 초기화 등.</li></ul><ul id="3544b0d1-b903-4f95-a7aa-500f5858711f" class="bulleted-list"><li style="list-style-type:circle"><strong>학습</strong>: 순전파, 손실 계산, 역전파, 가중치 업데이트.</li></ul><ul id="1e5ef0fa-2ddf-405e-b36f-464300478cc1" class="bulleted-list"><li style="list-style-type:circle"><strong>최적화 방법</strong>: 경사하강법, 모멘텀, Adam 등.</li></ul><ul id="9c5cd7a0-e6c5-496a-a39b-121036460283" class="bulleted-list"><li style="list-style-type:circle"><strong>성능 영향</strong>: 초기화, 학습률, 과적합/과소적합 등.</li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="131b8042-6e36-4988-bf88-7337e1dfa2a3"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">가중치(weight)는 활성화 함수를 이루는 요소로 입력값 x 에 곱해져서 활성화 함수 결과에 반영된다</div></figure></li></ul></details></li></ul><hr id="8cb05407-0ca3-4170-9d4a-4ec6146a1e8b"/><ul id="5a50faf8-820b-4fbf-bfa8-91cfb6b821a3" class="bulleted-list"><li style="list-style-type:disc">시계열 데이터(시간에 따라 변화하는 데이터)를 처리하기에 좋은 뉴럴 네트워크 구조<ul id="75f37c2f-01e6-4bc4-aa08-c67f5b6f5f9e" class="bulleted-list"><li style="list-style-type:circle">음성인식(speech recognition)</li></ul><ul id="c01f9067-35cd-431d-abdc-3f6e66300d69" class="bulleted-list"><li style="list-style-type:circle">음악 생성기(music generation)</li></ul><ul id="5a62b30f-1098-475a-b4df-2cad82f4c79c" class="bulleted-list"><li style="list-style-type:circle">DNA 염기서열</li></ul><ul id="0cdecbab-bb15-4c0d-9f22-7bc57418e3bc" class="bulleted-list"><li style="list-style-type:circle">번역기(machine translation)</li></ul><ul id="8d1a6e82-26d7-4002-83e0-a90d923d86b4" class="bulleted-list"><li style="list-style-type:circle">감정 분석(sentiment classification)</li></ul><ul id="fe4e5c1b-c243-451a-827c-e810c91a551a" class="bulleted-list"><li style="list-style-type:circle">→ 자연어 처리, 음성 처리 등등 모두 순차성을 가진다 : 시간에 흐름에 따라 진행된다<ul id="602ef3c2-cd57-4ac5-bf36-a8738864b382" class="bulleted-list"><li style="list-style-type:square">예시) 나는 물을 마시고 싶어 → ‘마시고’라는 단어는 ‘나는’, ’물을’이 순차적으로 나오고 나와야 문장에서 의미를 가진다. 즉, 시간의 흐름에 따라 정보가 나열된다.</li></ul></li></ul></li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="d4c48121-70d2-4929-ab79-6439e55aba6d"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">CNN이 이미지 구역별로 같은 weight를 공유한다면, RNN은 시간 별로 같은 weight를 공유한다. 즉, 과거와 현재는 같은 weight를 공유한다</div></figure><hr id="040eff57-1b61-4c9a-9dea-71bf5493ec74"/><h1 id="1a2bdaea-e8d6-4e4a-872a-71d6b978dfbb" class="">First Order System</h1><ul id="7a1d0275-1271-46ae-ac3c-e08609085830" class="bulleted-list"><li style="list-style-type:disc">현재 시간의 상태가 이전 시간의 상태와 관련이 있다고 가정</li></ul><ul id="a7a64236-0c82-422e-9fda-f1d444fd2bd1" class="bulleted-list"><li style="list-style-type:disc">자기와 자기 이전 상태에 대한 함수<figure id="93f8fe0a-1208-44ce-b900-cc2afe0867b3" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>x</mi><mo>:</mo><mtext>상태</mtext><mo stretchy="false">(</mo><mtext>시세</mtext><mo separator="true">,</mo><mtext>날씨</mtext><mo separator="true">,</mo><mtext>점수</mtext><mo stretchy="false">)</mo><mspace linebreak="newline"></mspace><mi>t</mi><mo>:</mo><mtext>시간</mtext><mspace linebreak="newline"></mspace><msub><mi>x</mi><mi>t</mi></msub><mo>:</mo><mi>t</mi><mtext>일때상태</mtext><mspace linebreak="newline"></mspace><msub><mi>x</mi><mi>t</mi></msub><mo>=</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">x : 상태 (시세, 날씨, 점수)\\t : 시간\\x_t : t일 때 상태\\x_t = f(x_{t-1})
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord hangul_fallback">상태</span><span class="mopen">(</span><span class="mord hangul_fallback">시세</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">날씨</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">점수</span><span class="mclose">)</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.6151em;"></span><span class="mord mathnormal">t</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord hangul_fallback">시간</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">t</span><span class="mord hangul_fallback">일때상태</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></div></figure></li></ul><ul id="d4e80b6f-8520-4ad5-a06d-b719e0bf0d69" class="bulleted-list"><li style="list-style-type:disc">즉 t일 때 x는 이전 시간인 t-1일 때 x에 영향을 받는다(단, 이전 시간의 상태만 영향을 미친다 → x0는 x1에 영향을 미치고 x1은 x2에 영향을 미친다 즉, x0가 x2에 명향을 미치지는 않는다.)</li></ul><ul id="b46c5d07-42c3-419b-a445-26da23c23591" class="bulleted-list"><li style="list-style-type:disc">현재 시간의 상태는 이전 시간의 상태에 대한 어떤 함수이다</li></ul><ul id="651486a8-86e4-45ba-9649-ae104a6faf31" class="bulleted-list"><li style="list-style-type:disc">이 시스템은 외부 입력 없이 자기 혼자서 돌아간다 → autonomous system</li></ul><h3 id="601a900f-7125-44a1-951d-4fb2ac86bafa" class="">현재의 입력이 추가된 First Order System  </h3><figure id="8b579dcc-8590-4ed3-ab47-bae7fd8c4cc2" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>x</mi><mi>t</mi></msub><mo>:</mo><mi>t</mi><mtext>일때상태</mtext><mspace linebreak="newline"></mspace><msub><mi>u</mi><mi>t</mi></msub><mo>:</mo><mtext>현재의입력</mtext><mo stretchy="false">(</mo><mtext>외부입력</mtext><mo stretchy="false">)</mo><mspace linebreak="newline"></mspace><msub><mi>x</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>:</mo><mtext>이전시간의상태</mtext><mspace linebreak="newline"></mspace><msub><mi>x</mi><mi>t</mi></msub><mo>=</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><mo separator="true">,</mo><msub><mi>u</mi><mi>t</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">x_t : t일 때 상태\\u_t : 현재의 입력(외부 입력)\\x_{t-1} : 이전 시간의 상태\\x_t = f(x_{t-1},u_t)
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">t</span><span class="mord hangul_fallback">일때상태</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">u</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord hangul_fallback">현재의입력</span><span class="mopen">(</span><span class="mord hangul_fallback">외부입력</span><span class="mclose">)</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.6389em;vertical-align:-0.2083em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord hangul_fallback">이전시간의상태</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">u</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></div></figure><hr id="ee6c9594-8acd-4f2f-a83e-74169d7f76c6"/><h1 id="902c9b68-00ea-4a8d-ae1c-8fff91d4a7d9" class="">State-Space Model</h1><ul id="18d5d99c-738f-4eeb-882f-e438dc5596f8" class="bulleted-list"><li style="list-style-type:disc">1차원 시스템의 모형</li></ul><figure id="cdfc5409-579c-44d8-a9ff-b95de96f795d" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>x</mi><mi>t</mi></msub><mo>=</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><mo separator="true">,</mo><msub><mi>u</mi><mi>t</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">x_t = f(x_{t-1},u_t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">u</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></div></figure><ul id="c933a06e-8107-46bf-9cc7-bab65e2a8d57" class="bulleted-list"><li style="list-style-type:disc">모든 시간 t에서 모든 상태 xt가 관측 가능한가?(observable)<ul id="4dd6074c-5da2-4b08-af4f-3dc06cfcec46" class="bulleted-list"><li style="list-style-type:circle">날씨 예측</li></ul><ul id="ddba6214-2bf6-449d-9ab3-85907d24acc7" class="bulleted-list"><li style="list-style-type:circle">주가 예측</li></ul><ul id="751b2b0d-1cb5-438f-adeb-76e323ac1344" class="bulleted-list"><li style="list-style-type:circle">예시) 날씨를 예측하는 것이 가능한가? → 일부만 가능하다 → 날씨에 영향을 주는 다양한 요인들이 존재하는데 그 요인 중 일부만 예측할 수 있기 때문에 일부만 가능하다고 할 수 있다</li></ul></li></ul><ul id="b779c0d3-5ee0-4b68-bd1a-bca207712b70" class="bulleted-list"><li style="list-style-type:disc">즉, 모든 시간 t 에서 모든 상태 xt는 일부만 관측 가능하다 → 관측 가능한 상태의 모음(State-Space Model에서 정의된다)</li></ul><ul id="14692b4c-ec4d-47fa-9a62-a9e88bac2b51" class="bulleted-list"><li style="list-style-type:disc">각 시간에서 관측 가능한 상태의 모음 : 출력 yt</li></ul><figure id="5395d97e-430b-4e0b-91f0-82f0fd7647ff" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>y</mi><mi>t</mi></msub><mo>=</mo><mi>h</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>t</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">y_t = h(x_t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">h</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></div></figure><ul id="45fb4481-c5fb-410e-b012-08c9e2b7daea" class="bulleted-list"><li style="list-style-type:disc">State-Space Model as RNN<ul id="ce03772b-0cd2-412a-ac8d-4b40741db116" class="bulleted-list"><li style="list-style-type:circle">상태 x_t가 의미하는 것은 hidden layer의 state이다</li></ul><ul id="a01099b2-6a7c-40cd-965f-e73940fec8a9" class="bulleted-list"><li style="list-style-type:circle">이전가지의 상태와 이전까지의 입력을 대표할 수 있는 압출본이라고 할 수 있음<ul id="c6bbad0f-9bd4-4f23-b8c8-e0712b18c788" class="bulleted-list"><li style="list-style-type:square">예시) 오늘의 주가는 어제까지의 주가를 결정한 과거의 주가와 주가에 영향을 주는 변수들의 입력값이 압축된 총체하고 할 수 있음</li></ul></li></ul><ul id="fe089306-34e4-49b4-8bbd-aed3574054c9" class="bulleted-list"><li style="list-style-type:circle">상태 x_t는 시계열로 들어오는 입력들을 최대한 상세히 표현할 수 있어야함</li></ul></li></ul><h3 id="b1f322d6-d3b9-402b-885a-76529ef8fa1a" class="">어떤 시스템을 해석하기 위한 3요소</h3><ul id="7dd8bdab-6c53-410e-b707-6a83d56932cc" class="bulleted-list"><li style="list-style-type:disc">입력(u), 상태(x), 출력(y)</li></ul><figure id="a93f22aa-6af3-4b95-9819-c9348453cb14" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>x</mi><mi>t</mi></msub><mo>=</mo><mi>f</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><mo separator="true">,</mo><msub><mi>u</mi><mi>t</mi></msub><mo stretchy="false">)</mo><mspace linebreak="newline"></mspace><msub><mi>y</mi><mi>t</mi></msub><mo>=</mo><mi>h</mi><mo stretchy="false">(</mo><msub><mi>x</mi><mi>t</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">x_t = f(x_{t-1},u_t)\\y_t = h(x_t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">u</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">h</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></div></figure><ul id="bceb6a44-2a85-493e-8d51-fe8d029ca163" class="bulleted-list"><li style="list-style-type:disc">도식화 → 입력값(x), 상태값(s), 출력값(o)<figure id="d43832a3-445e-4686-84fa-1b2a523f0e71" class="image"><a href="RNN%200efe580049924264923680bae1d9992c/Untitled.png"><img style="width:795px" src="RNN%200efe580049924264923680bae1d9992c/Untitled.png"/></a><figcaption><strong>이미지 1</strong></figcaption></figure><ul id="5b2f4cc5-54d2-45bd-bb1a-323c579f8711" class="bulleted-list"><li style="list-style-type:circle">그림에서 알 수 있듯 단순히 입력값 → 상태값 → 출력값 단계를 거치는 ANN과 달리 self-loop 단계가 존재해서 일정한 W(가중치)가 반복 사용된다</li></ul></li></ul><h3 id="bb77d81b-0c30-42bf-9054-bece43a21681" class="">RNN에서의 가중치(Weight)</h3><p id="c465e600-2785-4665-8b20-a2e2c13c7716" class="">위의 이미지 1을 참고</p><ul id="56185637-006a-4a8d-ba29-f66cde039549" class="bulleted-list"><li style="list-style-type:disc">입력 가중치 행렬 : 입력 데이터 x_t를 현재 은닉 상태 s_t로 변환하는 가중치 → U(W_xs)</li></ul><ul id="100648c8-6e8b-4ae0-a21e-64341ceafd11" class="bulleted-list"><li style="list-style-type:disc">은닉 상태 가중치 행렬 : 이전 은닉 상태 s_t-1을 현재 은닉 상태 s_t로 변환하는 가중치 → W(W_ss)</li></ul><ul id="f4784e98-ff6c-4831-98ab-a5607ee97016" class="bulleted-list"><li style="list-style-type:disc">출력 가중치 행렬 : 현재 은닉 상태 s_t를 출력 o_t로 변환하는 가중치 → V(Wso)</li></ul><h3 id="7692fef9-752e-4973-97be-e61ab9fbbba2" class="">RNN 작동 원리</h3><ul id="725ba851-cc4a-45e8-81ad-97d896812885" class="bulleted-list"><li style="list-style-type:disc">은닉 상태 업데이트<figure id="f562d451-83b2-4b0b-86a9-1be7fc705456" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>s</mi><mi>t</mi></msub><mo>=</mo><mi>σ</mi><mo stretchy="false">(</mo><msub><mi>W</mi><mrow><mi>x</mi><mi>s</mi></mrow></msub><msub><mi>x</mi><mi>t</mi></msub><mo>+</mo><msub><mi>W</mi><mrow><mi>s</mi><mi>s</mi></mrow></msub><msub><mi>s</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>+</mo><msub><mi>b</mi><mi>h</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">s_t=σ(W_{xs}x_t+W_{ss}s_{t−1}+b_h)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">x</span><span class="mord mathnormal mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8917em;vertical-align:-0.2083em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">ss</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">h</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></div></figure><figure id="e318b19e-5933-40bb-924e-ef4198e5da4c" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>s</mi><mi>t</mi></msub><mo>:</mo><mtext>현재</mtext><mtext> </mtext><mtext>시간의</mtext><mtext> </mtext><mtext>은닉</mtext><mtext> </mtext><mtext>상태</mtext><mspace linebreak="newline"></mspace><mi>σ</mi><mo>:</mo><mtext>활성화</mtext><mtext> </mtext><mtext>함수</mtext><mspace linebreak="newline"></mspace><msub><mi>W</mi><mrow><mi>x</mi><mi>s</mi></mrow></msub><mo>:</mo><mtext>입력</mtext><mtext> </mtext><mtext>가중치</mtext><mtext> </mtext><mtext>행렬</mtext><mspace linebreak="newline"></mspace><msub><mi>x</mi><mi>t</mi></msub><mo>:</mo><mtext>현재</mtext><mtext> </mtext><mtext>시간의</mtext><mtext> </mtext><mtext>입력값</mtext><mspace linebreak="newline"></mspace><msub><mi>W</mi><mrow><mi>s</mi><mi>s</mi></mrow></msub><mo>:</mo><mtext>은닉</mtext><mtext> </mtext><mtext>상태</mtext><mtext> </mtext><mtext>가중치</mtext><mtext> </mtext><mtext>행렬</mtext><mspace linebreak="newline"></mspace><msub><mi>s</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>:</mo><mtext>이전</mtext><mtext> </mtext><mtext>시간의</mtext><mtext> </mtext><mtext>은닉</mtext><mtext> </mtext><mtext>상태</mtext><mspace linebreak="newline"></mspace><msub><mi>b</mi><mi>h</mi></msub><mo>:</mo><mtext>은닉</mtext><mtext> </mtext><mtext>상태에</mtext><mtext> </mtext><mtext>대한</mtext><mtext> </mtext><mtext>바이어스</mtext><mo stretchy="false">(</mo><mi>b</mi><mi>i</mi><mi>a</mi><mi>s</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">s_t : 현재\,시간의\,은닉\,상태\\σ : 활성화\,함수\\W_{xs} : 입력\,가중치\,행렬\\x_t : 현재\,시간의\,입력값\\W_{ss} : 은닉\,상태\,가중치\,행렬\\s_{t−1} : 이전\,시간의\,은닉\,상태\\b_h : 은닉\,상태에\,대한\,바이어스(bias)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord hangul_fallback">현재</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">시간의</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">은닉</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">상태</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">σ</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord hangul_fallback">활성화</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">함수</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">x</span><span class="mord mathnormal mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord hangul_fallback">입력</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">가중치</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">행렬</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord hangul_fallback">현재</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">시간의</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">입력값</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">ss</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord hangul_fallback">은닉</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">상태</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">가중치</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">행렬</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.6389em;vertical-align:-0.2083em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord hangul_fallback">이전</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">시간의</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">은닉</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">상태</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">h</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord hangul_fallback">은닉</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">상태에</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">대한</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">바이어스</span><span class="mopen">(</span><span class="mord mathnormal">bia</span><span class="mord mathnormal">s</span><span class="mclose">)</span></span></span></span></span></div></figure></li></ul><ul id="fdcc3778-a33a-401f-9272-e84d9e316cb4" class="bulleted-list"><li style="list-style-type:disc">출력 계산</li></ul><figure id="d8ac3848-3fa2-45ef-827e-e10b3de78051" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>o</mi><mi>t</mi></msub><mo>=</mo><mi>ϕ</mi><mo stretchy="false">(</mo><msub><mi>W</mi><mrow><mi>s</mi><mi>o</mi></mrow></msub><msub><mi>s</mi><mi>t</mi></msub><mo>+</mo><msub><mi>b</mi><mi>y</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">o_t=ϕ(W_{so}s_t+b_y)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">o</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">ϕ</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">so</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1.0361em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">y</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></div></figure><figure id="da75710d-9b5a-499e-9187-84471772dd14" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>o</mi><mi>t</mi></msub><mo>:</mo><mtext>현재</mtext><mtext> </mtext><mtext>시간의</mtext><mtext> </mtext><mtext>출력값</mtext><mspace linebreak="newline"></mspace><mi>ϕ</mi><mo>:</mo><mtext>출력</mtext><mtext> </mtext><mtext>활성화</mtext><mtext> </mtext><mtext>함수</mtext><mspace linebreak="newline"></mspace><msub><mi>W</mi><mrow><mi>s</mi><mi>o</mi></mrow></msub><mo>:</mo><mtext>출력</mtext><mtext> </mtext><mtext>가중치</mtext><mtext> </mtext><mtext>행렬</mtext><mspace linebreak="newline"></mspace><msub><mi>s</mi><mi>t</mi></msub><mo>:</mo><mtext>업데이트된</mtext><mtext> </mtext><mtext>은닉</mtext><mtext> </mtext><mtext>상태</mtext><mspace linebreak="newline"></mspace><msub><mi>b</mi><mi>y</mi></msub><mo>:</mo><mtext>은닉</mtext><mtext> </mtext><mtext>상태에</mtext><mtext> </mtext><mtext>대한</mtext><mtext> </mtext><mtext>바이어스</mtext><mo stretchy="false">(</mo><mi>b</mi><mi>i</mi><mi>a</mi><mi>s</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">o_t : 현재\,시간의\,출력값\\ϕ : 출력\,활성화\,함수 \\W_{so} : 출력\,가중치\,행렬\\s_t : 업데이트된\,은닉\,상태\\b_y : 은닉\,상태에\,대한\,바이어스(bias)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">o</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord hangul_fallback">현재</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">시간의</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">출력값</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">ϕ</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord hangul_fallback">출력</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">활성화</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">함수</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">so</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord hangul_fallback">출력</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">가중치</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">행렬</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.5806em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord hangul_fallback">업데이트된</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">은닉</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">상태</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.9805em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.03588em;">y</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord hangul_fallback">은닉</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">상태에</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">대한</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord hangul_fallback">바이어스</span><span class="mopen">(</span><span class="mord mathnormal">bia</span><span class="mord mathnormal">s</span><span class="mclose">)</span></span></span></span></span></div></figure><ul id="f01d7bbb-dfd9-47de-b378-e906e906e826" class="bulleted-list"><li style="list-style-type:disc">초기 조건 정의(s_0) : RNN이 진행됨에 있어 첫번째 시점의 상태는 따로 정의해주어야 한다</li></ul><hr id="f132c7ea-9960-4510-8b60-9179194bfeea"/><p id="9396a15c-cc21-4693-8b87-3123c07ad024" class="">RNN의 유형</p><figure id="21c7dbad-b0b3-4783-afda-729ae9db7f1b" class="image"><a href="RNN%200efe580049924264923680bae1d9992c/1_zVeBz2aX5vfM-vRSm9zZcA.webp"><img style="width:708px" src="RNN%200efe580049924264923680bae1d9992c/1_zVeBz2aX5vfM-vRSm9zZcA.webp"/></a></figure><ul id="31bcbff5-0b72-4b88-af15-429bbb42abf6" class="bulleted-list"><li style="list-style-type:disc">일대일 : RNN이 없는 기본 처리 모드, 고정된 크기의 입력에서 고정된 크기의 출력으로 진행 (예 - 이미지 분류)</li></ul><ul id="a1241953-d936-4107-87b3-93a0d92c8c8b" class="bulleted-list"><li style="list-style-type:disc">일대다 : 시퀀스 출력(예 - 이미지를 가져와 이미지를 설명하는 단어와 문장을 출력 &gt; CNN으로 생성한 이미지 특징 벡터를 사용하여 RNN의 초기 은닉 상태로 사용) → 생성</li></ul><ul id="f611b285-11d3-4602-8d5c-6896fa3f4038" class="bulleted-list"><li style="list-style-type:disc">다대일 : 시퀀스 입력(예 - 주어진 문장이 긍정적 또는 부정적인 감정을 표현하는 것으로 분류되는 감정 분석) → 예측</li></ul><ul id="6d3142e8-704a-4610-bf4a-c3c7e5ce5f17" class="bulleted-list"><li style="list-style-type:disc">다대다(1) : 시퀀스 입력 및 시퀀스 출력(예 - 번역기로 영어 문장을 프랑스 문장으로 번역) → 번역</li></ul><ul id="a2828a15-c183-4176-801f-fdd9e3af973e" class="bulleted-list"><li style="list-style-type:disc">다대다(2) : 동기화된 시퀀스 입력 및 출력(예 - 비디오의 각 프레임에 레이블을 지정하려는 비디오 분류)</li></ul><hr id="f2b7ead6-5d43-4fe6-ac37-38d7e7201afd"/><h3 id="52a8189d-01ab-4429-8cd2-10015e2f8a9d" class="">RNN 한계점</h3><p id="2a86faf8-5bd3-43ec-8e51-8f6199faa579" class="">1. 기울기 소실 문제 (Vanishing Gradient Problem)</p><ul id="b3851b39-3a9d-4195-b63c-0998601ca5d3" class="bulleted-list"><li style="list-style-type:disc">설명: 역전파 과정에서 기울기(Gradient)가 점점 작아져서 초기 층까지 도달하기 전에 거의 0이 되는 현상입니다. 이는 특히 긴 시퀀스를 학습할 때 심각한 문제입니다.</li></ul><ul id="6902c2ed-3fd2-4ab0-8ff8-f0b92bbff652" class="bulleted-list"><li style="list-style-type:disc">영향: 모델이 장기 의존성을 학습하지 못하고, 최근의 정보에만 의존하게 됩니다.</li></ul><ul id="bc2c5c70-69da-4291-a97e-6c6ed6fc1436" class="bulleted-list"><li style="list-style-type:disc">원인: RNN에서 은닉 상태는 반복적으로 이전 은닉 상태에 가중치를 곱하는 방식으로 업데이트됩니다. 이 과정에서 활성화 함수의 미분 값이 1보다 작으면, 기울기가 반복적으로 곱해지면서 기하급수적으로 감소합니다.</li></ul><p id="71990db7-83c3-4fb5-bbab-d9f509f439df" class="">2. 기울기 폭발 문제 (Exploding Gradient Problem)</p><ul id="27fa18a7-d2e3-457e-980a-ae4c375961ed" class="bulleted-list"><li style="list-style-type:disc">설명: 기울기가 역전파 과정에서 너무 커지는 현상입니다.</li></ul><ul id="9c458c98-088c-4961-8f8b-08ea54721a35" class="bulleted-list"><li style="list-style-type:disc">영향: 모델의 가중치가 비정상적으로 커지며, 학습이 불안정해지고 발산할 수 있습니다.</li></ul><ul id="0f2b8c33-9017-4164-99d0-d4511f96c90b" class="bulleted-list"><li style="list-style-type:disc">원인: 기울기가 1보다 큰 값이 반복적으로 곱해질 때, 기울기가 기하급수적으로 증가하게 됩니다.</li></ul><p id="79089b79-4af0-474b-8d39-f8fafbabaf86" class="">3. 장기 의존성 학습의 어려움</p><ul id="eb03b953-e8c4-47c3-9081-d8612a4c4283" class="bulleted-list"><li style="list-style-type:disc">설명: 긴 시퀀스에서 초기 입력이 나중의 출력에 영향을 미치는 경우, 이를 학습하는 것이 어렵습니다.</li></ul><ul id="e3ddb7d0-9ec8-4204-a3cb-863db690c66a" class="bulleted-list"><li style="list-style-type:disc">영향: RNN은 단기 의존성을 잘 학습할 수 있지만, 장기 의존성은 학습하기 어렵습니다.</li></ul><ul id="7b47e69e-6ead-408d-abbe-1bc85e1df59d" class="bulleted-list"><li style="list-style-type:disc">원인: 기울기 소실 및 폭발 문제로 인해 장기적인 정보가 효과적으로 전달되지 못합니다.</li></ul><p id="72020ffd-a2f8-4250-91f5-85ffda271d0f" class="">4. 병렬 처리의 어려움</p><ul id="331281b7-9e99-4fa3-9144-c0d9202c0523" class="bulleted-list"><li style="list-style-type:disc">설명: RNN은 순차적으로 데이터를 처리하기 때문에 병렬 처리가 어렵습니다.</li></ul><ul id="ac583c59-8964-461b-8edf-aaafeb613359" class="bulleted-list"><li style="list-style-type:disc">영향: 학습 속도가 느려지며, 특히 긴 시퀀스를 처리할 때 시간이 많이 소요됩니다.</li></ul><ul id="7dc9b41a-142b-45cb-85f0-bcb4a95b9b24" class="bulleted-list"><li style="list-style-type:disc">원인: RNN의 특성상 다음 타임 스텝의 은닉 상태는 이전 타임 스텝의 은닉 상태에 의존하므로, 모든 타임 스텝을 동시에 처리할 수 없습니다.</li></ul><p id="82e16607-d486-4836-af94-50cc1e9bcf23" class="">5. 계산 비용</p><ul id="0e019cb6-3d48-4c54-8eda-d984d4c42132" class="bulleted-list"><li style="list-style-type:disc">설명: 긴 시퀀스를 학습하고 예측하는 데 높은 계산 비용이 소요됩니다.</li></ul><ul id="83d7d93a-55cf-4698-8f8e-120211bbe758" class="bulleted-list"><li style="list-style-type:disc">영향: 모델을 학습시키고 예측하는 데 시간이 많이 걸리며, 자원이 많이 필요합니다.</li></ul><ul id="b0de091e-ddbd-4ee0-84c2-1dea8cbd5271" class="bulleted-list"><li style="list-style-type:disc">원인: 각 타임 스텝마다 은닉 상태를 계산하고 업데이트해야 하기 때문입니다.</li></ul><p id="7f203e4d-501e-481d-a66b-e57655479c4e" class="">6. 제한된 메모리 용량</p><ul id="47e18d6d-269e-4a27-9790-0476f6da02f5" class="bulleted-list"><li style="list-style-type:disc">설명: RNN의 은닉 상태는 고정된 크기이기 때문에, 긴 시퀀스의 모든 정보를 효과적으로 저장하고 활용하기 어렵습니다.</li></ul><ul id="3a7b9352-d78a-4ab5-81ad-f5fcf9ed78ff" class="bulleted-list"><li style="list-style-type:disc">영향: 긴 시퀀스에서 중요한 정보를 잃어버릴 수 있습니다.</li></ul><ul id="41db4838-5af9-4eef-8719-9cc2a93a5fd0" class="bulleted-list"><li style="list-style-type:disc">원인: 은닉 상태의 크기가 고정되어 있으며, 이는 모델의 메모리 용량을 제한합니다.</li></ul><hr id="b52aaa8d-46cc-4800-b175-da2fd3e28c17"/><h3 id="6467d06c-5bdc-432e-87dc-4f0617125bd5" class="">RNN의 문제점 추가 학습</h3><ul id="212174ea-0c4b-4584-a7eb-eae0c93a79ba" class="bulleted-list"><li style="list-style-type:disc">RNN은 아래 두 가지 원인으로 시계열 데이터의 장기 의존 관계를 학습하기 어렵다는 문제점 존재<ul id="8b7d16c0-9fc4-4cb7-971a-3f0891b0b256" class="bulleted-list"><li style="list-style-type:circle">기울기 소실</li></ul><ul id="d22c5076-994c-43c9-bd18-fb0b2edfe40a" class="bulleted-list"><li style="list-style-type:circle">기울기 폭발</li></ul></li></ul><ul id="a3b27870-3f2b-4ef7-8e67-cf7fc677e068" class="bulleted-list"><li style="list-style-type:disc">RNN의 경우 가중치 조정이 모델의 성능에 아주 중요한 역할을 함</li></ul><ul id="f98956fc-acff-4409-a8bb-023981fd5b30" class="bulleted-list"><li style="list-style-type:disc">따라서 가중치를 반복적으로 조정하면서 결과값과 실제값의 차이를 줄이는 것이 중요</li></ul><ul id="2312abd4-2725-458f-8378-595799352f0d" class="bulleted-list"><li style="list-style-type:disc">이때 사용하는 방식이 바로 역전파(Back propagation) 방식<ul id="84a50494-6ef1-4372-8232-4e2c5a6b869a" class="toggle"><li><details open=""><summary>역전파(Back propagation)</summary><ul id="bbb8546c-d13f-4f28-afcf-03d2a9635a78" class="bulleted-list"><li style="list-style-type:disc">인공 신경망을 통해서 도출한 결과값과 실제값을 비교하여 Loss(손실)과 관련된 손실함수를 구하고 역으로 출력 → 입력 방향으로 손실이 적어지는 방향으로 가중치를 업데이트 하는 과정</li></ul><ul id="82aab7f9-8d5c-498b-b9b9-dceca20717d9" class="bulleted-list"><li style="list-style-type:disc">역전파 과정<ol type="1" id="1153f314-1996-48b0-b93f-5952cdb76673" class="numbered-list" start="1"><li>순전파 (Forward Propagation)<figure id="a477b8f7-03c3-446c-a415-c637dbc72b4c" class="image"><a href="RNN%200efe580049924264923680bae1d9992c/backpropagation_2.png"><img style="width:480px" src="RNN%200efe580049924264923680bae1d9992c/backpropagation_2.png"/></a></figure><ul id="97b67ea5-0f3f-4743-87fb-e0b7058756a2" class="bulleted-list"><li style="list-style-type:disc">입력 데이터를 신경망에 주입하고 각 층에서 가중치를 적용하여 출력을 계산</li></ul><ul id="c1b6acc3-9c65-4106-948d-b914d98ef87f" class="bulleted-list"><li style="list-style-type:disc">각 층에서는 활성화 함수를 통해 비선형성을 추가하고 다음 층으로 신호 전달</li></ul></li></ol><ol type="1" id="5ff5168e-1340-4a4f-89ed-6f95411bb5ce" class="numbered-list" start="3"><li>손실 함수 계산<ul id="3aa8c1cf-6e7a-4e59-8aaf-e07b8d5bc609" class="bulleted-list"><li style="list-style-type:disc">손실 함수(loss function)란 신경망 모델이 예측한 출력과 실제 타겟 값 사이의 차이를 측정하는 함수</li></ul><ul id="249ad73a-e12e-4664-90a5-8b639ec0bea9" class="bulleted-list"><li style="list-style-type:disc">손실 함수 값을 최소화하는 것이 모델의 성능을 높이는 것이므로 이를 위해 가중치를 조정</li></ul></li></ol><ol type="1" id="1b48cdda-2a92-4c38-a456-0ad9d9152702" class="numbered-list" start="4"><li>역전파 (Backward Propagation)<figure id="8175b444-a7e4-4657-830d-e6a2aa31c1d6" class="image"><a href="RNN%200efe580049924264923680bae1d9992c/backpropagation_3.png"><img style="width:156px" src="RNN%200efe580049924264923680bae1d9992c/backpropagation_3.png"/></a></figure><ul id="6a1b8b81-e368-4853-899e-b88a9f0b0c6d" class="bulleted-list"><li style="list-style-type:disc">손실 함수를 사용하여 각 가중치가 전체 오차에 얼마나 기여했는지 계산</li></ul><ul id="218d2a4b-d3a0-4eac-9c25-dd125cb34854" class="bulleted-list"><li style="list-style-type:disc">이 과정에서 역전파는 출력층에서부터 시작하여 각 측의 가중치에 대한 오차의 그라디언트(gradient - 기울기)를 계산</li></ul><ul id="7fc6257d-9c6d-4e88-a7af-1b807cb175b5" class="bulleted-list"><li style="list-style-type:disc">그라디언트는 출력층에서부터 역순으로 각 층의 가중치와 편향을 조정하기 위해 사용</li></ul><figure id="bdfcac57-900b-4428-9ddc-4540516fbda2" class="image"><a href="RNN%200efe580049924264923680bae1d9992c/backpropagation_4.png"><img style="width:401px" src="RNN%200efe580049924264923680bae1d9992c/backpropagation_4.png"/></a></figure></li></ol><p id="4924fa03-2f84-4bb4-9087-62d6178eb635" class="">4. 가중치 업데이트<div class="indented"><ul id="91f386e6-0339-45e5-aab6-26348600f31c" class="bulleted-list"><li style="list-style-type:disc">계산된 그라디언트를 사용하여 경사 하강법을 이용해 가중치를 업데이트</li></ul><ul id="2783d4d2-dcf7-45d2-a3a0-6c5b4e06ff38" class="bulleted-list"><li style="list-style-type:disc">경사 하강법은 손실 함수를 최소화하기 위해 가중치를 조금씩 조정하는 방법</li></ul><ul id="b682c240-a2d2-4772-ba13-279b12e2eedd" class="bulleted-list"><li style="list-style-type:disc">가중치를 업데이트 할 때 가중치에 대한 오차의 기울기(gradient)를 계산하여 곱해준다</li></ul><ul id="b7e7fda7-7797-4258-a2ca-43a50ded97b5" class="bulleted-list"><li style="list-style-type:disc">이 때 기울기 소실 문제가 발생</li></ul><ul id="3071acb0-0d61-4ecf-a241-8a1cbb520fd1" class="bulleted-list"><li style="list-style-type:disc">tanh(hyperbolic tangent) 함수 예시<figure id="834d6812-eee9-4ca3-89cf-4791e05b8fc8" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>h</mi><mi>t</mi></msub><mo>=</mo><mi>t</mi><mi>a</mi><mi>n</mi><mi>h</mi><mo stretchy="false">(</mo><msub><mi>h</mi><mrow><mi>t</mi><mo>−</mo><mn>1</mn></mrow></msub><msub><mi>W</mi><mi>h</mi></msub><mo>+</mo><msub><mi>x</mi><mi>t</mi></msub><msub><mi>W</mi><mi>x</mi></msub><mo>+</mo><mi>b</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">h_t=tanh(h_{t−1}W_h+x_tW_x+b)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">t</span><span class="mord mathnormal">anh</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">t</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">h</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2806em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">b</span><span class="mclose">)</span></span></span></span></span></div></figure><figure id="fd40db9a-6162-4e5b-965a-1ce1924e6dd9" class="image"><a href="RNN%200efe580049924264923680bae1d9992c/80352894-8594d780-88af-11ea-9aba-e1482a300728.png"><img style="width:900px" src="RNN%200efe580049924264923680bae1d9992c/80352894-8594d780-88af-11ea-9aba-e1482a300728.png"/></a></figure><ul id="e4937995-0086-4b0e-9e2a-b3e9ecb169de" class="bulleted-list"><li style="list-style-type:circle">RNN에서 일반적으로 쓰이는 tanh 함수는 다음과 같이 [-1,1] 사이의 범위의 값을 가짐</li></ul><ul id="430e949a-56a1-4252-af04-70a66c01bf3d" class="bulleted-list"><li style="list-style-type:circle">tanh 함수를 미분하게 되면 보라색과 같은 그래프가 나옴</li></ul><ul id="dac04338-c518-4177-874a-aec368c89aae" class="bulleted-list"><li style="list-style-type:circle">보라색 그래프의 최대값은 1이므로 1보다 작은 값이 오차의 기울기가 됨</li></ul><ul id="316f1e00-97ca-4b06-98b4-a1cef62f07ed" class="bulleted-list"><li style="list-style-type:circle">따라서 레이어가 많을 때 1보다 작은 값을 무수히 곱하게되면 값이 0으로 수렴하여 기울기가 손실되는 문제가 발생</li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="5897f465-69ce-4299-92cd-97c9475bb5e6"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">만약 기울기가 1보다 크다면 계속 곱하게 되면 무한대로 수렴해버림 → 기울기 폭발</div></figure><p id="76431086-7da6-47ee-9dd5-6de95aa289ea" class="">
+</p></li></ul></div></p></li></ul></details></li></ul></li></ul></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
